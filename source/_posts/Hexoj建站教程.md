@@ -176,7 +176,23 @@ mathjax:
   # GithubLatex编译 cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 ```
 
-
+## 发布部署说明 ##
+- `hexo` 分支:hexo笔记源代码
+- `master` 分支:hexo笔记访问分支
+- `jekyll`分支:之前博客文章备份
+源码文件夹一直处于`hexo`分支，直接修改博客，然后修改。源文件直接`commit`到`hexo`分支。  
+部署直接git cmd使用
+``` bash
+hexo clean
+hexo g
+hexo d
+```
+`hexo`已追踪文件及文件夹:
+- `.gitignore`
+- `_config.yml`
+- `source/`
+- `theme/next/_config.yml`
+- `scaffolds/`
 
 
 # 参考 #
