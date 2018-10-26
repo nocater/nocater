@@ -8,7 +8,7 @@ categories: other
 description: Hexo建站流程说明
 ---
 
-# 步骤 #
+# 安装及部署 #
 ## 初始化 ##
 ``` bash
 $ hexo init [folder]
@@ -36,16 +36,8 @@ $ hexo server
 启动服务器。默认情况下，访问网址为： `http://localhost:4000/`。
 
 ## 部署 ##
-``` bash
-$ hexo deploy
-```
-**该命令请在git中执行。**  部署网站，可以简写为
-```
-$ hexo d
-```
 
-## 修改站点位置文件 ##
-文件位于项目根路径下`_config.yml`文件，
+首先，修改`站点位置文件`,文件位于项目根路径下`_config.yml`文件，
 ``` bash
 deploy:
   type: git
@@ -54,11 +46,39 @@ deploy:
 ```
 这里注意`:`后一定要有一个空格，否则部署无反应。
   
-## 安装Hexo-git ##
+然后，安装Hexo-git
 ``` bash
 $ npm install hexo-deployer-git --save
 ```
-之后使用发布命令即可。
+
+执行部署命令：
+``` bash
+$ hexo deploy
+```
+**该命令请在git中执行。**  部署网站，可以简写为
+```
+$ hexo d
+```
+
+## 发布部署说明 ##
+- `hexo` 分支:hexo笔记源代码
+- `master` 分支:hexo笔记访问分支
+- `jekyll`分支:之前博客文章备份
+源码文件夹一直处于`hexo`分支，直接修改博客，然后修改。源文件直接`commit`到`hexo`分支。  
+部署直接git cmd使用
+``` bash
+hexo clean
+hexo g
+hexo d
+```
+`hexo`已追踪文件及文件夹:
+- `.gitignore`
+- `_config.yml`
+- `source/`
+- `theme/next/_config.yml`
+- `scaffolds/`
+
+# 个性化配置 #
 
 ## 更换主题 ##
 1. 下载主题：
@@ -70,7 +90,7 @@ $ git clone https://github.com/iissnan/hexo-theme-next themes/next
 ``` 
 theme: next
 ```
-可以选择修改样式.打开主题配置文件`next/_config.yml`，选择以下即可：
+可以选择修改样式.打开`主题配置文件`(`next/_config.yml`)，选择以下即可：
 ``` 
 #scheme: Muse
 #scheme: Mist
@@ -78,7 +98,7 @@ scheme: Pisces
 #scheme: Gemini
 ```
 
-## Profile信息修改 ##
+## 网站信息 ##
 打开站点配置文件`_config.yml`，修改对应文字即可：
 ```
 # Site
@@ -223,7 +243,7 @@ INFO  [Algolia] Indexing chunk 1 of 1 (50 items each)
 INFO  [Algolia] Indexing done.
 ```
 
-## Latex注意事项 ##
+## 文章公式 ##
 - 先写下标，再写上标，否则无法编译。`$X_1^2$`
 - `{}`的转义不是`\{\}`，而是`\\{\\}`:$\\{\\}$
 - 公式换行`\\`转义为`\\\\`:
@@ -248,26 +268,9 @@ mathjax:
   # GithubLatex编译 cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 ```
 
-## 发布部署说明 ##
-- `hexo` 分支:hexo笔记源代码
-- `master` 分支:hexo笔记访问分支
-- `jekyll`分支:之前博客文章备份
-源码文件夹一直处于`hexo`分支，直接修改博客，然后修改。源文件直接`commit`到`hexo`分支。  
-部署直接git cmd使用
-``` bash
-hexo clean
-hexo g
-hexo d
-```
-`hexo`已追踪文件及文件夹:
-- `.gitignore`
-- `_config.yml`
-- `source/`
-- `theme/next/_config.yml`
-- `scaffolds/`
-
-
 # 参考 #
-
+$$\begin{equation}
+e=mc^2
+\end{equation}\label{eq1}$$
 [Hexo官方文档](https://hexo.io/zh-cn/docs/commands)  
 [NexT官方教程](https://theme-next.iissnan.com/getting-started.html)
