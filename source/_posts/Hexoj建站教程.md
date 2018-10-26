@@ -151,6 +151,78 @@ description: Hexo建站流程说明
 阅读次数统计（LeanCloud） 由 Doublemine 贡献
 请查看[为NexT主题添加文章阅读量统计功能](https://notes.wanghao.work/2015-10-21-%E4%B8%BANexT%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%8A%9F%E8%83%BD.html#%E9%85%8D%E7%BD%AELeanCloud)
 
+## 文章搜索 ##
+1.安装`hexo-generator-searchdb`：
+``` bash
+$ npm install hexo-generator-searchdb --save
+```
+2.编辑`站点配置文件`,新增以下内容到任意位置：
+``` yml
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+```
+3.编辑`主题配置文件`，启用本地搜索及Algolia功能：
+``` 
+local_search:
+  enable: true
+
+...
+
+algolia_search:
+  enable: true
+```
+4.启用Algolia：  
+4.1创建APIKeyHEXO_ALGOLIA_INDEXING_KEY
+- 进入`Algolia`的`API Keys`页面`ALL API KEYS`选项卡
+- 创建APIKey
+    - Description：HEXO_ALGOLIA_INDEXING_KEY
+    - Indices：***`<此处选择之前创建的Index>`***
+    - ACL：Add records，Delete records，List indices，Delete index
+4.2设置环境变量`HEXO_ALGOLIA_INDEXING_KEY`,可手动添加
+``` bash
+$ export HEXO_ALGOLIA_INDEXING_KEY=<此处为第1步创建的APIKey>
+```
+4.3修改`站点配置文件`，添加以下内容：
+```
+# Add manual - algolia:
+algolia:
+  applicationID: '你的Application ID'
+  apiKey: '你的Search-Only API Key'
+  indexName: '输入刚才创建index name'
+  chunkSize: 5000 
+```
+> 官方教程中未添加`apikey`列，导致可能失败。参考Github上[教程](https://github.com/theme-next/hexo-theme-next/blob/master/docs/ALGOLIA-SEARCH.md)
+
+4.4安装模块
+``` bash
+$ cd themes/next
+$ git clone https://github.com/theme-next/theme-next-algolia-instant-search source/lib/algolia-instant-search
+```
+4.5配置URL
+修改`站点配置`文件，将`url`设置为`/`,防止出现搜索结果跳转链接域名为`http;//yoursite`:
+```
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+#url: http://yoursite.com
+url: /
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults: 
+```
+
+4.6执行Algolia命令
+``` bash
+$ hexo algolia
+INFO  [Algolia] Testing HEXO_ALGOLIA_INDEXING_KEY permissions.
+INFO  Start processing
+INFO  [Algolia] Identified 9 pages and posts to index.
+INFO  [Algolia] Indexing chunk 1 of 1 (50 items each)
+INFO  [Algolia] Indexing done.
+```
+
 ## Latex注意事项 ##
 - 先写下标，再写上标，否则无法编译。`$X_1^2$`
 - `{}`的转义不是`\{\}`，而是`\\{\\}`:$\\{\\}$

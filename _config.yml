@@ -7,12 +7,13 @@ title: Nocater's Blog
 subtitle: cats:0
 description: 
 author: Chen Shuai
-language: zh-Hans
+language: zh-CN
 timezone: 
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+#url: http://yoursite.com
+url: /
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -80,3 +81,10 @@ deploy:
   type: git
   repo: git@github.com:nocater/nocater.github.io.git
   branch: master
+  
+# Add manual - algolia:
+algolia:
+  applicationID: '415B8LG6UG'
+  apiKey: '8a8cb341516db603092ecd5652bed6a6'
+  indexName: 'hexo'
+  chunkSize: 5000  

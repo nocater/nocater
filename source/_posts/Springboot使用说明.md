@@ -4,7 +4,7 @@ date: 2018-10-25 13:29:09
 tags:
 - springboot
 categories: other
-description:
+description: Springboot 技术简单使用说明
 ---
 
 # 1. 新建Spring Boot项目
