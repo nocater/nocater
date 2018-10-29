@@ -13,7 +13,10 @@ timezone:
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 #url: http://yoursite.com
-url: /
+# local blog 
+#url: /
+# deply blog
+url: https://nocater.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -88,3 +91,9 @@ algolia:
   apiKey: '8a8cb341516db603092ecd5652bed6a6'
   indexName: 'hexo'
   chunkSize: 5000  
+  
+# 自动生成sitemap
+sitemap:
+  path: sitemap.xml
+  #baidusitemap:
+  #path: baidusitemap.xml

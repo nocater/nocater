@@ -5,22 +5,23 @@ tags:
 - Hexo 
 - Github Page
 categories: other
-description: Hexo建站流程说明
+description: Hexo v3.8.0 NexT v6.4.2博客搭建流程
+mathjax: true
 ---
 
-# 安装及部署 #
-## 初始化 ##
+# 安装及部署 
+## 初始化 
 ``` bash
 $ hexo init [folder]
 ```
 
-## 新建文章 ##
+## 新建文章 
 ``` bash
 $ hexo new [layout] <title>
 ```
 如果没有设置`layout`，默认使用config.yml中的`defaultlayout`参数代替。如果标题包含空格，请使用引号括起来。
 
-## 生成静态网页 ##
+## 生成静态网页 
 ``` bash
 $ hexo generate
 ```
@@ -29,13 +30,13 @@ $ hexo generate
 $ hexo g
 ```
 
-## 启动服务 ##
+## 启动服务 
 ``` bash
 $ hexo server
 ```
 启动服务器。默认情况下，访问网址为： `http://localhost:4000/`。
 
-## 部署 ##
+## 部署 
 
 首先，修改`站点位置文件`,文件位于项目根路径下`_config.yml`文件，
 ``` bash
@@ -60,7 +61,7 @@ $ hexo deploy
 $ hexo d
 ```
 
-## 发布部署说明 ##
+## 发布部署说明 
 - `hexo` 分支:hexo笔记源代码
 - `master` 分支:hexo笔记访问分支
 - `jekyll`分支:之前博客文章备份
@@ -78,12 +79,12 @@ hexo d
 - `theme/next/_config.yml`
 - `scaffolds/`
 
-# 个性化配置 #
+# 个性化配置 
 
-## 更换主题 ##
+## 更换主题 
 1. 下载主题：
 ``` bash
-$ git clone https://github.com/iissnan/hexo-theme-next themes/next
+$ git clone https://github.com/theme-next/hexo-theme-next themes/next
 ```
 2. 配置主题：
 修改站点默认主题
@@ -98,7 +99,7 @@ scheme: Pisces
 #scheme: Gemini
 ```
 
-## 网站信息 ##
+## 网站信息 
 打开站点配置文件`_config.yml`，修改对应文字即可：
 ```
 # Site
@@ -111,7 +112,7 @@ timezone:
 ```
 **Next的使用以后再调整**
 
-## 文章标签 ##
+## 文章标签 
 首先创建tag页面：
 ``` bash
 $ hexo new page tags
@@ -141,7 +142,7 @@ tags:
 - Github Page
 ```
 
-## 文章分类 ##
+## 文章分类 
 同创建标签步骤基本一致，首先创建分类页面：
 ``` bash
 $ hexo new page categories
@@ -167,11 +168,11 @@ description: Hexo建站流程说明
 ---
 ```
 
-## 阅读统计 ##
+## 阅读统计 
 阅读次数统计（LeanCloud） 由 Doublemine 贡献
 请查看[为NexT主题添加文章阅读量统计功能](https://notes.wanghao.work/2015-10-21-%E4%B8%BANexT%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%8A%9F%E8%83%BD.html#%E9%85%8D%E7%BD%AELeanCloud)
 
-## 文章搜索 ##
+## 文章搜索 
 1.安装`hexo-generator-searchdb`：
 ``` bash
 $ npm install hexo-generator-searchdb --save
@@ -243,7 +244,7 @@ INFO  [Algolia] Indexing chunk 1 of 1 (50 items each)
 INFO  [Algolia] Indexing done.
 ```
 
-## 文章公式 ##
+## 文章公式 
 - 先写下标，再写上标，否则无法编译。`$X_1^2$`
 - `{}`的转义不是`\{\}`，而是`\\{\\}`:$\\{\\}$
 - 公式换行`\\`转义为`\\\\`:
@@ -268,9 +269,66 @@ mathjax:
   # GithubLatex编译 cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 ```
 
-# 参考 #
-$$\begin{equation}
-e=mc^2
-\end{equation}\label{eq1}$$
+## 底部标签 ##
+将文章底部的标签由`#`改为<i class="fa fa-tag"></i>  
+打开`/themes/next/layout/_macro/post.swig`，搜索`rel="tag">#`  
+将`#`改为`<i class="fa fa-tag"></i>`
+
+
+## 谷歌收录 
+创建站点地图
+
+``` bash 
+npm install hexo-generator-sitemap --save
+```
+
+在`站点配置文件`中添加以下内容：
+
+``` 
+# 自动生成sitemap
+sitemap:
+  path: sitemap.xml
+  #baidusitemap:
+  #path: baidusitemap.xml
+```
+
+修改`站点配置文件`中的`url`：
+
+```
+url: https://nocater.github.io
+```
+
+执行`hexo d`部署后，访问`https://nocater.github.io/sitemap.xml`，检查其中是否包含域名：
+
+``` xml
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>
+      https://nocater.github.io/2018/10/24/Hexoj%E5%BB%BA%E7%AB%99%E6%95%99%E7%A8%8B/
+    </loc>
+    <lastmod>2018-10-26T06:46:34.000Z</lastmod>
+  </url>
+<url>
+```
+验证通过后，就可以开始配置Google了：
+- 在[谷歌搜索引擎入口](https://link.jianshu.com/?t=https://www.google.com/webmasters)提交博客网址
+- 选择`文件验证`，下载html文件后，在源码里添加
+```
+---
+layout: false
+---
+```
+禁止Hexo的模板渲染。部署成功并访问成功后，就可以通过验证了。
+- 在[站点地图](https://search.google.com/search-console/sitemaps?resource_id=https%3A%2F%2Fnocater.github.io%2F)提交`sitemap.xml`，并查看状态。
+
+## 百度收录
+提交网址与提交链接实现与Google类似。  
+不过`站点地图`可选择：
+- 主动推送
+- 自动推送 可直接修改`主题配置文件`，将`baidu_push: false`设置为`ture`。
+- sitemap(Google中使用此方法) 
+
+# 参考 
+$e=mc^2$
 [Hexo官方文档](https://hexo.io/zh-cn/docs/commands)  
 [NexT官方教程](https://theme-next.iissnan.com/getting-started.html)
