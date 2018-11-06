@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '415B8LG6UG',
+      apiKey: '8a8cb341516db603092ecd5652bed6a6',
+      indexName: 'hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="吴恩达深度学习课程第三课笔记">
+<meta name="keywords" content="Andrew Ng,deep learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03-结构化机器学习项目">
+<meta property="og:url" content="https://nocater.github.io/2018/10/25/03-结构化机器学习项目/index.html">
+<meta property="og:site_name" content="Nocater&#39;s Blog">
+<meta property="og:description" content="吴恩达深度学习课程第三课笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-2/31105965.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-6/16375421.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-6/71194902.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-6/80653879.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-8/12499021.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-8/46164709.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-8/3357150.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-9/34998381.jpg">
+<meta property="og:updated_time" content="2018-11-06T08:05:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="03-结构化机器学习项目">
+<meta name="twitter:description" content="吴恩达深度学习课程第三课笔记">
+<meta name="twitter:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-2/31105965.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://nocater.github.io/2018/10/25/03-结构化机器学习项目/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>03-结构化机器学习项目 | Nocater's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Nocater's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">cats:0</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nocater.github.io/2018/10/25/03-结构化机器学习项目/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Shuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nocater's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">03-结构化机器学习项目
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-25 10:38:02" itemprop="dateCreated datePublished" datetime="2018-10-25T10:38:02+08:00">2018-10-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-11-06 16:05:30" itemprop="dateModified" datetime="2018-11-06T16:05:30+08:00">2018-11-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/深度学习-吴恩达/" itemprop="url" rel="index"><span itemprop="name">深度学习[吴恩达]</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/10/25/03-结构化机器学习项目/" class="leancloud_visitors" data-flag-title="03-结构化机器学习项目">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">吴恩达深度学习课程第三课笔记</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="03-结构化机器学习项目"><a href="#03-结构化机器学习项目" class="headerlink" title="03.结构化机器学习项目"></a>03.结构化机器学习项目</h1><h2 id="第一周"><a href="#第一周" class="headerlink" title="第一周"></a>第一周</h2><h3 id="1-1-为什么是ML策略"><a href="#1-1-为什么是ML策略" class="headerlink" title="1.1 为什么是ML策略"></a>1.1 为什么是ML策略</h3><p><strong>经验</strong>：如何进一步优化模型</p>
+<h3 id="1-2-正交化"><a href="#1-2-正交化" class="headerlink" title="1.2 正交化"></a>1.2 正交化</h3><p><strong>正交化</strong>是指，在模型的调参过程中，尽量选择影响单一化的方法。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-2/31105965.jpg" alt="@正交化说明图"></p>
+<blockquote>
+<p>第一组按钮用来调节宽度，方法包括 - bigger network - Adam算法<br>第二组按钮用来调节高度，方法包括 - 正则化 - 增加数据集<br>第三组 - 增加数据集<br>第二组 - 改变损失函数 - 改变开发数据集</p>
+</blockquote>
+<p> 一般不使用<em>early stopping</em>,它会同时影响前两步,违反<strong>正交化</strong>,使模型不好分析。</p>
+<h3 id="1-3-单一数字评估指标"><a href="#1-3-单一数字评估指标" class="headerlink" title="1.3 单一数字评估指标"></a>1.3 单一数字评估指标</h3><p>使用单一数字(实数)指标进行模型的评估。如<strong>F1值</strong>：$\frac{2}{\frac{1}{P}+\frac{1}{R}}$<br>重申：idea&lt;-&gt;code&lt;-&gt;experiment</p>
+<h3 id="1-4-满足和优化指标"><a href="#1-4-满足和优化指标" class="headerlink" title="1.4 满足和优化指标"></a>1.4 满足和优化指标</h3><p>当有多个指标去衡量目标的话，可以选择一个作为<strong>优化指标(optimizing metric)</strong>，其它的设置为<strong>满足指标(satisficing metric)</strong></p>
+<ul>
+<li>如猫学习器准确率作为<strong>optimizing metric</strong>，识别速度小于100ms作为<strong>satisficing metric</strong></li>
+<li>如语音唤醒设备，准确率作为<strong>optimizing metric</strong>，24小时内只能一次假阳性唤醒作为<strong>satisficing metric</strong></li>
+</ul>
+<h3 id="1-5-训练-开发-测试集的划分"><a href="#1-5-训练-开发-测试集的划分" class="headerlink" title="1.5 训练/开发/测试集的划分"></a>1.5 训练/开发/测试集的划分</h3><p>开发集/保留交叉验证集 和 测试集 应保持数据同分布<br>新收集的数据也应同时分布在开发集和测试集上</p>
+<h3 id="1-6-开发集和测试集的大小"><a href="#1-6-开发集和测试集的大小" class="headerlink" title="1.6 开发集和测试集的大小"></a>1.6 开发集和测试集的大小</h3><p>传统的8:2或6:2:2方式不再适合大数据下的当代<br>深度学习对训练数据量的要求非常大，因此，当数据大于百万时候，使用98:1:1是没有问题的。<br>一般强调设置 训练集、开发集、测试集<br>有时候忽略测试集不推荐</p>
+<h3 id="1-7-什么时间开始改变开发-测试集和指标"><a href="#1-7-什么时间开始改变开发-测试集和指标" class="headerlink" title="1.7 什么时间开始改变开发/测试集和指标"></a>1.7 什么时间开始改变开发/测试集和指标</h3><p>如果无法正确评估好算法的排名，则需要定义一个新的评估指标。</p>
+<blockquote>
+<p>算法a在识别猫图时可能会推送成人图片，则需要修改error指标：</p>
+<script type="math/tex; mode=display">Error: \frac{1}{m_{dev}} \sum_{i=1}^{m_{dev}}L({\hat y}^{(i)},y^{(i)}) \tag{1}</script><script type="math/tex; mode=display">Error: \frac{1}{\sum \omega^{(i)}} \sum_{i=1}^{M_{dev}}\omega^{(i)}L({\hat y}^{(i)},y^{(i)}) \tag{2}</script><script type="math/tex; mode=display">\omega^{(i)}=
+\begin{cases}
+1& \text{if} \ x^{i}\  \text{is non-porn}\\\\
+10& \text{if} \ x^{i}\  \text{is porn}
+\end{cases}</script></blockquote>
+<p>在当前开发集和测试集表现很好，但在实际应用中表现不好时，需要修改指标换切换数据集。</p>
+<h3 id="1-8-为什么是人的表现"><a href="#1-8-为什么是人的表现" class="headerlink" title="1.8 为什么是人的表现"></a>1.8 为什么是人的表现</h3><p><img src="http://pa54oihmf.bkt.clouddn.com/18-7-6/16375421.jpg" alt="@贝叶斯误差"><br><strong>贝叶斯最优误差(Bayes optimal error)</strong>是理论上可能达到的最优误差，<br>如果你的模型比人类水平低，说明可以使用某些工具来提高性能。<br>模型效果低于人类水平，你可以</p>
+<ul>
+<li>人为标注更多类别数据</li>
+<li>人工误差分析：为什么人类做的对？</li>
+<li>更好的偏差/方差分析</li>
+</ul>
+<h3 id="1-9-可避免偏差"><a href="#1-9-可避免偏差" class="headerlink" title="1.9 可避免偏差"></a>1.9 可避免偏差</h3><p><img src="http://pa54oihmf.bkt.clouddn.com/18-7-6/71194902.jpg" alt="@可避免方差"><br>将人类水平看作是贝叶斯误差，贝叶斯误差和训练集的错误率记为<strong>可避免偏差(Avoidable bias)</strong>，</p>
+<ul>
+<li>当可避免偏差过大，要先降低训练集的错误率。如情况A</li>
+<li>当可避免偏差很小，解决方差。如情况B</li>
+</ul>
+<h3 id="1-10-理解人的表现"><a href="#1-10-理解人的表现" class="headerlink" title="1.10 理解人的表现"></a>1.10 理解人的表现</h3><p><strong>Human-level error</strong>定义:替代贝叶斯误差。</p>
+<ul>
+<li>一般人对放射科的识别误差为3%</li>
+<li>一般医生的误差为1%</li>
+<li>专家医生的误差为0.7%</li>
+<li>专家团队的误差为0.5%</li>
+</ul>
+<p>可以得知 bayes error &lt;= 0.5%<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-6/80653879.jpg" alt="@偏差、方差问题"><br>比较Avoidable bias 和 Variance大小可以分析应解决偏差还是方差问题。</p>
+<h3 id="1-11-超过人的表现"><a href="#1-11-超过人的表现" class="headerlink" title="1.11 超过人的表现"></a>1.11 超过人的表现</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Human-level</th>
+<th>training set error</th>
+<th>development error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0.5%</td>
+<td>0.6%</td>
+<td>0.8%</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0.5%</td>
+<td>0.3%</td>
+<td>0.4%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>在情况A下Avoidable Bias为0.1，Variance为0.2，故应该着重降低方差。<br>但在情况B下，模型超过人类，很难用现有的工具和方法去判断应降低偏差还是方差。<br>在结构化数据中，机器学习算法很容易超越人的表现。<br>但在自然感知领域，人类比较擅长，但机器学习能够一定程度上超过人类。</p>
+<h3 id="1-12-改善你模型的表现"><a href="#1-12-改善你模型的表现" class="headerlink" title="1.12 改善你模型的表现"></a>1.12 改善你模型的表现</h3><ol>
+<li>减小可避免偏差<ul>
+<li>更大的模型</li>
+<li>训练更久，优化算法(momentum, RMS prop, Adam, activation function)</li>
+<li>更换网络结构(RNN,CNN)，超参数搜索</li>
+</ul>
+</li>
+<li>减小方差<ul>
+<li>更多数据</li>
+<li>正则化(L2, Dropout, data augmentation)</li>
+<li>更换网络结构(RNN,CNN)，超参数搜索</li>
+</ul>
+</li>
+</ol>
+<h3 id="第一周作业"><a href="#第一周作业" class="headerlink" title="第一周作业"></a>第一周作业</h3><p>选择题 可参考网上相关资料</p>
+<h2 id="第二周"><a href="#第二周" class="headerlink" title="第二周"></a>第二周</h2><h3 id="2-1-进行误差分析"><a href="#2-1-进行误差分析" class="headerlink" title="2.1 进行误差分析"></a>2.1 进行误差分析</h3><p>误差分析：通过人工检查分析错误样本点，来进行下一步的优化。</p>
+<blockquote>
+<p>一个猫分类器错误地将狗识别成了猫，目前误差是$10\%$<br>是否应该专门去处理狗？<br>误差分析：</p>
+<ol>
+<li>随机抽取开发集中100个错误样本</li>
+<li>统计狗的数量<br>结果：</li>
+</ol>
+<ul>
+<li>$5\%$是狗，则花费很多时间处理狗，误差会从$10\%$降低到$9.5\%$，即性能提升的<strong>Ceiling</strong>为$9.5\%$。</li>
+<li>$50\%$是狗，那么误差会从$10\%$降低到$5\%$，值得尝试。</li>
+</ul>
+</blockquote>
+<p><strong>多个想法的并行评估</strong><br>猫分类器的优化idea:</p>
+<ul>
+<li>修复狗识别成猫问题</li>
+<li>修复狮子等大猫被错误分类</li>
+<li>更好地图片模糊处理</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Image</th>
+<th style="text-align:center">Dog</th>
+<th style="text-align:center">Great Cats</th>
+<th style="text-align:center">Blurry</th>
+<th style="text-align:center">分析中新的类别</th>
+<th>Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td>比特犬</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center"></td>
+<td>动物园下雨</td>
+</tr>
+<tr>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center">…</td>
+<td style="text-align:center"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">%of total</td>
+<td style="text-align:center">8%</td>
+<td style="text-align:center">43%</td>
+<td style="text-align:center">61%</td>
+<td style="text-align:center">12%</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>然后通过人为分析，比如解决Great Cats问题，或同时解决图像模糊问题。<br>这个统计步骤大概需要几小时，但是值得。</p>
+<h3 id="2-2-清除标注错误的数据"><a href="#2-2-清除标注错误的数据" class="headerlink" title="2.2 清除标注错误的数据"></a>2.2 清除标注错误的数据</h3><p>深度学习对<strong>随机误差</strong>(少量的数据标记出错)<strong>鲁棒性(robust)</strong>，但对<strong>系统误差</strong>没有。<br>在误差分析的时候添加一列：数据标记类别出错，进行分析。<br>是否进行样本类别修正?</p>
+<ul>
+<li>如果这些标记错误严重影响了模型在开发集的评估能力，需要修复。</li>
+<li>没有，则不需要花费宝贵时间修正。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-8/12499021.jpg" alt="@误差分析"><blockquote>
+<p>第一种情况下，其它错误占9.4%远大于标记错误问题，所以应多处理其它错误。第二种情况下，标记错误类别比较大，需要处理。</p>
+</blockquote>
+</li>
+</ul>
+<p>修正开发集/测试集错误样本</p>
+<ul>
+<li>在开发集，测试集上使用相同的处理，保证数据同分布</li>
+<li>同时检查算法中正确和错位的样例</li>
+<li>训练集和开发测试集处于轻微的不同分布。之前提到训练集对随机误差有鲁棒性，且训练集比开发测试集大很多，不做标记修正也是可以的，之后细谈这个问题。</li>
+</ul>
+<p>深度学习不仅是使用模型，还更多在模型优化，调参，分析误差上。</p>
+<h3 id="2-3-快速搭建你的第一个系统，并进行迭代"><a href="#2-3-快速搭建你的第一个系统，并进行迭代" class="headerlink" title="2.3 快速搭建你的第一个系统，并进行迭代"></a>2.3 快速搭建你的第一个系统，并进行迭代</h3><p>快速建立原型系统，然后进行迭代。</p>
+<ol>
+<li>快速设立开发测试集和评估指标</li>
+<li>建立机器学习系统原型</li>
+<li>使用偏差/方差分析和误差分析决定下一步<blockquote>
+<p>如果研究的问题有大量的文献参考资料，可以先了解然后一开始就建立比较复杂的模型</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="2-4-在不同的划分上进行训练和测试"><a href="#2-4-在不同的划分上进行训练和测试" class="headerlink" title="2.4 在不同的划分上进行训练和测试"></a>2.4 在不同的划分上进行训练和测试</h3><p><strong>训练集和开发测试集要保持同分布不一定完全对</strong></p>
+<blockquote>
+<p>一、 想要训练识别APP用户上传的猫图分类器，有200K网页抓取猫图(清晰)数据，和10KApp用户上传数据(真实应用，模糊不专业)。这种情况下去做数据的划分有两种选择：</p>
+<ol>
+<li>将两个数据集合并打乱，划分如下。虽然保证了数据的同分布，但在开发集2.5K数据中，仅有119张是App数据，<strong>靶心更多地指向了网页抓取猫图</strong>，因此，这种方式是不可行地。<br> | 训练集     |     开发集 |   测试集   |<br> | 205k |   2.5k |  2.5k |</li>
+<li>将App的10K数据分为2.5k,2,5k,5k。两个2.5k分别作为开发集和测试集，5k和网页抓取200K数据一起作为训练集，虽然训练集和开发测试集数据分布不同，但靶心是正确的。</li>
+</ol>
+</blockquote>
+<hr>
+<blockquote>
+<p>二、想要建立一个汽车后视镜语音识别模型，有买的语音识别数据500k，和与后视镜交互的真实应用数据20k<br>数据集的划分应该为，将真实数据中的5K分别做开发集和测试集，剩余的进行训练集</p>
+</blockquote>
+<h3 id="2-5-不匹配数据划分的偏差和方差"><a href="#2-5-不匹配数据划分的偏差和方差" class="headerlink" title="2.5 不匹配数据划分的偏差和方差"></a>2.5 不匹配数据划分的偏差和方差</h3><p>偏差和方差分析可以帮助你进行下一步的优化，训练集和开发测试集的数据分布不同时候，偏差和方差分析方法需要调整。需要设立<strong>训练-开发集(train-dev set)</strong>进行分析。<br><strong>训练-开发集(train-dev set)</strong>：和训练集同分布，但没有用于训练。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-8/46164709.jpg" alt="@训练-开发集"></p>
+<p>误差分析情况示例：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">-</th>
+<th style="text-align:right">Scenario A</th>
+<th style="text-align:center">Scenario B</th>
+<th style="text-align:center">Scenario C</th>
+<th style="text-align:center">Scenario D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Human-error</td>
+<td style="text-align:right">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">0%</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:left">Train error</td>
+<td style="text-align:right">1%</td>
+<td style="text-align:center">1%</td>
+<td style="text-align:center">10%</td>
+<td style="text-align:center">10%</td>
+</tr>
+<tr>
+<td style="text-align:left">Train-dev error</td>
+<td style="text-align:right">9%</td>
+<td style="text-align:center">1.5%</td>
+<td style="text-align:center">11%</td>
+<td style="text-align:center">11%</td>
+</tr>
+<tr>
+<td style="text-align:left">Dev error</td>
+<td style="text-align:right">10%</td>
+<td style="text-align:center">10%</td>
+<td style="text-align:center">12%</td>
+<td style="text-align:center">20%</td>
+</tr>
+<tr>
+<td style="text-align:left">Problem</td>
+<td style="text-align:right"><strong>Variance</strong></td>
+<td style="text-align:center"><strong>data mismatch</strong></td>
+<td style="text-align:center"><strong>Bias</strong></td>
+<td style="text-align:center"><strong>Bias &amp; data mismatch</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>avoidable error</strong>:Human-error - Train error<br><strong>variance</strong>:train error - train-dev error<br><strong>data mismatch</strong>: train-dev error - dev error<br><strong>degree of overfit</strong>:dev error - test error</p>
+</blockquote>
+<p>考虑下面的情况：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">编号</th>
+<th style="text-align:left">-</th>
+<th style="text-align:right">-</th>
+<th style="text-align:center">与上一行差值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">Human-error</td>
+<td style="text-align:right">4%</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left">Train error</td>
+<td style="text-align:right">7%</td>
+<td style="text-align:center"><strong>avoidable error</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left">Train-dev error</td>
+<td style="text-align:right">10%</td>
+<td style="text-align:center"><strong>variance</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left">Dev error</td>
+<td style="text-align:right">6%</td>
+<td style="text-align:center"><strong>data mismatch</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left">Test error</td>
+<td style="text-align:right">6%</td>
+<td style="text-align:center"><strong>degree of overfit</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>2,3是根据训练集分布评估的，4,5是根据开发集分布评估的，需要一个更通用的分析，以汽车后视镜语音为例：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">-</th>
+<th style="text-align:right">General speech recognition</th>
+<th style="text-align:center">Reaview mirror speech data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Human level</td>
+<td style="text-align:right"><code>human level</code> 4%</td>
+<td style="text-align:center">6%</td>
+</tr>
+<tr>
+<td style="text-align:left">Error on examples on trained</td>
+<td style="text-align:right"><code>Traing error</code> 7%</td>
+<td style="text-align:center">6%</td>
+</tr>
+<tr>
+<td style="text-align:left">Error on examples on <strong>not</strong> trained</td>
+<td style="text-align:right"><code>Training-dev error</code> 10%</td>
+<td style="text-align:center"><code>Dev/Test error</code> 6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>首先分析红色四个数据，能给出优化方向<br>把表格中右上两个数字得到，左右对比分析很有用<br>最后一行说明实际任务对比训练任务更简单，但一行差值又表明不是那么简单<br><strong>data mismatch</strong>没有很系统的解决方法，但有一些尝试建议</p>
+</blockquote>
+<p>原图如下：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-8/3357150.jpg" alt=""></p>
+<h3 id="2-6-定位数据不匹配"><a href="#2-6-定位数据不匹配" class="headerlink" title="2.6 定位数据不匹配"></a>2.6 定位数据不匹配</h3><p>数据不匹配问题进行误差分析，<strong>1）</strong>尝试了解两个数据分布的不同之处，<strong>2）</strong>收集等多的像开发集一样的数据，如通过人工合成数据。<br>使用<strong>人工合成数据</strong>要警惕：从所有可能性的空间只选取了很好一部分去模拟数据，从而导致算法对这一部门过拟合。</p>
+<blockquote>
+<p>以汽车后视镜语音系统为例子<br>可以在清晰的数据集上人为与汽车噪声数据合成，但注意，汽车噪声不应该仅仅是一个小时，而应该是很大的，近似于清晰数据集。不然很容易对这一小时的汽车噪声过拟合。</p>
+</blockquote>
+<h3 id="2-7-迁移学习"><a href="#2-7-迁移学习" class="headerlink" title="2.7 迁移学习"></a>2.7 迁移学习</h3><p>迁移学习的应用场景：</p>
+<ul>
+<li>当你想从任务A并迁移一些知识到任务B，当任务A和任务B都有同样的输入X时，迁移学习时有意义的。</li>
+<li>当你拥有任务A的数据大于任务B时候</li>
+<li>任务A的低层特征对任务B是有效的</li>
+</ul>
+<p>迁移学习将神经网络最后一层或多层进行重新初始化和训练，迁移学习又叫<strong>预训练</strong>。</p>
+<h3 id="2-8-多任务学习"><a href="#2-8-多任务学习" class="headerlink" title="2.8 多任务学习"></a>2.8 多任务学习</h3><p><strong>多任务学习使用频率低于迁移学习</strong><br>多任务学习比单任务学习效果要好，如果不好说明网络不够深<br>多任务学习在计算机视觉，目标检测有很广应用。<br>多任务学习最后一层不再使用softamx，单一样本的类别不再是onehot向量表示，$y$成为各个类别的0，1表示。损失函数：$Loss=\underset{(4,1)}{\hat{y}^{(i)}}$变为：$\frac{1}{m}\sum_i^m\sum_j^4L(\hat{y}_j^{(i)}, y_j^{(i)})$</p>
+<h3 id="2-9-什么是端对端的深度学习"><a href="#2-9-什么是端对端的深度学习" class="headerlink" title="2.9 什么是端对端的深度学习"></a>2.9 什么是端对端的深度学习</h3><p>以前的数据处理系统或学习系统，需要多个阶段的处理，<strong>end to end learning</strong>则是忽略所有这些不同的阶段，用单个神经网络来代替它。<br>但端对端学习并不使用所有场景：</p>
+<ul>
+<li>百度的人脸门禁系统，将其拆分成1.判断是否有人脸并进行图片切割2.判断人物身份</li>
+<li>机器翻译，使用端对端学习相比传统的一步步收取特征再转换有效，且有大量的数据集</li>
+<li>根据手骨判断儿童年龄，数据量太小。无法支撑端对端学习，而传统的切割手骨判断长度再判断年龄比较合适</li>
+</ul>
+<h3 id="2-10-是否使用端对端学习"><a href="#2-10-是否使用端对端学习" class="headerlink" title="2.10 是否使用端对端学习"></a>2.10 是否使用端对端学习</h3><p>优势：</p>
+<ul>
+<li>让数据说话(黑盒)。不要强迫机器学习C A T，以音位为单位去学习进行语音识别。(联想到用语法做文本分析，结果一沓糊涂)</li>
+<li>降低手工设计的组件需要</li>
+</ul>
+<p>劣势：</p>
+<ul>
+<li>需要非常大量的数据</li>
+<li>排除了可能有用的手工设计组件，精心设计的组件可能很有用，也可能限制学习器的学习思维。</li>
+</ul>
+<p>使用端对端(end to end learning)的建议：<br><strong>关键</strong>：是否拥有足够的数据来学习从x到y足够复杂(complexity needed)的函数。<br>无人驾驶技术，并不是简单的端对端学习：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-9/34998381.jpg" alt=""><br>而是把DL用来学习构成部分组件。</p>
+<blockquote>
+<p>深度学习做预测，决策是更上层的目标。-<strong>沈华伟</strong></p>
+</blockquote>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="nocater/deeplearning_ai_books">深度学习笔记-黄海广</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Andrew-Ng/" rel="tag"># Andrew Ng</a>
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/24/02-改善深层神经网络/" rel="next" title="02-改善深层神经网络">
+                <i class="fa fa-chevron-left"></i> 02-改善深层神经网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/25/04-卷积神经网络/" rel="prev" title="04-卷积神经网络">
+                04-卷积神经网络 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Chen Shuai">
+            
+              <p class="site-author-name" itemprop="name">Chen Shuai</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/nocater" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#03-结构化机器学习项目"><span class="nav-number">1.</span> <span class="nav-text">03.结构化机器学习项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一周"><span class="nav-number">1.1.</span> <span class="nav-text">第一周</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-为什么是ML策略"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 为什么是ML策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-正交化"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 正交化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-单一数字评估指标"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 单一数字评估指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-满足和优化指标"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 满足和优化指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-训练-开发-测试集的划分"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 训练/开发/测试集的划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-开发集和测试集的大小"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6 开发集和测试集的大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-什么时间开始改变开发-测试集和指标"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7 什么时间开始改变开发/测试集和指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-为什么是人的表现"><span class="nav-number">1.1.8.</span> <span class="nav-text">1.8 为什么是人的表现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-可避免偏差"><span class="nav-number">1.1.9.</span> <span class="nav-text">1.9 可避免偏差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-10-理解人的表现"><span class="nav-number">1.1.10.</span> <span class="nav-text">1.10 理解人的表现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-11-超过人的表现"><span class="nav-number">1.1.11.</span> <span class="nav-text">1.11 超过人的表现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-12-改善你模型的表现"><span class="nav-number">1.1.12.</span> <span class="nav-text">1.12 改善你模型的表现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一周作业"><span class="nav-number">1.1.13.</span> <span class="nav-text">第一周作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二周"><span class="nav-number">1.2.</span> <span class="nav-text">第二周</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-进行误差分析"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 进行误差分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-清除标注错误的数据"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 清除标注错误的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-快速搭建你的第一个系统，并进行迭代"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 快速搭建你的第一个系统，并进行迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-在不同的划分上进行训练和测试"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 在不同的划分上进行训练和测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-不匹配数据划分的偏差和方差"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 不匹配数据划分的偏差和方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-定位数据不匹配"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 定位数据不匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-迁移学习"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7 迁移学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-多任务学习"><span class="nav-number">1.2.8.</span> <span class="nav-text">2.8 多任务学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-什么是端对端的深度学习"><span class="nav-number">1.2.9.</span> <span class="nav-text">2.9 什么是端对端的深度学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-是否使用端对端学习"><span class="nav-number">1.2.10.</span> <span class="nav-text">2.10 是否使用端对端学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.2.11.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright"> &copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Shuai</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.5.0"></script>
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "2miGsS0xYN9CvVc3BePXgOSf-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "2miGsS0xYN9CvVc3BePXgOSf-gzGzoHsz",
+                'X-LC-Key': "ebj6IWvY4muYuOEDSUdJafIh",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

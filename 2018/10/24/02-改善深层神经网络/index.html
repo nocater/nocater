@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '415B8LG6UG',
+      apiKey: '8a8cb341516db603092ecd5652bed6a6',
+      indexName: 'hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="吴恩达深度学习课程第二课笔记">
+<meta name="keywords" content="Andrew Ng,deep learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02-改善深层神经网络">
+<meta property="og:url" content="https://nocater.github.io/2018/10/24/02-改善深层神经网络/index.html">
+<meta property="og:site_name" content="Nocater&#39;s Blog">
+<meta property="og:description" content="吴恩达深度学习课程第二课笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-10-25/73238235.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-6-21/17117533.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-6-21/78183345.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-6-12/63213598.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-6-21/36190156.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-6-27/38729479.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-6-30/18094383.jpg">
+<meta property="og:updated_time" content="2018-11-06T08:02:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="02-改善深层神经网络">
+<meta name="twitter:description" content="吴恩达深度学习课程第二课笔记">
+<meta name="twitter:image" content="http://pa54oihmf.bkt.clouddn.com/18-10-25/73238235.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://nocater.github.io/2018/10/24/02-改善深层神经网络/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>02-改善深层神经网络 | Nocater's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Nocater's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">cats:0</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nocater.github.io/2018/10/24/02-改善深层神经网络/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Shuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nocater's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">02-改善深层神经网络
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-24 22:32:49" itemprop="dateCreated datePublished" datetime="2018-10-24T22:32:49+08:00">2018-10-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-11-06 16:02:06" itemprop="dateModified" datetime="2018-11-06T16:02:06+08:00">2018-11-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/深度学习-吴恩达/" itemprop="url" rel="index"><span itemprop="name">深度学习[吴恩达]</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/10/24/02-改善深层神经网络/" class="leancloud_visitors" data-flag-title="02-改善深层神经网络">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">吴恩达深度学习课程第二课笔记</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="02-改善深层神经网络"><a href="#02-改善深层神经网络" class="headerlink" title="02.改善深层神经网络"></a>02.改善深层神经网络</h1><h2 id="第一周-深度学习的实用层面"><a href="#第一周-深度学习的实用层面" class="headerlink" title="第一周 深度学习的实用层面"></a>第一周 深度学习的实用层面</h2><h3 id="1-1-训练-开发-测试集"><a href="#1-1-训练-开发-测试集" class="headerlink" title="1-1 训练/开发/测试集"></a>1-1 训练/开发/测试集</h3><p>以前一般使用7:3划分训练集测试集或6:2:2 。大数据下通常需要用验证集快速验证多种算法的优劣，所以可以去小一些。<br>百万数据集98：1：1%<br>确保验证集合测试集的数据来自同一分布</p>
+<h3 id="1-2-偏差-方差"><a href="#1-2-偏差-方差" class="headerlink" title="1-2 偏差/方差"></a>1-2 偏差/方差</h3><p>欠拟合：偏差过高  过拟合：方差过高<br>高方差：训练集和验证集的错误率相差过大<br>高偏差：与人类等实际分类效果对比太差<br>如果可以确定最优方差 然后去和偏差方差作比较来评价模型</p>
+<h3 id="1-3-机器学习基础"><a href="#1-3-机器学习基础" class="headerlink" title="1-3 机器学习基础"></a>1-3 机器学习基础</h3><p>High bias? </p>
+<ul>
+<li>Bigger network</li>
+<li>Train longer </li>
+<li>NN architecture search (可选)<br>拟合训练集后，再看 High variance?</li>
+<li>More data</li>
+<li>regularization</li>
+<li>NN architecture search (可选)</li>
+</ul>
+<h3 id="1-4-正则化"><a href="#1-4-正则化" class="headerlink" title="1-4 正则化"></a>1-4 正则化</h3><p>L1 正则化 $\omega$稀疏，但没有压缩模型减少内存<br>L2 正则化又称<strong>权重衰减(Weight Decay)</strong> 公式可见权重在减小</p>
+<h3 id="1-5-为什么正则化可以减少过拟合"><a href="#1-5-为什么正则化可以减少过拟合" class="headerlink" title="1-5 为什么正则化可以减少过拟合"></a>1-5 为什么正则化可以减少过拟合</h3><p>L2 正则化防止过拟合 直观经验是权重越多接近于0 模型越简单(存疑)<br>以<code>Sigmoid</code>为例 当权重过小时候，<code>Sigmoid</code>是接近线性的，整个网络是线性的从而使模型变为简单来减少过拟合</p>
+<h3 id="1-6-Dropout-Inverted-dropout"><a href="#1-6-Dropout-Inverted-dropout" class="headerlink" title="1-6 Dropout(Inverted dropout)"></a>1-6 Dropout(Inverted dropout)</h3><p><code>d3 = np.random.rand(a3.shape[0], a3.shape[1]) &lt; keep_prob</code><br><code>a3 /= keep_prob</code><br>以<strong>Hinton</strong>论文中提出的<em>Dropout</em>在测试集上是将概率$p$应用到神经元的输出边上<br>为了简化测试集的操作，在训练时候每个神经元的输出都降低为权重$1/p$ 这样就不需要在测试集做额外操作</p>
+<blockquote>
+<p><a href="https://www.jiqizhixin.com/articles/2018-01-23-4" target="_blank" rel="noopener">BN与Dropout的冲突</a><br>解决方式：1. 先使用BN后使用Dropout, 更甚仅在softmax前一层使用 2.使用Uout</p>
+</blockquote>
+<h3 id="1-7-理解Dropout"><a href="#1-7-理解Dropout" class="headerlink" title="1-7 理解Dropout"></a>1-7 理解Dropout</h3><p>Dropout 有效性体现：</p>
+<ol>
+<li>等效正则化，使网络更简单</li>
+<li>神经元不在完全依赖特定的输入神经元  </li>
+</ol>
+<p>可以设置不同层$\omega$的dropout rate  设置为1表示不使用dropout<br><em>Dropout</em>主要同于计算机视觉(CV)，当过拟合的时候可以在使用<br>缺点：</p>
+<ul>
+<li>损失函数的定义不对明确</li>
+<li>调试困难(先固定为1， J递减再开启)</li>
+</ul>
+<h3 id="1-8-其他正则化技术"><a href="#1-8-其他正则化技术" class="headerlink" title="1-8 其他正则化技术"></a>1-8 其他正则化技术</h3><ol>
+<li>Data Augmentation 数据增强 如 图片旋转、裁剪、扭曲</li>
+<li>early stooping have a mid-size rate $||W||_{2F}$<br>通常的训练步骤：<ol>
+<li>优化代价函数J(GD/ Momentum/ RMRprop /Adam)</li>
+<li>避免过拟合(正则化) | 减少方差(正交化)<br>early stooping 不能独立处理问题1 2</li>
+</ol>
+</li>
+</ol>
+<h3 id="1-9-正则化输入-Normalization-training-sets"><a href="#1-9-正则化输入-Normalization-training-sets" class="headerlink" title="1-9 正则化输入 Normalization training sets"></a>1-9 正则化输入 Normalization training sets</h3><p>0均值 1方差<br>当特征范围不一致时候使用归一化，加速$J$下降</p>
+<h3 id="1-10-梯度消失和爆炸"><a href="#1-10-梯度消失和爆炸" class="headerlink" title="1-10 梯度消失和爆炸"></a>1-10 梯度消失和爆炸</h3><h3 id="1-11-神经网络的权重初始化"><a href="#1-11-神经网络的权重初始化" class="headerlink" title="1-11 神经网络的权重初始化"></a>1-11 神经网络的权重初始化</h3><p>$z = W_1x_1+W_2x_2+…+W_nx_n$<br>设置$var(Wi) = 1/n W^{[l]} $=<code>np.random.rand(shape)*np.sqrt(1/n[l-1])</code><br>最后一项<br><em>tanh</em> 使用<em>Xavier </em>初始化，<em>ReLU</em>使用公式2</p>
+<blockquote>
+<p>Xavier 初始化，公式： $\sqrt{\frac{1}{n^{[l-1]}}}$<br>公式： $\sqrt{\frac{2}{n^{[l-1]}+n^{[i]}}}$</p>
+</blockquote>
+<p>此超参数的调节优先等级比较低</p>
+<h3 id="1-12-梯度的数值逼近"><a href="#1-12-梯度的数值逼近" class="headerlink" title="1-12 梯度的数值逼近"></a>1-12 梯度的数值逼近</h3><p><strong>双边误差法</strong>：$f(\theta) = \frac{f(\theta+\epsilon) - f(\theta-\epsilon)}{2\epsilon}$</p>
+<h3 id="1-13-梯度检验"><a href="#1-13-梯度检验" class="headerlink" title="1-13 梯度检验"></a>1-13 梯度检验</h3><p>$J(\theta) -&gt; d\theta$<br>$10^{-7}$ 效果great $10^-3$效果wrong<br><img src="http://pa54oihmf.bkt.clouddn.com/18-10-25/73238235.jpg" alt=""></p>
+<h3 id="1-14-梯度检验经验"><a href="#1-14-梯度检验经验" class="headerlink" title="1-14 梯度检验经验"></a>1-14 梯度检验经验</h3><ol>
+<li>Dont use in training - only to debug      </li>
+<li>If algorithm fails grad check, look at components to try to identify bug</li>
+<li>Rember regularization</li>
+<li>Doesn’t work with dropout</li>
+<li>Run ai random initialization;perhaps again after some training</li>
+</ol>
+<h3 id="第一周第一次作业"><a href="#第一周第一次作业" class="headerlink" title="第一周第一次作业"></a>第一周第一次作业</h3><p>权重初始化作用：</p>
+<ul>
+<li>加速梯度收敛 </li>
+<li>增加泛化能力</li>
+</ul>
+<p>权重初始化对比</p>
+<ul>
+<li>0 </li>
+<li>随机 </li>
+<li>HE三种方式<br>结果逐渐变好 其中<em>He Initialization</em> (<a href="https://www.leiphone.com/news/201703/3qMp45aQtbxTdzmK.html" target="_blank" rel="noopener">Xavier Initialization变种 参考</a>)</li>
+</ul>
+<p>权重为0 $cost$不下降模型无效<br>权重过大，没有效果</p>
+<h3 id="第一周第二次作业"><a href="#第一周第二次作业" class="headerlink" title="第一周第二次作业"></a>第一周第二次作业</h3><p>正则化技术很有效</p>
+<h3 id="第一周第三次作业"><a href="#第一周第三次作业" class="headerlink" title="第一周第三次作业"></a>第一周第三次作业</h3><p>梯度检验：</p>
+<script type="math/tex; mode=display">difference = \frac {\| grad - gradapprox \|_2}{\| grad \|_2 + \| gradapprox \|_2 } \tag{3}</script><h2 id="第二周-优化算法"><a href="#第二周-优化算法" class="headerlink" title="第二周 优化算法"></a>第二周 优化算法</h2><h3 id="2-1-Mini-batch梯度下降法"><a href="#2-1-Mini-batch梯度下降法" class="headerlink" title="2.1 Mini-batch梯度下降法"></a>2.1 Mini-batch梯度下降法</h3><p>默认梯度下降是将所有数据进行计算实现一部梯度下降<br>分批次 : $X = {X^{\{1\}}, X^{\{1\}}, …, X^{\{m\}} }$<br>同样：$Y = \{Y^{\{1\}}, Y^{\{1\}}, …, Y^{\{m\}} \}$<br>mini  batch $t:X^{\{t\}}, Y^{\{t\}}$  </p>
+<blockquote>
+<p>$x^{(i)}$表示训练集中第$i$个训练样本<br>$z^{[l]}$表示神经网络的层数<br>$X^{\{i\}} \  Y^{\{i\}}$表示不同的mini batch  $X$维度$(n_x,  \text{batch size})$</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 遍历批次 每批次使用向量化</span></span><br><span class="line"><span class="keyword">for</span> t=<span class="number">1</span>,...<span class="number">.5000</span>:&#123;</span><br><span class="line">	<span class="comment"># 使用X^&#123;t&#125; Y^&#123;t&#125; 实现 一步 梯度下降</span></span><br><span class="line">	Forward prop on X^&#123;t&#125;</span><br><span class="line">	Z^[<span class="number">1</span>] = W^[<span class="number">1</span>]X^&#123;t&#125; + b^[<span class="number">1</span>]</span><br><span class="line">	A^[<span class="number">1</span>] = g[<span class="number">1</span>](Z^[<span class="number">1</span>])</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	A^[l] = g^[l](Z^[l])</span><br><span class="line">	Compute cost J^&#123;t&#125;</span><br><span class="line">	Back prop</span><br><span class="line">	update W,B</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-理解mini-batch梯度下降法"><a href="#2-2-理解mini-batch梯度下降法" class="headerlink" title="2.2 理解mini-batch梯度下降法"></a>2.2 理解mini-batch梯度下降法</h3><h4 id="损失表现"><a href="#损失表现" class="headerlink" title="损失表现"></a>损失表现</h4><p>mini-batch 的成本函数是震荡下降的</p>
+<h4 id="选择mini-batch-size"><a href="#选择mini-batch-size" class="headerlink" title="选择mini-batch size"></a>选择mini-batch size</h4><p>Tips:</p>
+<ul>
+<li>将mini-batch size 设置为m : <strong>Batch Gradient Descend</strong></li>
+<li>将mini-batch size 设置为1 : <strong>stochastic gradient descent(随机梯度下降)</strong>   </li>
+</ul>
+<p><strong>batch gradient descend</strong>的<em>cost</em>轨迹，相对噪声低，幅度大<br><strong>stochastic gradient descent</strong>的<em>cost</em>轨迹，噪声大，徘徊在最小值 缺点：失去了向量化的加速处理<br> 一般使用合适batch size的mini-batch 其优点：</p>
+<ul>
+<li>向量化</li>
+<li>不全部使用数据集</li>
+</ul>
+<p>size 选取：</p>
+<ul>
+<li>样本集小直接使用<strong>batch gradient descent</strong>  ($m\leqslant 2000$)</li>
+<li>mini-batch size 一般为 [64，128，256，512] 一般为2的次方</li>
+<li>保证$X^{\{t\}}, Y^{\{t\}}$ 与CPU/GPU内存相适应</li>
+</ul>
+<h3 id="2-3-指数加权平均"><a href="#2-3-指数加权平均" class="headerlink" title="2.3 指数加权平均"></a>2.3 指数加权平均</h3><p><strong>指数加权平均</strong>(exponentially weighted averages)又称<strong>指数加权移动平均</strong>(exponentially weight moving averages)<br>以温度为例,<br>$V<em>0 = 0$<br>$V_1 = 0.9 \cdot V_0 + 0.1 \cdot \theta_1$<br>$V_2 = 0.9 \cdot V_1 + 0.1 \cdot \theta_2$<br>$V_3 = 0.9 \cdot V_2 + 0.1 \cdot \theta_3$<br>…<br>$V_t = 0.9 \cdot V</em>{t-1} + 0.1 \cdot \theta_t$<br>效果如图：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-6-21/17117533.jpg" alt="效果图"></p>
+<p>$V<em>t = \beta V</em>{t-1} + (1-\beta) \theta_t$<br>当$\beta = 0.9 ：\approx \frac{1}{1-\beta} = 10\ (dayTemperature)$<br>当$\beta = 0.98 ：\approx \frac{1}{1-\beta} = 50\ (dayTemperature)$<br>当$\beta = 0.5 ：\approx \frac{1}{1-\beta} = 2\ (dayTemperature)$<br>对比效果图如下：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-6-21/78183345.jpg" alt="效果对比图"></p>
+<blockquote>
+<p>红色0.9(10天平均温度)  绿色0.98(50天平均温度)  黄色0.5(2天平均温度)<br>平均天数越大图像越平滑，越偏移<br>平均天数越小噪声越大  </p>
+</blockquote>
+<p><strong>选定参数对模型有一定的影响</strong></p>
+<h3 id="2-4-理解指数加权平均"><a href="#2-4-理解指数加权平均" class="headerlink" title="2.4 理解指数加权平均"></a>2.4 理解指数加权平均</h3><p>  $v<em>t = \beta v</em>{t-1}+(1-\beta)\theta_t$  </p>
+<p>$V<em>{100} = 0.9v</em>{99}+0.1\theta<em>{100}$<br>$V</em>{99} = 0.9v<em>{98}+0.1\theta</em>{99}$<br>$V<em>{98} = 0.9v</em>{97}+0.1\theta<em>{98}$<br>…<br>$V</em>{100}=0.1\cdot\theta<em>{100}+0.1\cdot0.9\theta</em>{99}+0.1\cdot(0.9)^2\theta<em>{98}+0.1\cdot (0.9)^3\theta</em>{97}…$  </p>
+<script type="math/tex; mode=display">0.9^{10} \approx 0.35 \approx \frac{1}{e} \label{1}</script><script type="math/tex; mode=display">(1-\epsilon)^{\frac{1}{\epsilon}} \approx \frac{1}{e}</script><p>即，经过10天后，权重下降到原来的三分之一<br>当$\beta = 0.98$时，需要指数50能达到$\frac{1}{\epsilon}$，即可以看作是平均了50天温度可以使用<script type="math/tex">\frac{1}{1-\beta}</script>来表示平均了多少数据(<strong><em>非正式数学证明</em></strong>)  </p>
+<h3 id="2-5-指数加权平均的偏差修正-bias-correction"><a href="#2-5-指数加权平均的偏差修正-bias-correction" class="headerlink" title="2.5 指数加权平均的偏差修正(bias correction)"></a>2.5 指数加权平均的偏差修正(bias correction)</h3><p>当$t_0 = 0$时，$V_1 = \beta V_0+(1-\beta )\theta_1 = (1-\beta )\theta_1$，会发现前期数据值比较小 。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-6-12/63213598.jpg" alt="偏差修正对比图"></p>
+<blockquote>
+<p>紫线是实际图形，对比绿线发现，前期数值偏小，后期重合</p>
+</blockquote>
+<p><strong>偏差修正</strong>$\frac{V_t}{1-\beta^t}$ 用来解决前期偏差过大问题，随着$t$的增加，偏差修正无效。<br>在机器学习中，大家都不在乎使用偏差修正，大部分人喜欢熬过前期。如果关心初期的偏差，就需要使用它。</p>
+<h3 id="2-6-动量梯度下降法Momentum"><a href="#2-6-动量梯度下降法Momentum" class="headerlink" title="2.6 动量梯度下降法Momentum"></a>2.6 动量梯度下降法Momentum</h3><p><strong>Momemtum</strong> 在梯度下降中，我们希望朝最优解进向横向速度越大，纵向震荡越小越好。</p>
+<blockquote>
+<p><strong>Momemtum</strong>对于优化碗形状损失函数比较适用</p>
+</blockquote>
+<h4 id="Implementation-details"><a href="#Implementation-details" class="headerlink" title="Implementation details"></a>Implementation details</h4><p>On iteration t:<br>    compute $dW$,$db$, on the current mini-batch<br>    $v<em>{dW} = \beta v</em>{dW}+(1-\beta)dW$<br>    $v<em>{db} = \beta v</em>{dWb}+(1-\beta)db$<br>    $W = W -\alpha v<em>{dW}, b=b-\alpha v</em>{db}$<br>Hyperparameters:$\alpha ,\beta$ $\beta = 0.9$(平均十次数据) 不使用<strong>偏差修正</strong></p>
+<blockquote>
+<p>$dW$ $db$ 可以理解为加速度<br>$v<em>{dW}, v</em>{db}$ 可以理解为速度<br>前项$\beta &lt; 1$可以理解为摩擦力</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong>Tip</strong>: 有一些资料中删除了后项的$(1-\beta)$参数， 即$v<em>{dW} = \beta v</em>{dW}+dW$<br>得到的$v_{dW}$缩小了$(1-\beta)$倍<br>这要求学习率$\alpha$要与$(1-\beta)$相应变化，影响了$\alpha$的最优值<br>此外，如果调整$\beta$ 则需要对应调整$\alpha$ 所以不选择此实现方式</p>
+</blockquote>
+<h3 id="2-7-RMSprop"><a href="#2-7-RMSprop" class="headerlink" title="2.7 RMSprop"></a>2.7 RMSprop</h3><p>RMSprop(root mean square prop)可以消除梯度下降算法中的摆动，加速梯度下降，可以使用更大学习率<br><img src="http://pa54oihmf.bkt.clouddn.com/18-6-21/36190156.jpg" alt="RMSprop"><br>我们希望在$\text{w<em>}$更新更快，在$\text{b</em>}$减小震荡<br>从一个蓝色箭头中可以看出$dw$比较大，$db$比较小(即梯度)<br>因此在更新时候加上相关项来处理  </p>
+<blockquote>
+<p>$\text{w<em>}$ 和 $\text{b</em>}b$ 表示高维中的参数 不仅代表w,b</p>
+</blockquote>
+<hr>
+<p>实现：</p>
+<blockquote>
+<p>在迭代$t$中<br>计算 mini-batch 中的$dw$,$db$<br>$S<em>{dw} = \beta S</em>{dw} + (1-\beta)(dw)^2$<br>$S<em>{db} = \beta S</em>{db} +(1-\beta)(db)^2$<br>$w = w-\alpha \frac{dw}{\sqrt{S<em>{dw}}}$<br>$b = b- \alpha \frac{db}{\sqrt{S</em>{db}}}$<br>$(dw)^2$ 变小 w更新越大  $(db)^2$ 变大 b更新越大<br>特别的为了防止$\sqrt{S<em>{dw}}$过小，会添加一项$\epsilon$ : $w = w-\alpha \frac{dw}{\sqrt{S</em>{dw}+\epsilon}}$ $b = b- \alpha \frac{db}{\sqrt{S_{db}+\epsilon}}$ $\epsilon$一般取值$10^{-8}$<br>效果示意图为绿线</p>
+</blockquote>
+<h3 id="2-8-Adam-优化算法"><a href="#2-8-Adam-优化算法" class="headerlink" title="2.8 Adam 优化算法"></a>2.8 Adam 优化算法</h3><p>Adam优化算法是把Momentum和RMSprop算法结合在一起<br>算法流程：</p>
+<blockquote>
+<p>$V<em>{dw} = 0, S</em>{dw} = 0, V<em>{db} = 0, S</em>{db} = 0$<br>在迭代$t$：<br>使用mini-batch 计算 $dw$, $db$<br>$V<em>{dw} = \beta_1V</em>{dw}+(1-\beta<em>1)dw, V</em>{db} = \beta<em>1v</em>{db}+(1-\beta<em>1)db  $ &lt;- “momentum” $\beta_1$<br>$S</em>{dw} = \beta<em>2S</em>{dw}+(1-\beta<em>2)(dw)^2, S</em>{db} = \beta<em>2S</em>{db}+(1-\beta<em>2)(db)^2 $ &lt;- “RMSprop” $\beta_2$<br># 要进行偏差修正<br>$V</em>{dw}^{corrected} = V<em>{dw}/(1-\beta_1^t), V</em>{db}^{corrected} = V<em>{db}/(1-\beta_1^t)$<br>$S</em>{dw}^{corrected} = S<em>{dw}/(1-\beta_2^t), S</em>{db}^{corrected} = S<em>{db}/(1-\beta_2^t)$<br># 更新系数<br>$W=W-\alpha \cdot \frac{V</em>{dw}^{corrected}}{\sqrt{S<em>{dw}^{corrected}+\epsilon}}, b = b-\alpha\cdot\frac{V</em>{db}^{corrected}}{\sqrt{S_{dw}^{corrected}+\epsilon}}$</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>超参数的选择<br>$\alpha : 需要调整$<br>$\beta_1:0.9 -&gt;(dw)$<br>$\beta_2:0.999 -&gt;(dw^2)$<br>$\epsilon:10^{-8}$<br>一般使用默认就好，不需要特别修改<br>Adam : Adaption momentum Estimator</p>
+</blockquote>
+<h3 id="2-9-学习率衰减"><a href="#2-9-学习率衰减" class="headerlink" title="2.9 学习率衰减"></a>2.9 学习率衰减</h3><p><strong>epoch</strong>:完整的使用一次全部数据集  </p>
+<ul>
+<li>$\alpha = \frac{1}{1+decay_rate*epoch_num}$</li>
+<li>$\alpha = 0.95^{epoch_num}\cdot \alpha_0$</li>
+<li>$\alpha = \frac{k}{\sqrt{epoch_num}}\cdot \alpha_0$</li>
+<li>离散化衰减</li>
+<li>手动衰减</li>
+</ul>
+<h3 id="2-10-局部最优的问题"><a href="#2-10-局部最优的问题" class="headerlink" title="2.10 局部最优的问题"></a>2.10 局部最优的问题</h3><p><strong>鞍点(saddle point)</strong>问题：在各维度导数为0，但部分维度是凸函数顶点</p>
+<ul>
+<li>unlikely to get stuck in a bad local optima(不太可能陷入局部最优的最佳点)</li>
+<li>Plateaus can make learning slow(平滑区域导致学习变慢，Adam能加速学习逃离)</li>
+</ul>
+<h3 id="第二周作业"><a href="#第二周作业" class="headerlink" title="第二周作业"></a>第二周作业</h3><blockquote>
+<p>Momentum</p>
+</blockquote>
+<p><img src="http://pa54oihmf.bkt.clouddn.com/18-6-27/38729479.jpg" alt="随机梯度下降vs批量梯度下降"></p>
+<ul>
+<li>随机梯度下降和批量梯度下降的区别在于，在一次计算梯度时候所使用的训练集样本数量(The difference between gradient descent, mini-batch gradient descent and stochastic gradient descent is the number of examples you use to perform one update step.)</li>
+<li>必须调整学习率(You have to tune a learning rate hyperparameter $\alpha$ .)</li>
+<li>参数设置很好的批量梯度下降算法，比梯度下降和随机梯度下降算法要高效，特别在数据集大情况下(With a well-turned mini-batch size, usually it outperforms either gradient descent or stochastic gradient descent (particularly when the training set is large).)</li>
+</ul>
+<blockquote>
+<p>Adam</p>
+</blockquote>
+<script type="math/tex; mode=display">
+\begin{cases}
+v_{W^{[l]}} = \beta_1 v_{W^{[l]}} + (1 - \beta_1) \frac{\partial J }{ \partial W^{[l]} } \\\\
+v_{W^{[l]}}^{corrected} = \frac{v_{W^{[l]}}}{1 - (\beta_1)^t} \\\\
+s_{W^{[l]}} = \beta_2 s_{W^{[l]}} + (1 - \beta_2) (\frac{\partial J }{\partial W^{[l]} })^2 \\\\
+s_{W^{[l]}}^{corrected} = \frac{s_{W^{[l]}}}{1 - (\beta_2)^t} \\\\
+W^{[l]} = W^{[l]} - \alpha \frac{v_{W^{[l]}}^{corrected}}{\sqrt{s^{corrected}_{W^{[l]}}}+\varepsilon}
+\end{cases}</script><ul>
+<li>适合mini-batch 和 momentum </li>
+<li>稍微调整超参数就能很有效($\alpha$除外)</li>
+</ul>
+<h2 id="第三周-超参数调试、Batch正则化和程序框架"><a href="#第三周-超参数调试、Batch正则化和程序框架" class="headerlink" title="第三周 超参数调试、Batch正则化和程序框架"></a>第三周 超参数调试、Batch正则化和程序框架</h2><h3 id="3-1-调试处理"><a href="#3-1-调试处理" class="headerlink" title="3.1 调试处理"></a>3.1 调试处理</h3><p>系统超参数调试技巧</p>
+<blockquote>
+<p>$\alpha$ 第一级别重要<br>$\beta$(默认0.9) <strong>mini-batch size</strong> 和 <strong>#hidden units</strong> 第二级别重要<br>learning rate decay 和 #layers 第三级别重要<br>$\beta_1(0.9),\beta_2(0.999), \epsilon(10^{-8})$基本不用修改</p>
+</blockquote>
+<hr>
+<p>超参数搜索原则：先<code>随机取值</code>再<code>精确搜索</code><br> 随机取值:不是网格取值<br> 精确搜索:缩小范围</p>
+<h3 id="3-2-为超参数选择合适的范围"><a href="#3-2-为超参数选择合适的范围" class="headerlink" title="3.2 为超参数选择合适的范围"></a>3.2 为超参数选择合适的范围</h3><p>对参数选择良好的尺度(scale)，不是使用区间随机取值，而是将区间通过指数变换成整数值来随机抽取。<br>如学习率$\alpha$范围为[0.0001, 1],直接随机抽取，搜索资源90%会落在[0.1,1]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r = -4 * np.random.rand() #[-4, 0]</span><br><span class="line">alpha = 10 ** r		  #[10^-4, 10^0]</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-3-超参数选取实战：Pandas-vs-Caviar"><a href="#3-3-超参数选取实战：Pandas-vs-Caviar" class="headerlink" title="3.3 超参数选取实战：Pandas vs. Caviar"></a>3.3 超参数选取实战：Pandas vs. Caviar</h3><ul>
+<li>Pandas：在CPU/GPU资源较少的情况下，在一个模型上不同时间调整学习率，查看损失函数表现</li>
+<li>Caviar：在计算资源充足条件下，并行跑多个模型，选择最好的模型参数</li>
+</ul>
+<h3 id="3-4-正则化网络的激活函数-Batch-Normalization"><a href="#3-4-正则化网络的激活函数-Batch-Normalization" class="headerlink" title="3.4 正则化网络的激活函数 Batch Normalization"></a>3.4 正则化网络的激活函数 Batch Normalization</h3><blockquote>
+<p>吴恩达推荐的是在激活函数之前对$Z$进行归一化，与BN网络论文一致。参考论文：<a href="https://arxiv.org/pdf/1502.03167.pdf" target="_blank" rel="noopener">BN_PDFD</a>和<a href="https://app.yinxiang.com/shard/s58/nl/19892803/8697a028-b9b0-43f9-8504-90b8f2d01144" target="_blank" rel="noopener">BN笔记</a><br><a href="https://www.jiqizhixin.com/articles/2018-01-23-4" target="_blank" rel="noopener">BN与Dropout的冲突</a><br>解决方式：1. 先使用BN后使用Dropout, 更甚仅在softmax前一层使用 2.使用Uout</p>
+</blockquote>
+<hr>
+<script type="math/tex; mode=display">
+\mu = \frac{1}{m}\sum_i z^{(i)}</script><script type="math/tex; mode=display">
+\sigma^2 = \frac{1}{m}\sum_i(z^{(i)}-\mu)^2</script><script type="math/tex; mode=display">
+z_{norm}^2=\frac{z^{(i)}-\mu}{\sqrt{\sigma^2+\epsilon}}</script><script type="math/tex; mode=display">
+\bar{z}^{(i)} = \gamma z_{norm}^{(i)} + \beta</script><blockquote>
+<p>$\gamma$和$\beta$是为了防止归一化限制输入特征的的表现。<br>   当$\gamma = \sqrt{\sigma^2+\epsilon}$，$\beta=\mu$，只是一个恒等函数。</p>
+</blockquote>
+<hr>
+<h3 id="3-5-将Batch-Normalization-拟合进神经网络"><a href="#3-5-将Batch-Normalization-拟合进神经网络" class="headerlink" title="3.5 将Batch Normalization 拟合进神经网络"></a>3.5 将Batch Normalization 拟合进神经网络</h3><p><img src="http://pa54oihmf.bkt.clouddn.com/18-6-30/18094383.jpg" alt=""></p>
+<blockquote>
+<p>BN应用在每一个神经元激活函数之前的计算结果$z$，同时BN使参数偏置项$b$无效</p>
+</blockquote>
+<h3 id="Appendix-神经网络训练步骤"><a href="#Appendix-神经网络训练步骤" class="headerlink" title="[Appendix] 神经网络训练步骤"></a>[Appendix] 神经网络训练步骤</h3><blockquote>
+<p><a href="https://www.jiqizhixin.com/articles/2018-01-23-4" target="_blank" rel="noopener">BN与Dropout的冲突</a><br>解决方式：1. 先使用BN后使用Dropout, 更甚仅在softmax前一层使用 2.使用Uout<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">split x_train,y_train,x_test,y_test</span><br><span class="line">set hyper parameters:</span><br><span class="line">	batch_size</span><br><span class="line">	learning_rate learning_rate_decay</span><br><span class="line">	beta1,beta2</span><br><span class="line">	keep_probe</span><br><span class="line">init parameters(He Initialization):</span><br><span class="line">	w,</span><br><span class="line">	gamma,beta #？存疑</span><br><span class="line"></span><br><span class="line">for e in epoch:</span><br><span class="line">	for i in iteration:</span><br><span class="line">		# 1. forward propagation</span><br><span class="line">		# 1.1 compute Z (dw)(db deprecated by BN)</span><br><span class="line">		Z = W * a</span><br><span class="line">		# 1.2 BN (dgamma,dbeta)</span><br><span class="line">		Z = BN(Z)</span><br><span class="line">		# 1.3 activation function</span><br><span class="line">		a = g(Z)</span><br><span class="line">		</span><br><span class="line">		# ... iterate L neural layer</span><br><span class="line">		# gradient parameters: dw,dgamma,dbeta</span><br><span class="line">		# 1.4 droupout (applied on last hidden layer)</span><br><span class="line">		a = a * d </span><br><span class="line">		a /= keep_prob </span><br><span class="line">		</span><br><span class="line">		# 2. back paopagation</span><br><span class="line">		dw, db, dbeta = computeGradient(Z)</span><br><span class="line">		# 2.1 momentum </span><br><span class="line">		vdw = beta1 * vdw + (1-beta1) * dw</span><br><span class="line">		vdw_corrected = vdw/(1-beta1 ** i)</span><br><span class="line">		# same as other gradient parameters</span><br><span class="line">		# 2.2 RMSprop</span><br><span class="line">		sdw = beta2 * sdw + (1-beta2) * dw ** 2</span><br><span class="line">		sdw_corrected = sdw/(1-beta2 ** i)</span><br><span class="line">		# 2.3 update parameters</span><br><span class="line">		w = w - learning_rate * ( vdw_corrected / math.sqrt(sdw_corrected + episilon) )</span><br><span class="line">		# same as other gradient parameters</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="3-6-Batch-Norm-为什么奏效"><a href="#3-6-Batch-Norm-为什么奏效" class="headerlink" title="3.6 Batch Norm 为什么奏效"></a>3.6 Batch Norm 为什么奏效</h3><ul>
+<li>归一化使输入均值为0，方差为1，能够加速学习。</li>
+<li>固定了各神经层间的输入分布变化，因而使神经元能更好地学习</li>
+</ul>
+<p>BN的额外功能：正则化</p>
+<ul>
+<li>数据被缩放</li>
+<li>添加噪声，使神经元不再特定依赖</li>
+<li>轻微的正则化效果</li>
+</ul>
+<h3 id="3-7-测试时的-Batch-Norm"><a href="#3-7-测试时的-Batch-Norm" class="headerlink" title="3.7 测试时的 Batch Norm"></a>3.7 测试时的 Batch Norm</h3><p>和BN论文说明不太相同。<br><strong>在训练BN网络地时候</strong>，<br>训练数据集分为$X ^{\{1\}}$,$X^{\{2\}}$,$X^{\{3\}}$…$X^{\{m\}}$<br>对于第一层地一个神经元可以得到$X^{\{1\}[1]}$,$X^{\{2\}[1]}$,$X^{\{3\}[1]}$……<br>每一层的每一个神经元，都会得到$m$个$\mu$和$\sigma$<br>以第l层第n个神经元为例，将其$m$个$\mu$使用<strong>指数加权平均</strong>方法进行处理<br>$v<em>i = \beta v</em>{i-1} + (1-\beta)\mu^{\{i\}}$<br><strong>在测试集的时候</strong><br>BN仅仅是一个线性变化，<br>利用指数加权平均计算各层神经元的$\mu$和$\sigma$参数</p>
+<h3 id="3-8-Softmax-回归"><a href="#3-8-Softmax-回归" class="headerlink" title="3.8 Softmax 回归"></a>3.8 Softmax 回归</h3><script type="math/tex; mode=display">
+y(a^{[L]})= \frac{e^{z^{[L]}}}{\sum z^{[L]}}</script><p>Softmax 用来归一化概率<br>Softmax 激活函数的特殊：输入为向量，输出为向量，其它激活函数输入为单值<br>无隐层的Softmax网络可以用于多分类，学习到的决策边界都是线性的。</p>
+<h3 id="3-9-训练一个Softmax分类器"><a href="#3-9-训练一个Softmax分类器" class="headerlink" title="3.9 训练一个Softmax分类器"></a>3.9 训练一个Softmax分类器</h3><p><strong>softmax</strong>是和<strong>hardmax</strong>相对应的。(hardmax形式[0,1,0,0])</p>
+<blockquote>
+<p>Softmax regression generalizes logistic regression to <strong>C</strong> classes</p>
+</blockquote>
+<p><strong>Softmax</strong>是<strong>logistic</strong>的多分类应用。<br>Loss Function: </p>
+<script type="math/tex; mode=display">L(\hat{y},y)=-\sum_{j=1}^C y_j log\hat{y}_j</script><p>如$C=4$，$y=[0,1,0,0]$，$a^{[L]}=\hat{y}=[0.3,0.2,0.1,0.4]$,则:</p>
+<script type="math/tex; mode=display">L(\hat{y},y)=0+y_2 \dot log\hat{y}_2+0+0=-log\hat{y}_2</script><p>即损失函数定义是正确类别的概率越大(<strong><em>最大似然估计</em></strong>)<br>训练集的代价函数<script type="math/tex">J=(\omega^{[i]},b^{[i]}...)=\frac{1}{m}\sum_{i=1}^m L(\hat{y},y)</script><br>实现梯度下降：<script type="math/tex">\frac{\partial J}{\partial z^{[L]}} = dz^{[L]} = \hat{y}-y</script></p>
+<h3 id="深度学习框架"><a href="#深度学习框架" class="headerlink" title="深度学习框架"></a>深度学习框架</h3><p>选择指标：</p>
+<ul>
+<li>易于编程</li>
+<li>运行速度</li>
+<li>真正开源</li>
+</ul>
+<p>部分深度学习框架：</p>
+<ul>
+<li>Caffe/Caffe2</li>
+<li>PyTorch</li>
+<li>Keras </li>
+<li>Tensorflow</li>
+<li>Theano</li>
+<li>mxnet</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="nocater/deeplearning_ai_books">深度学习笔记-黄海广</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Andrew-Ng/" rel="tag"># Andrew Ng</a>
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/24/Hexoj建站教程/" rel="next" title="Hexo Blog 教程">
+                <i class="fa fa-chevron-left"></i> Hexo Blog 教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/25/03-结构化机器学习项目/" rel="prev" title="03-结构化机器学习项目">
+                03-结构化机器学习项目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Chen Shuai">
+            
+              <p class="site-author-name" itemprop="name">Chen Shuai</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/nocater" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#02-改善深层神经网络"><span class="nav-number">1.</span> <span class="nav-text">02.改善深层神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一周-深度学习的实用层面"><span class="nav-number">1.1.</span> <span class="nav-text">第一周 深度学习的实用层面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-训练-开发-测试集"><span class="nav-number">1.1.1.</span> <span class="nav-text">1-1 训练/开发/测试集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-偏差-方差"><span class="nav-number">1.1.2.</span> <span class="nav-text">1-2 偏差/方差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-机器学习基础"><span class="nav-number">1.1.3.</span> <span class="nav-text">1-3 机器学习基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-正则化"><span class="nav-number">1.1.4.</span> <span class="nav-text">1-4 正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-为什么正则化可以减少过拟合"><span class="nav-number">1.1.5.</span> <span class="nav-text">1-5 为什么正则化可以减少过拟合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-Dropout-Inverted-dropout"><span class="nav-number">1.1.6.</span> <span class="nav-text">1-6 Dropout(Inverted dropout)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-理解Dropout"><span class="nav-number">1.1.7.</span> <span class="nav-text">1-7 理解Dropout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-其他正则化技术"><span class="nav-number">1.1.8.</span> <span class="nav-text">1-8 其他正则化技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-正则化输入-Normalization-training-sets"><span class="nav-number">1.1.9.</span> <span class="nav-text">1-9 正则化输入 Normalization training sets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-10-梯度消失和爆炸"><span class="nav-number">1.1.10.</span> <span class="nav-text">1-10 梯度消失和爆炸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-11-神经网络的权重初始化"><span class="nav-number">1.1.11.</span> <span class="nav-text">1-11 神经网络的权重初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-12-梯度的数值逼近"><span class="nav-number">1.1.12.</span> <span class="nav-text">1-12 梯度的数值逼近</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-13-梯度检验"><span class="nav-number">1.1.13.</span> <span class="nav-text">1-13 梯度检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-14-梯度检验经验"><span class="nav-number">1.1.14.</span> <span class="nav-text">1-14 梯度检验经验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一周第一次作业"><span class="nav-number">1.1.15.</span> <span class="nav-text">第一周第一次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一周第二次作业"><span class="nav-number">1.1.16.</span> <span class="nav-text">第一周第二次作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一周第三次作业"><span class="nav-number">1.1.17.</span> <span class="nav-text">第一周第三次作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二周-优化算法"><span class="nav-number">1.2.</span> <span class="nav-text">第二周 优化算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Mini-batch梯度下降法"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Mini-batch梯度下降法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-理解mini-batch梯度下降法"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 理解mini-batch梯度下降法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#损失表现"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">损失表现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择mini-batch-size"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">选择mini-batch size</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-指数加权平均"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 指数加权平均</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-理解指数加权平均"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 理解指数加权平均</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-指数加权平均的偏差修正-bias-correction"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 指数加权平均的偏差修正(bias correction)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-动量梯度下降法Momentum"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6 动量梯度下降法Momentum</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Implementation-details"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">Implementation details</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-RMSprop"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7 RMSprop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-Adam-优化算法"><span class="nav-number">1.2.8.</span> <span class="nav-text">2.8 Adam 优化算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-学习率衰减"><span class="nav-number">1.2.9.</span> <span class="nav-text">2.9 学习率衰减</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-局部最优的问题"><span class="nav-number">1.2.10.</span> <span class="nav-text">2.10 局部最优的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二周作业"><span class="nav-number">1.2.11.</span> <span class="nav-text">第二周作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三周-超参数调试、Batch正则化和程序框架"><span class="nav-number">1.3.</span> <span class="nav-text">第三周 超参数调试、Batch正则化和程序框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-调试处理"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 调试处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-为超参数选择合适的范围"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 为超参数选择合适的范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-超参数选取实战：Pandas-vs-Caviar"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 超参数选取实战：Pandas vs. Caviar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-正则化网络的激活函数-Batch-Normalization"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 正则化网络的激活函数 Batch Normalization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-将Batch-Normalization-拟合进神经网络"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 将Batch Normalization 拟合进神经网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Appendix-神经网络训练步骤"><span class="nav-number">1.3.6.</span> <span class="nav-text">[Appendix] 神经网络训练步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-Batch-Norm-为什么奏效"><span class="nav-number">1.3.7.</span> <span class="nav-text">3.6 Batch Norm 为什么奏效</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-测试时的-Batch-Norm"><span class="nav-number">1.3.8.</span> <span class="nav-text">3.7 测试时的 Batch Norm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-Softmax-回归"><span class="nav-number">1.3.9.</span> <span class="nav-text">3.8 Softmax 回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-训练一个Softmax分类器"><span class="nav-number">1.3.10.</span> <span class="nav-text">3.9 训练一个Softmax分类器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度学习框架"><span class="nav-number">1.3.11.</span> <span class="nav-text">深度学习框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.3.12.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright"> &copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Shuai</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.5.0"></script>
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "2miGsS0xYN9CvVc3BePXgOSf-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "2miGsS0xYN9CvVc3BePXgOSf-gzGzoHsz",
+                'X-LC-Key': "ebj6IWvY4muYuOEDSUdJafIh",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

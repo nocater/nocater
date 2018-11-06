@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '415B8LG6UG',
+      apiKey: '8a8cb341516db603092ecd5652bed6a6',
+      indexName: 'hexo',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="吴恩达深度学习课程第四课笔记">
+<meta name="keywords" content="Andrew Ng,deep learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="04-卷积神经网络">
+<meta property="og:url" content="https://nocater.github.io/2018/10/25/04-卷积神经网络/index.html">
+<meta property="og:site_name" content="Nocater&#39;s Blog">
+<meta property="og:description" content="吴恩达深度学习课程第四课笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-10/46841974.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-10/94859843.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-10/86370149.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-10/31131334.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-12/89709390.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-12/52356549.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-12/38478487.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-12/3923799.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-12/63480450.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-12/50212310.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-12/39837732.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-12/30770686.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-12/50543925.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-24/8405147.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-24/75072239.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-24/54699374.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-24/95807995.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-26/57381390.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-26/61167160.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-26/14752244.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-26/11773514.jpg">
+<meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-8-23/92960861.jpg">
+<meta property="og:updated_time" content="2018-11-06T08:02:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="04-卷积神经网络">
+<meta name="twitter:description" content="吴恩达深度学习课程第四课笔记">
+<meta name="twitter:image" content="http://pa54oihmf.bkt.clouddn.com/18-7-10/46841974.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://nocater.github.io/2018/10/25/04-卷积神经网络/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>04-卷积神经网络 | Nocater's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Nocater's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">cats:0</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nocater.github.io/2018/10/25/04-卷积神经网络/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Shuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nocater's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">04-卷积神经网络
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-25 10:59:52" itemprop="dateCreated datePublished" datetime="2018-10-25T10:59:52+08:00">2018-10-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-11-06 16:02:00" itemprop="dateModified" datetime="2018-11-06T16:02:00+08:00">2018-11-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/深度学习-吴恩达/" itemprop="url" rel="index"><span itemprop="name">深度学习[吴恩达]</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/10/25/04-卷积神经网络/" class="leancloud_visitors" data-flag-title="04-卷积神经网络">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">吴恩达深度学习课程第四课笔记</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="04-卷积神经网络"><a href="#04-卷积神经网络" class="headerlink" title="04.卷积神经网络"></a>04.卷积神经网络</h1><h2 id="00-动态性策略如何与DL结合-预测之上的决策系统-？"><a href="#00-动态性策略如何与DL结合-预测之上的决策系统-？" class="headerlink" title="00? 动态性策略如何与DL结合(预测之上的决策系统)？"></a>00? 动态性策略如何与DL结合(预测之上的决策系统)？</h2><h2 id="第一周-卷积神经网络"><a href="#第一周-卷积神经网络" class="headerlink" title="第一周 卷积神经网络"></a>第一周 卷积神经网络</h2><h3 id="1-1-计算机视觉-Computer-vision"><a href="#1-1-计算机视觉-Computer-vision" class="headerlink" title="1.1 计算机视觉 (Computer vision)"></a>1.1 计算机视觉 (Computer vision)</h3><p>将CV知识应用到新的领域，催生新的网络结构<br><em>目标检测</em> <em>风格迁移</em><br>一个64x64的图像，会有12288个维度，<br>一个1000x1000的图像，会有3M个维度，<br>假如第一层神经元有1000个，则$w^{[1]}$有3B个参数，这太大了！<br>故需要<strong>卷积</strong></p>
+<h3 id="1-2-边缘检测示例-Edge-detection-example"><a href="#1-2-边缘检测示例-Edge-detection-example" class="headerlink" title="1.2 边缘检测示例 (Edge detection example)"></a>1.2 边缘检测示例 (Edge detection example)</h3><p>*是卷积操作的标准符号<br>对卷积不了解可详细看这个视频<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-10/46841974.jpg" alt="@垂直边的检测"><br><a href="https://github.com/fengdu78/deeplearning_ai_books/blob/master/%E5%8F%82%E8%80%83%E8%AE%BA%E6%96%87/files/786/Ren%20%E7%AD%89%E3%80%82%20-%202015%20-%20Faster%20R-CNN%20towards%20real-time%20object%20detection%20w.pdf" target="_blank" rel="noopener">参考论文</a></p>
+<h3 id="1-3-更多边缘检测内容-More-edge-detection"><a href="#1-3-更多边缘检测内容-More-edge-detection" class="headerlink" title="1.3 更多边缘检测内容 (More edge detection)"></a>1.3 更多边缘检测内容 (More edge detection)</h3><p>固定的卷积核：<br><strong>Sober过滤器：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">-</th>
+<th style="text-align:center">-</th>
+<th style="text-align:center">-</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">-1</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">-2</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">-1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Scharr过滤器：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">-</th>
+<th style="text-align:center">-</th>
+<th style="text-align:center">-</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">-3</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">-10</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">-3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>另一种思想：<strong>将9个数字作为参数进行学习</strong>，是CV的有效思想之一。</p>
+<h3 id="1-4-Padding"><a href="#1-4-Padding" class="headerlink" title="1.4 Padding"></a>1.4 Padding</h3><p>普通的卷积操作</p>
+<ul>
+<li>输出减少，$output: (n-k)+1$，输出图片变小</li>
+<li>丢失了图像边缘的大部分信息</li>
+</ul>
+<p>对原始图片进行填充，如用0填充，则输出(n+2p-k)+1=6，图像保持不变。<br><strong>Valid convolution</strong>:不使用填充，$n\times n * f\times f \rightarrow (n-f+1) \times (n-f+1)$<br><strong>Same convolution</strong>:使用填充，保持图片大小不变。$n+2p-f+1 \times n+2p-f+1$ 继续求解可得$p = \frac{f-1}{2}$<br><em>卷积核一般为奇数</em></p>
+<h3 id="1-5-卷积步长-Strided-convolution"><a href="#1-5-卷积步长-Strided-convolution" class="headerlink" title="1.5 卷积步长 (Strided convolution)"></a>1.5 卷积步长 (Strided convolution)</h3><p>输出图片维度(向下取整)：$\lfloor \frac{n+2p-f}{s}+1 \rfloor$<br>按机器学习惯例，不使用翻转操作，技术上讲，可能叫<strong>互相关</strong>更好，深度学习中叫做卷积操作。</p>
+<h3 id="1-6-三维卷积-Convolutions-over-volumes"><a href="#1-6-三维卷积-Convolutions-over-volumes" class="headerlink" title="1.6 三维卷积 (Convolutions over volumes)"></a>1.6 三维卷积 (Convolutions over volumes)</h3><p> 输出：$n\times n \times n_c  *  f\times f \times n_c \rightarrow  n-f+1 \times n-f+1 \times n_c’$<br> $n_c$是channel， $n_c’$是卷积核的数量</p>
+<h3 id="1-7-单卷积层网络-One-layer-of-convolution-network"><a href="#1-7-单卷积层网络-One-layer-of-convolution-network" class="headerlink" title="1.7 单卷积层网络 (One layer of convolution network)"></a>1.7 单卷积层网络 (One layer of convolution network)</h3><p> 假如有10个3x3x3的卷积核，则该层的参数为280个。而无论你的输入的图片大小是多少，参数个数是不变的，即使用10个特征提取。卷积之后得到feature_map，与偏置项$b$相加，得到$z^{[l]}$，然后再应用激活函数得到$a^{[l]}$</p>
+<p> <img src="http://pa54oihmf.bkt.clouddn.com/18-7-10/94859843.jpg" alt="@卷积网络概念"></p>
+<blockquote>
+<p>$f^{[l]}$是卷积核的大小，$n_c^{[l]}$是卷积核的个数<br>$p^{[l]}$是padding, $s^{[l]}$是步长<br>输入为上一层的输出，所以为$n_H^{[l-1]} \times n_w^{[l-1]} \times n_c^{[l-1]}$<br>卷积计算：$n_H^{[l]} = \frac{n_H^{[l-1]}+2p^{[l]}-f^{l}}{s^{[l]}} + 1$，同理$n_w^{[l]}的计算$<br>每一个卷积核(过滤器)维度：$f^{[l]} \times f^{[l]} \times n_c^{[l-1]} $，$n_c^{[l-1]}$是上一层输出的channel。<br>激活函数：$a^{[l]} = n_H^{[l]} \times n_W^{[l]} \times n_c^{[l]}$<br>权重Weights：$f^{[l]} \times f^{[l]} \times n_c^{[l-1]} \times n_c^{[l]}$，$n_c^{[l]}$是卷积核的个数<br>偏置项bias：$n_c^{[l]}\rightarrow(1,1,1,n_c^{[l]})$</p>
+</blockquote>
+<h3 id="1-8-简单卷积网络示例-A-simple-convolution-network-example"><a href="#1-8-简单卷积网络示例-A-simple-convolution-network-example" class="headerlink" title="1.8 简单卷积网络示例 (A simple convolution network example)"></a>1.8 简单卷积网络示例 (A simple convolution network example)</h3><p>假设输入图片大小：$n<em>{H}^{[0]} = n</em>{W}^{[0]}=39$，$n_{c}^{[0]} =3$<br>第一层卷积：10个$f^{[1]} = 3$，$s^{[1]} = 1$，$p^{[1]} =0$，则$a^{[1]}=$37×37×10<br>第二层卷积：20个$f^{\left\lbrack 2 \right\rbrack}=5$，$s^{\left\lbrack 2 \right\rbrack}=2$，$p^{\left\lbrack 2 \right\rbrack} = 0$，则$a^{\left\lbrack 2 \right\rbrack}=$17x17x20<br>第三层卷积：40个$f^{\left\lbrack 3 \right\rbrack}=5$，$s^{\left\lbrack 3 \right\rbrack}=2$，$p^{\left\lbrack 3 \right\rbrack} = 0$，则$a^{\left\lbrack 3 \right\rbrack}=$7x7x40=1960<br>最后处理成向量，接softmax或logistic回归函数</p>
+<p>典型的卷积神经网络层：</p>
+<ul>
+<li>Convolution (Conv)</li>
+<li>Pooling (POOL)</li>
+<li>Fully connected (FC)</li>
+</ul>
+<h3 id="1-9-池化层-Pooling-layers"><a href="#1-9-池化层-Pooling-layers" class="headerlink" title="1.9 池化层 (Pooling layers)"></a>1.9 池化层 (Pooling layers)</h3><p><strong>Max pooling</strong>:如果在卷积核中提取到某个特征，则保留其最大值，如果没有提取到，最大值也很小。仅是直观理解，但实验效果良好。步长和大小不需要学习。p一般为0<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-10/86370149.jpg" alt="@Max pooling"><br><strong>Average pooling</strong>:不太常用。</p>
+<h3 id="1-10-卷积神经网络示例（Convolutional-neural-network-example）"><a href="#1-10-卷积神经网络示例（Convolutional-neural-network-example）" class="headerlink" title="1.10 卷积神经网络示例（Convolutional neural network example）"></a>1.10 卷积神经网络示例（Convolutional neural network example）</h3><p>类似于Le-Net-5<br>逐步讲解各卷积层的输出维度<br>有的文献将卷积和池化作为一层神经网络。<br>随着网络的加深，高度$n<em>{H}$和宽度$n</em>{W}$通常都会减少，而通道数量会增加。</p>
+<p>在神经网络中，另一种常见模式就是一个或多个卷积后面跟随一个池化层，然后一个或多个卷积层后面再跟一个池化层，然后是几个全连接层，最后是一个softmax。这是神经网络的另一种常见模式。</p>
+<p><img src="http://pa54oihmf.bkt.clouddn.com/18-7-10/31131334.jpg" alt="@激活层大小"></p>
+<p>有几点要注意，第一，池化层和最大池化层没有参数；第二卷积层的参数相对较少，前面课上我们提到过，其实许多参数都存在于神经网络的全连接层。观察可发现，随着神经网络的加深，激活值尺寸会逐渐变小，如果激活值尺寸下降太快，也会影响神经网络性能。示例中，激活值尺寸在第一层为6000，然后减少到1600，慢慢减少到84，最后输出softmax结果。我们发现，许多卷积网络都具有这些属性，模式上也相似。</p>
+<h3 id="1-11-为什么使用卷积神经网络-Why-convolutions"><a href="#1-11-为什么使用卷积神经网络-Why-convolutions" class="headerlink" title="1.11 为什么使用卷积神经网络 (Why convolutions?)"></a>1.11 为什么使用卷积神经网络 (Why convolutions?)</h3><p>卷积神经网络的优点：</p>
+<ol>
+<li><strong>参数共享</strong>：特征检测如垂直边缘检测如果适用于图片的某个区域，那么它也可能适用于图片的其他区域，共享特征选择器。</li>
+<li><strong>稀疏连接</strong>：如32x32x3 = 3072 使用6个5核卷积得到28x28x6=4704，如果用传统的全连接则需要3072x4704=14M参数，而卷积只需要(5x5+1)x6=156个参数。同时，映射后的feature_map某一像素点只和整张图片中的25个像素点有关联，所以是稀疏连接。</li>
+</ol>
+<blockquote>
+<p><strong>Parameter sharing:</strong> A feature detector (such as a vertical edge detector) that’s useful on one part of the image is probably useful in another part of the image.<br><strong>Sparsity of connections:</strong> In each layer, each output value depends only on a small number of inputs.</p>
+</blockquote>
+<p>卷积网络可以使用任何的代价函数$J$，以及其它梯度下降算法(Momentum,RMSprop,Adam)</p>
+<h3 id="第一周作业"><a href="#第一周作业" class="headerlink" title="第一周作业"></a>第一周作业</h3><p>卷积神经网络的反向传播</p>
+<h2 id="第二周-深度卷积网络：实例探究-Deep-convolutional-models-case-studies"><a href="#第二周-深度卷积网络：实例探究-Deep-convolutional-models-case-studies" class="headerlink" title="第二周 深度卷积网络：实例探究 (Deep convolutional models: case studies)"></a>第二周 深度卷积网络：实例探究 (Deep convolutional models: case studies)</h2><h3 id="2-1-为什么要进行实例探究-Why-look-at-case-studies"><a href="#2-1-为什么要进行实例探究-Why-look-at-case-studies" class="headerlink" title="2.1 为什么要进行实例探究 (Why look at case studies?)"></a>2.1 为什么要进行实例探究 (Why look at case studies?)</h3><p>通过他人案例学习建立卷积神经网络的直觉与技巧。<br><strong>尝试读计算机视觉(CV)论文</strong><br>提纲：</p>
+<ul>
+<li>经典网络<ul>
+<li>LeNet-5 1980</li>
+<li>AlexNet</li>
+<li>VGG</li>
+</ul>
+</li>
+<li><strong>ResNet</strong> 训练了深达152层的网络</li>
+<li><strong>Inception</strong></li>
+</ul>
+<h3 id="2-2-经典网络-Classic-networks"><a href="#2-2-经典网络-Classic-networks" class="headerlink" title="2.2 经典网络 (Classic networks)"></a>2.2 经典网络 (Classic networks)</h3><ol>
+<li><p><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=726791" target="_blank" rel="noopener">LeNet-5</a> <a href="file:///C:/Users/chenshuai/Documents/%E5%AD%A6%E4%B9%A0%E8%AE%BA%E6%96%87/paper/LeNet.pdf" target="_blank" rel="noopener">离线阅读</a><br>论文发表于1998年，当时使用的平均池化，也没有采用padding。LeNet-5在全连接最后一层使用的不是softmax，而是另一种，现在很少用到的分类器。此外，当时使用的激活函数为Sigmoid和tanh，而不是ReLu。PPT内容大部分来自于论文<strong>II</strong>和<strong>III</strong>，精读第<strong>II</strong>段，泛读第<strong>III</strong>段。</p>
+</li>
+<li><p><a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf" target="_blank" rel="noopener">AlexNet</a> <a href="file:///C:/Users/chenshuai/Documents/学习论文/paper/imagenetclassificationCNN.pdf" target="_blank" rel="noopener">离线阅读</a><br>AlexNet使用227x227x3(原文使用224x224x3)图片作为输入，部分卷积层使用了padding，还是用了复杂的GPU计算，激活函数选取的ReLu，最后一层使用softmax，同时使用了局部响应归一化层”（Local Response Normalization），即LRN层,LRN效果没多大作用。</p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/1409.1556.pdf" target="_blank" rel="noopener">VGG-16</a><br>VGG-16 虽然包含16个看似很多的的网络层，但结构并不复杂。首先卷积核(过滤器)的数量，64-128-256-512-512。</p>
+</li>
+</ol>
+<p><img src="http://pa54oihmf.bkt.clouddn.com/18-7-12/89709390.jpg" alt="@VGG-16"></p>
+<blockquote>
+<p>如果你对这些论文感兴趣，我建议从介绍AlexNet的论文开始，然后就是VGG的论文，最后是LeNet的论文。虽然有些晦涩难懂，但对于了解这些网络结构很有帮助。</p>
+</blockquote>
+<h3 id="2-3-残差网络-Residual-Networks-ResNets"><a href="#2-3-残差网络-Residual-Networks-ResNets" class="headerlink" title="2.3 残差网络 (Residual Networks (ResNets))"></a>2.3 残差网络 (Residual Networks (ResNets))</h3><p><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/He_Deep_Residual_Learning_CVPR_2016_paper.pdf" target="_blank" rel="noopener">ResNet论文</a>中将逐层传播网络定义为<strong>plain network</strong>，而ResNet的不同就是添加了”short cut/skip connection”，形成了Residual block。示意图：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-12/52356549.jpg" alt="@ResNet"><br>在第二层线性变化后，非线性激活前，添加一样$a^{[l]}$，即$a^{[l+1]} = g(z^{[l+1]} + a^{[l]})$</p>
+<p>整个网络示意图：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-12/38478487.jpg" alt=""><br>残差网络解决了<strong>梯度消失或爆炸</strong>，允许网络结构更加深层。</p>
+<h3 id="残差网络为什么有效-Why-ResNet-work"><a href="#残差网络为什么有效-Why-ResNet-work" class="headerlink" title="残差网络为什么有效 (Why ResNet work)"></a>残差网络为什么有效 (Why ResNet work)</h3><p><img src="http://pa54oihmf.bkt.clouddn.com/18-7-12/3923799.jpg" alt=""><br>设想一个神经网络的输出为$a^{\left\lbrack l \right\rbrack}$， 我们在它后面添加带“residual block”的两层网络。此时，$a^{\left\lbrack l + 2\right\rbrack} = g(z^{\left\lbrack l + 2 \right\rbrack} + a^{\left\lbrack l\right\rbrack})$。如果使用L2正则化，那么权重$W^{[l+1]}$会被压缩，$b$偶尔也会被压缩，注意$W$，如果$W^{\left\lbrack l + 2 \right\rbrack} = 0$，为方便起见，假设$b^{\left\lbrack l + 2 \right\rbrack} = 0$，这几项就没有了，因为它们（$W^{\left\lbrack l + 2 \right\rbrack}a^{\left\lbrack l + 1 \right\rbrack} + b^{\left\lbrack l + 2\right\rbrack}$）的值为0。最后$ a^{\left\lbrack l + 2 \right\rbrack} = \ g\left( a^{[l]} \right) = a^{\left\lbrack l\right\rbrack}$，因为我们假定使用ReLU激活函数，并且所有激活值都是非负的，$g\left(a^{[l]} \right)$是应用于非负数的ReLU函数，所以$a^{[l+2]} =a^{[l]}$。</p>
+<p>事实上，残差块学习这个恒等式函数并不难。从上面可以看出，即使网络添加了两层，但它的效率比没有降低，所以将残差块放到网络中间还是末尾，都不影响网络。</p>
+<p>此外，如果这些隐层能学到一些拥有东西，比恒等式表现还好，那网络可以提升效果，或者说至少不会降低。</p>
+<p>一个细节：ResNets使用了需要<strong>SAME</strong>卷积，保证了$a^{\left\lbrack l\right\rbrack}$与残差块的维度一致，当不一致的时候，在残差块中添加一个科学系参数$W_s$，即$a^{\left\lbrack l + 2\right\rbrack} = g(z^{\left\lbrack l + 2 \right\rbrack} + W_s \cdot a^{\left\lbrack l\right\rbrack})$</p>
+<p>论文中，使用卷积-卷积-卷积-池化 -卷积-卷积-卷积-池化….最后使用softmax</p>
+<h3 id="2-5-网络中的网络以及1x1卷积-Network-in-Network-and-1x1-convolutions"><a href="#2-5-网络中的网络以及1x1卷积-Network-in-Network-and-1x1-convolutions" class="headerlink" title="2.5 网络中的网络以及1x1卷积 (Network in Network and 1x1 convolutions)"></a>2.5 网络中的网络以及1x1卷积 (Network in Network and 1x1 convolutions)</h3><p>对于通道为1的6x6图片，使用1x1卷积核似乎作用并不大，仅仅是对二维数组进行了扩大或缩放。</p>
+<p>但对于通道为32的6x6输入来说就不一样了，这时候我们使用一个1x1的卷积核(实际维度为<strong>1x1x32</strong>，卷积核通道与输入通道一致)。这时候的卷积操作，是将输入中的一个1x1x32的切片，乘以1x1的卷积核中32个不同的权重再求和，最后应用ReLU激活函数。当然这是1个卷积核，如果是32个卷积核，则效果如下：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-12/63480450.jpg" alt="@32个1x1卷积核"></p>
+<p>这种方法通常称为1×1卷积，有时也被称为Network in Network，在林敏、陈强和杨学成的论文中有详细描述。虽然论文中关于架构的详细内容并没有得到广泛应用，但是1×1卷积或Network in Network这种理念却很有影响力，很多神经网络架构都受到它的影响，包括下节课要讲的Inception网络。</p>
+<p>这时候输入输出的通道数量保持一致，因此改变卷积核的数量可以进行<strong>通道的压缩与扩充</strong>(<strong>池化仅仅压缩图片的高和宽</strong>)</p>
+<h3 id="2-6-Google-Inception-network-简介"><a href="#2-6-Google-Inception-network-简介" class="headerlink" title="2.6 Google Inception network 简介"></a>2.6 Google Inception network 简介</h3><p>Inception层或Inception网络可以用来代替人工来确定卷积层中的过滤器类型(1x1?3x2?5x5?)。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-12/50212310.jpg" alt="@Inception层(将多类型卷积结果拼在一起)"></p>
+<p>从图中可以发现会设计大量的计算，我们先来看一下5x5的卷积计算成本。<br>对于28x28x192的输入，采用32个5x5(x192)的卷积进行操作，计算量为 28x28x32 x 5x5x192 = <strong>120M</strong>(120422400) </p>
+<blockquote>
+<p>32个核 每个核参数为 5x5x192 做一次卷积需要的stride为 28x28 所以计算成本为 32x5x5x192x28x28</p>
+</blockquote>
+<p>而考虑下面的结构：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-12/39837732.jpg" alt="@先使用1x1再使用5x5卷积核"></p>
+<p>对于28x28x192的输入，我们想要得到和之前一样的输出维度28x28x32，先使用16个1x1(x192)的核卷积，再使用32个5x5(x16)的核卷积。其计算量为 28x28x16 x 192 = <strong>2.4M</strong> 28x28x32 x 5x5x16=<strong>10.0M</strong>,总计为<strong>12.4M</strong>，与上面的结果相比，缩小了10倍。</p>
+<p>所以$ 1\times1 $卷积核作为“bottleneck layer”的过渡层能够有效减小卷积神经网的计算成本。事实证明，只要合理地设置“bottleneck layer”，既可以显著减小上层的规模，同时又能降低计算成本，从而不会影响网络的性能。</p>
+<h3 id="2-7-Inception-网络"><a href="#2-7-Inception-网络" class="headerlink" title="2.7 Inception 网络"></a>2.7 Inception 网络</h3><p>通过计算成本的对比，可以发现使用1x1的卷积核能够简化计算量，因此可以构建<strong>Inception module</strong>：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-12/30770686.jpg" alt="@Inception module(将不同size的卷积核进行处理，输出拼接在一起)"></p>
+<p>有了Inception module，则Google的gooLeNet网络就很好理解了：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-12/50543925.jpg" alt="@GoogleLeNet"></p>
+<blockquote>
+<p>该模型使用多个Inception Module，此外模型多两个softmax输出，能对网络进行调整，并防止过拟合。Inception网络还有很多新版本，如Inception V2、V3以及V4，还有一个版本引入了跳跃连接(<strong>skip connection</strong>)的方法，有时也会有特别好的效果。</p>
+</blockquote>
+<h3 id="2-8-使用开源的实现方案-Using-open-source-implementations"><a href="#2-8-使用开源的实现方案-Using-open-source-implementations" class="headerlink" title="2.8 使用开源的实现方案 (Using open-source implementations)"></a>2.8 使用开源的实现方案 (Using open-source implementations)</h3><p>熟练使用<strong><em>GitHub</em></strong>，如<a href="https://github.com/KaimingHe/deep-residual-networks" target="_blank" rel="noopener">REstNets实现</a></p>
+<h3 id="2-9-卷积网络的迁移学习-Transfer-Learning"><a href="#2-9-卷积网络的迁移学习-Transfer-Learning" class="headerlink" title="2.9 卷积网络的迁移学习 (Transfer Learning)"></a>2.9 卷积网络的迁移学习 (Transfer Learning)</h3><p>如果建立自己的CV检测器，可以下载神经网络的开源实现，不仅包括代码，还包括权重。这样，修改最后一层的softmax层，freeze前面的神经网络，然后在你的数据集上进行训练。</p>
+<p>一个经验是，你的数据量越大，你需要freeze的层数越小，甚至仅仅把它们来当作初始化参数。CV中，迁移学习是很值得考虑去做的。</p>
+<h3 id="2-10-数据增强-Data-argumentation"><a href="#2-10-数据增强-Data-argumentation" class="headerlink" title="2.10 数据增强 (Data argumentation)"></a>2.10 数据增强 (Data argumentation)</h3><p>数据扩充方式：</p>
+<ul>
+<li><strong>镜像</strong>(Mirroring)</li>
+<li>随机裁剪(Random Cropping)</li>
+<li>其它实现比较复杂的方式：旋转，扭曲，</li>
+<li><strong>色彩转换</strong>，使用PCA颜色增强(AlexNet有细节，也有其它开源实现)</li>
+</ul>
+<p><strong>CPU并行</strong>：几个线程或进程做数据增强，其它CPU或GPU训练网络。</p>
+<h3 id="2-11-计算机视觉现状-The-state-of-computer-vision"><a href="#2-11-计算机视觉现状-The-state-of-computer-vision" class="headerlink" title="2.11 计算机视觉现状 (The state of computer vision)"></a>2.11 计算机视觉现状 (The state of computer vision)</h3><p><strong>语音识别</strong>、<strong>图像识别</strong>、<strong>目标检测</strong>任务现所有的数据一个比一个少。数据越少的任务可能越需要手工工程。</p>
+<p>在机器学习应用时，学习算法有两种知识来源。</p>
+<ul>
+<li>Labeled data</li>
+<li>Hand engineered features / network architecture / other components</li>
+</ul>
+<p>在缺乏数据的情况下，获取良好的表现方式还是花更多时间进行架构设计，或者在网络架构上花费更多时间。</p>
+<blockquote>
+<p>Benchmark 基准测试，Benchmark是一个评价方式，在整个计算机领域有着长期的应用。维基百科上解释：“As computer architecture advanced, it became more difficult to compare the performance of various computer systems simply by looking at their specifications.Therefore, tests were developed that allowed comparison of different architectures.”Benchmark在计算机领域应用最成功的就是性能测试，主要测试负载的执行时间、传输速度、吞吐量、资源占用率等。</p>
+</blockquote>
+<p><strong>在基准/竞赛中提升效果</strong></p>
+<ul>
+<li>集成 Ensembling <ul>
+<li>Train several networks independently and average their outputs</li>
+</ul>
+</li>
+<li>多折验证 Muti-crop at test time<ul>
+<li>Run classifier on multiple versions of test images and average results</li>
+</ul>
+</li>
+</ul>
+<p>集成大概可以提高1%或2%，但消耗时间。<br>Muti-crop 是说将你的测试图片进行多次裁剪，每张都进行预测，然后综合考虑结果。<br>这两种方式在实际生产情况下，很少考虑，在基准测试和竞赛上做得很好。</p>
+<p>最后，其他人可能已经在几路GPU上花了几个星期的时间来训练一个模型，训练超过一百万张图片，所以通过使用其他人的预先训练得模型，然后在数据集上进行微调，你可以在应用程序上运行得更快。当然如果你有电脑资源并且有意愿，我不会阻止你从头开始训练你自己的网络。事实上，如果你想发明你自己的计算机视觉算法，这可能是你必须要做的。</p>
+<h2 id="第三周-目标检测"><a href="#第三周-目标检测" class="headerlink" title="第三周 目标检测"></a>第三周 目标检测</h2><h3 id="3-1-目标定位"><a href="#3-1-目标定位" class="headerlink" title="3.1 目标定位"></a>3.1 目标定位</h3><p>识别一张图片中是否有车的分类问题已经很熟悉了，现在还要输出车在图片中的位置，即定位分类问题<strong>Classification with Location</strong>。进一步，如果图片中包含多个物体需要定位，就是目标检测。</p>
+<p>例：识别一张图片是1 行人 2 汽车 3 自行车 4 背景 类别。首先记图像左上角为(0,0)，右下角记(1,1)。图像的边框用bx,by,bh,bw来表示中心坐标点和宽高。这时候神经网络的输出向量可以定义为$[P_c,bx,by,bh,bw,c1,c2,c3]$。$pc$表示是前三类与否，如果为1，则$bx,by,bh,bw$来表示坐标，$c1,c2,c3$来表示具体的某一类。<br>此外，损失函数也需要修改：</p>
+<script type="math/tex; mode=display">L(\hat{y},y)=\begin{cases}
+\sum_i(\hat{y}_i-y_i)^2& \text{if} \ y_1=1\\\\
+(\hat{y}_1-y_1)^2& \text{if} \ y_1=0\\
+\end{cases}</script><p>实际中，可以不对$c<em>{1}$、$c</em>{2}$、$c<em>{3}$和softmax激活函数应用对数损失函数，并输出其中一个元素值，通常做法是对边界框坐标应用平方差或类似方法，对$p</em>{c}$应用逻辑回归函数，甚至采用平方预测误差也是可以的。</p>
+<h3 id="3-2-特征点检测-Landmark-detection"><a href="#3-2-特征点检测-Landmark-detection" class="headerlink" title="3.2 特征点检测 (Landmark detection)"></a>3.2 特征点检测 (Landmark detection)</h3><p>如果需要检测64个人脸关键点，则可以使卷积神经网络输出为129个，第一个代表有无人脸，剩余的表示各个特征的坐标。</p>
+<h3 id="3-3-目标检测-Object-detection"><a href="#3-3-目标检测-Object-detection" class="headerlink" title="3.3 目标检测 (Object detection)"></a>3.3 目标检测 (Object detection)</h3><p>使用卷积神经网络进行对象检测，采用是基于滑动窗口的目标检测算法。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-24/8405147.jpg" alt=""><br>选用不同的窗口和步长会有一定的影响，太小计算量大，太大影响效果。<br>不过计算成本得到了解决，见下。</p>
+<h3 id="3-4-卷积的滑动窗口实现-Convolutional-implementation-of-sliding-windows"><a href="#3-4-卷积的滑动窗口实现-Convolutional-implementation-of-sliding-windows" class="headerlink" title="3.4 卷积的滑动窗口实现 (Convolutional implementation of sliding windows)"></a>3.4 卷积的滑动窗口实现 (Convolutional implementation of sliding windows)</h3><p>之前讲的滑动检测计算效率太低，其中一个原始是因为重复计算问题。<br>而现在，不需要将图片每次切割单独放入神经网络去计算，可是将卷积神经网络的最后全连接层也改用为卷积层。输入也只需要输入原图片完整一次。</p>
+<ol>
+<li><p>改写全连接层：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-24/75072239.jpg" alt=""><br>假如输入图片是14x14x3，经过16的5x5卷积得到10x10x16，再经过池化得到5x5x16。连接两个400个节点的全连接层，输出四分类向量。<br>改写成卷积层：<br>前面一致，得到5x5x16特征后使用400个5x5的窗口可以得到1x1x400向量，再使用400个1x1的窗口，可以得到1x1x400向量，最后使用1x1的窗口可以得到1x1x4的向量。</p>
+</li>
+<li><p>一次计算<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-24/54699374.jpg" alt=""><br>假如训练数据为14x14x3，而测试图片数据为16x16x3，按切分的话，可以将16x16x3切分成四部分，然后每部分输入网络进行计算。但这样需要计算四次，且重复计算区域较大。可以将16x16x3图片直接输入网络，得到的2x2x4分别代表切割的四部分结果。</p>
+</li>
+</ol>
+<h3 id="3-5-Bounding-Box预测-Bounding-box-predictions"><a href="#3-5-Bounding-Box预测-Bounding-box-predictions" class="headerlink" title="3.5 Bounding Box预测 (Bounding box predictions)"></a>3.5 Bounding Box预测 (Bounding box predictions)</h3><p>参考论文：YOLO You Only Look Once: Unified real-time object detection 论文比较难懂。<br> 上节讲到的滑动窗口卷积实现算法效率很高，但仍有一个问题，不能输出最精准的边界框。<br> <strong>YOLO(you only look once)</strong>算法：<br> <img src="http://pa54oihmf.bkt.clouddn.com/18-7-24/95807995.jpg" alt=""><br> 假设输出维度为8：{px, bx, by, bh, bw, c1, c2, c3}。将原始100x100的图片划分为3x3的格子，对每个格子使用分配y标签(8维)。然后训练输出各个格子的y。最后整个输出为3x3x8的维度。<br> 当然，你可以切分更细，使用19x19边框，这个单个边框内包含多个目标的可能性更小。<br> 其中一个细节：bx,by,bw,bh都是[0,1]的，以每个边框的左上角为(0,0)坐标，右下角为(1,1)坐标。</p>
+<h3 id="3-6-交并集-Intersection-over-union"><a href="#3-6-交并集-Intersection-over-union" class="headerlink" title="3.6 交并集 (Intersection over union)"></a>3.6 交并集 (Intersection over union)</h3><p>目标检测算法的评估参数：<strong>交并集(lou)</strong>：$\frac{交集面积}{并集面积}$。一般lou&gt;0.5。这个阈值可以人为设置，很少小于0.5。lou衡量了两个边界框的重叠相对大小。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-26/57381390.jpg" alt=""></p>
+<h3 id="3-7-非极大值抑制-Non-max-suppression"><a href="#3-7-非极大值抑制-Non-max-suppression" class="headerlink" title="3.7 非极大值抑制(Non-max suppression)"></a>3.7 非极大值抑制(Non-max suppression)</h3><p>先假设对象检测中只有一种对象，但算法通常会检测出多次。如在19x19=361个格子检测，会得到很多格子检测包含目标，但很多检测的是同一个目标。<br>非极大值抑制是说，对于同一个检测物体的多个检测边界，仅输出最大概率的，抑制其它边界输出。<br>对于多目标类别检测，正确的做法是独立进行多次非极大值抑制。</p>
+<h3 id="3-8-Anchor-Boxes"><a href="#3-8-Anchor-Boxes" class="headerlink" title="3.8 Anchor Boxes"></a>3.8 Anchor Boxes</h3><p>当两个识别目标居于同一个格子时候，该如何处理呢？之前的目标检测都只能在一个格子里检测一个对象。<br>以一个格子最多两个对象为例子，首先根据目标的特性人为规定两个Anchor Boxes，比如竖着的为人，横着的为车。然后格子的类别标签y不在是8维度，而是16维度。前8维度为Anchor Boxes1的标签，后八个维度为Anchor Boxes2的标签。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-26/61167160.jpg" alt=""></p>
+<p>如何选择Anchor Boxes呢？可以使用K-Means对对象进行聚类，然后得到形状。</p>
+<h3 id="3-9-YOLO-算法"><a href="#3-9-YOLO-算法" class="headerlink" title="3.9 YOLO 算法"></a>3.9 YOLO 算法</h3><p><img src="http://pa54oihmf.bkt.clouddn.com/18-7-26/14752244.jpg" alt=""><br>将训练集图片分成3x3格子，需要检测三类对象：行人，汽车，摩托车。使用两个anchor box。第一个格子和第八个格子的标签如图。</p>
+<p>在预测的时候，一个目标的情况很容易理解。而对于下图：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-7-26/11773514.jpg" alt=""></p>
+<ul>
+<li>对于每一个grid call，得到两个预测边界框</li>
+<li>去掉概率低的预测</li>
+<li>对每个类别(行人，汽车，摩托车)使用非极值抑制算法。最后只得到最后一个预测。<h3 id="3-10-R-CNN"><a href="#3-10-R-CNN" class="headerlink" title="3.10 R-CNN"></a>3.10 R-CNN</h3>首先得到候选区域，再进行CNN卷积识别。</li>
+<li>R-CNN 使用图像分割算法，选取候选区域，然后使用滑动窗口方式卷积</li>
+<li>Fast R-CNN 类似于第四节，不再单个框输入而是一次全部，但速度还是比较慢。</li>
+<li>Faster R-CNN 使用CNN来选择候选区域。</li>
+</ul>
+<h2 id="第4周"><a href="#第4周" class="headerlink" title="第4周"></a>第4周</h2><h3 id="4-1-什么是人脸识别-What-is-face-recognition"><a href="#4-1-什么是人脸识别-What-is-face-recognition" class="headerlink" title="4.1 什么是人脸识别 (What is face recognition?)"></a>4.1 什么是人脸识别 (What is face recognition?)</h3><ul>
+<li><p>人脸验证(<strong>Verification</strong>)</p>
+<ul>
+<li>输入照片和姓名(ID)</li>
+<li>输出图像是否为本人</li>
+</ul>
+</li>
+<li><p>人脸识别(<strong>Recognition</strong>)</p>
+<ul>
+<li>拥有$K$个人脸的数据库</li>
+<li>输入图像</li>
+<li>输出人物ID如果他是$K$个人中之一</li>
+</ul>
+</li>
+</ul>
+<p>很显然，在人脸验证的任务中，准确率达到99%是可以接收的，但放到识别任务中，100个人则代表1%的失误状况，所以人脸识别需要较高的准确率。</p>
+<p>人脸验证之所以困难，原因之一是要解决”<strong>一次学习(one-shot learning problem)</strong>“问题。</p>
+<h3 id="4-2-One-Shot学习-One-Shot-learning"><a href="#4-2-One-Shot学习-One-Shot-learning" class="headerlink" title="4.2 One-Shot学习 (One-Shot learning)"></a>4.2 One-Shot学习 (One-Shot learning)</h3><p>如果识别人有四个人，使用ont-hot来表示输出，这种方式不太好，如果新加入一个人脸，则ont-hot维度需要改变。同时，一半人物只有一张照片，使用一张照片不能有效训练完成一个稳健的神经网络。</p>
+<p>为了解决One-Shot问题，可以使用”<strong>similarity</strong>“ function。使神经网络学习一个$d$表示的函数，$d(img1, img2) = degreed\ of \ difference\ between\ images$。它以两张图片作为输入，然受输出两张图片的差异值。差异值小于某个阈值$\tau$，它是一个超参数，表明是同一个人。</p>
+<h3 id="4-3-Siamese网络-Siamese-network"><a href="#4-3-Siamese网络-Siamese-network" class="headerlink" title="4.3 Siamese网络 (Siamese network)"></a>4.3 Siamese网络 (Siamese network)</h3><p>论文：DeepFace closing the gap to human level performance</p>
+<p>Siamese网络，学习函数$d$来计算两张人脸的相似度。<br>思想是，将人脸编码(映射)成固定维度向量(非one-hot)<br>将$x^{(1)}$和$x^{(2)}$的距离定义为这两幅图片的编码之差的范数，$d( x^{( 1)},x^{( 2)}) =|| f( x^{( 1)}) - f( x^{( 2)})||_{2}^{2}$。<br>如果$x^{(i)}$和$x^{(j)}$是同一个人，则$||f(x^{(i)}) - f(x^{(j)})||^2$很小，相反很大。使用反向传播来学习网络参数。如果定义真正的目标函数呢？使用<strong>三元组损失函数</strong></p>
+<h3 id="4-4-Triplet损失-Triplet-loss"><a href="#4-4-Triplet损失-Triplet-loss" class="headerlink" title="4.4 Triplet损失 (Triplet loss)"></a>4.4 Triplet损失 (Triplet loss)</h3><p>论文：<a href="https://arxiv.org/pdf/1503.03832.pdf" target="_blank" rel="noopener">FaceNet: A Unified Embedding for Face Recognition and Clustering</a></p>
+<p>Anchor Positive Negative<br>用三元组术语来说，对于一个Anchor图片，Positive图片和其是同一个人，距离更近，Negative非同一个人，距离更远。简写成$A$,$P$,$N$<br>三元组损失，我们的目标是想要$|| f(A) - f(P) ||^{2}$，你希望这个数值很小，准确地说，你想让它小于等$f(A)$和$f(N)$之间的距离，或者说是它们的范数的平方（即：$|| f(A) - f(P)||^{2} \leq ||f(A) - f(N)||^{2}$）。（$|| f(A) - f(P) ||^{2}$）当然这就是$d(A,P)$，（$|| f(A) - f(N) ||^{2}$）这是$d(A,N)$，你可以把$d$ 看作是距离(distance)函数，这也是为什么我们把它命名为$d$。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-8-23/92960861.jpg" alt=""><br>网络中的参数全为0的话，也是可以满足条件的，为了避免这个问题，添加一个超参数$\alpha$，代表间隔<strong>margin</strong>。<br>最后我们可以定义损失函数：</p>
+<script type="math/tex; mode=display">L(A,P,N) = max(||f(A) - f(P)||^2 - ||f(A) - f(N)||^2 + \alpha, 0)</script><p>不难发现，当$|| f( A) - f( P)||^{2} -|| f( A) - f( N)||^{2} + \alpha \ge 0$，则得到一个正的损失值。 相反，网络不会关心负值大小。</p>
+<p>对于训练集，至少保证一个人有多张图片。训练的时候，可以随机选取照片来构成APN三元组，但使用相近图像的AP才能更好地训练网络。<br>人脸识别模型可以选择其它公司或研究机构训练好的网络模型。</p>
+<h3 id="4-5-面部验证与二分类-Face-verification-and-binary-classification"><a href="#4-5-面部验证与二分类-Face-verification-and-binary-classification" class="headerlink" title="4.5 面部验证与二分类 (Face verification and binary classification)"></a>4.5 面部验证与二分类 (Face verification and binary classification)</h3><p>论文：<a href="https://research.fb.com/wp-content/uploads/2016/11/deepface-closing-the-gap-to-human-level-performance-in-face-verification.pdf" target="_blank" rel="noopener">DeepFace:Closing the gap to human-level performance in face verification</a></p>
+<p>除了Triplet loss方法外，还可以把人脸识别看作二分类问题。<br>选取一堆Siamese网络，将两章图片进行编码(映射)，然后输入逻辑回归单元如Sigmoid，进行输出1或0。此时损失函数为：</p>
+<script type="math/tex; mode=display">\hat{y} = \sigma ( \sum_{k=1}^{128} \omega_i |f(x^{(i)})_k - f(x^{(j)})_k| + b)</script><blockquote>
+<p>$f(x^{(i)})$是图片$x^{(i)}$的编码，$k$代表第$k$个元素。</p>
+</blockquote>
+<p>这样就可以将其转化成二分类问题。</p>
+<h3 id="4-6-什么是神经风格转换-What-is-neural-style-transfer"><a href="#4-6-什么是神经风格转换-What-is-neural-style-transfer" class="headerlink" title="4.6 什么是神经风格转换 (What is neural style transfer)"></a>4.6 什么是神经风格转换 (What is neural style transfer)</h3><p>我将使用$C$来表示内容图像，$S$表示风格图像，$G$表示生成的图像。</p>
+<h3 id="4-7-什么是深度卷积网络？-What-are-deep-ConvNets-learning"><a href="#4-7-什么是深度卷积网络？-What-are-deep-ConvNets-learning" class="headerlink" title="4.7 什么是深度卷积网络？(What are deep ConvNets learning?)"></a>4.7 什么是深度卷积网络？(What are deep ConvNets learning?)</h3><p>论文：Visualizing and Understanding Convolutional Networks</p>
+<p>通过可视化卷积神经网络分析可以发现，层数越高，网络学习到的内容越复杂。</p>
+<h3 id="4-8-代价函数-Cost-function"><a href="#4-8-代价函数-Cost-function" class="headerlink" title="4.8 代价函数 (Cost function)"></a>4.8 代价函数 (Cost function)</h3><p>代价函数包含两部分：</p>
+<ul>
+<li>$J_{\text{content}}(C,G)$，内容代价函数，用来度量生成图片$G$的内容与内容图片$C$的内容有多相似。</li>
+<li>$J_{\text{style}}(S,G)$，风格代价函数，用来度量图片$G$的风格和图片$S$的风格的相似度。</li>
+</ul>
+<p>最终的代价函数为($\alpha$ 是权重超参数)：</p>
+<script type="math/tex; mode=display">J( G) = a J_{\text{content}}( C,G) + \beta J_{\text{style}}(S,G)</script><h3 id="4-9-内容代价函数-Content-cost-function"><a href="#4-9-内容代价函数-Content-cost-function" class="headerlink" title="4.9 内容代价函数 (Content cost function)"></a>4.9 内容代价函数 (Content cost function)</h3><p>$J( G) = \alpha J<em>{\text{content}}( C,G) + \beta J</em>{\text{style}}(S,G)$<br>内容代价函数：</p>
+<ul>
+<li>选取隐层$l$来计算内容代价， use hidden layer l to compute content cost.</li>
+<li>使用预训练的卷积神经网络，如VGG</li>
+<li>使用$a^{[l]\lbrack C\rbrack}$和$a^{[l]\lbrack G\rbrack}$来表示两个图片$C$和$G$的$l$层的激活函数值。</li>
+<li>如果这两个激活值相似，那么就意味着两个图片的内容相似。</li>
+</ul>
+<p>内容代价函数求得就是两个图片之间$l$层激活值差值的平方和。</p>
+<h3 id="4-10-风格代价函数-Style-cost-function"><a href="#4-10-风格代价函数-Style-cost-function" class="headerlink" title="4.10 风格代价函数 (Style cost function)"></a>4.10 风格代价函数 (Style cost function)</h3><p>论文：A neural algorithm of artistic style</p>
+<p>风格的数据表达：相关性(correlation)<br>计算$l$层的输出，通道间的相关性。<br>风格矩阵(<strong>style matrix</strong>)<br>使用$a<em>{i,\ j,\ k}^{[l]}$来表示隐层$l$中$(i,j,k)$位置的激活项，$i$，$j$，$k$分别代表该位置的高度、宽度以及对应的通道数。计算风格矩阵$G^{l}$，它是一个$n</em>{c} \times n_{c}$的矩阵，同样地，我们也对生成的图像进行这个操作。</p>
+<p>$G<em>{kk^{‘}}^{[l][S]} = \sum</em>{i = 1}^{n<em>{H}^{[l]}}{\sum</em>{j = 1}^{n<em>{W}^{[l]}}{a</em>{i,\ j,\ k}^{[l][S]}a_{i,\ j,\ k^{‘}}^{[l][S]}}}$</p>
+<blockquote>
+<p>用符号$i$，$j$表示下界，对$i$，$j$，$k$位置的激活项$a<em>{i,\ j,\ k}^{[l]}$，乘以同样位置的激活项，也就是$i$,$ j$,$k’$位置的激活项，即$a</em>{i,j,k^{‘}}^{[l]}$，将它们两个相乘。然后$i$和$j$分别加到l层的高度和宽度，即$n<em>{H}^{[l]}$和$n</em>{W}^{[l]}$，将这些不同位置的激活项都加起来。$(i,j,k)$和$(i,j,k’)$中$x$坐标和$y$坐标分别对应高度和宽度，将$k$通道和$k’$通道上这些位置的激活项都进行相乘。我一直以来用的这个公式，严格来说，它是一种非标准的互相关函数，因为我们没有减去平均数，而是将它们直接相乘。</p>
+</blockquote>
+<p>同样计算生成图像的的风格矩阵：<br>$G<em>{kk^{‘}}^{[l][G]} = \sum</em>{i = 1}^{n<em>{H}^{[l]}}{\sum</em>{j = 1}^{n<em>{W}^{[l]}}{a</em>{i,\ j,\ k}^{[l][G]}a_{i,\ j,\ k^{‘}}^{[l][G]}}}$</p>
+<blockquote>
+<p><strong>Gram matrix</strong>，所以用$G$来表示。</p>
+</blockquote>
+<p>最后，整体的风格代价函数为两个风格矩阵的F范数的平方，可以乘以一个归一化常数，或者乘以一个超参数$\beta$就好了。</p>
+<p>$J<em>{style}^{[l]}(S,G) = \frac{1}{(2n_H^{[l]}n_W^{[l]}n_C^{[l]})^2} \sum_k \sum</em>{k’}(G<em>{KK’}^{[l][S]} - G</em>{KK’}^{[l][G]})$</p>
+<p>最终，整体的代价函数为：<br>$J(G) = a J<em>{\text{content}( C,G)} + \beta J</em>(S,G)$</p>
+<h3 id="4-11-一维到三维推广-1D-and-3D-generalizations-of-models"><a href="#4-11-一维到三维推广-1D-and-3D-generalizations-of-models" class="headerlink" title="4.11 一维到三维推广 (1D and 3D generalizations of models)"></a>4.11 一维到三维推广 (1D and 3D generalizations of models)</h3><p>卷积操作可以应用到1D和3D上，1D可以使用序列模型，会在下次课程中讲解并对比。<br>应用到3D，channel层是额外的。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="nocater/deeplearning_ai_books">深度学习笔记-黄海广</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Andrew-Ng/" rel="tag"># Andrew Ng</a>
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/25/03-结构化机器学习项目/" rel="next" title="03-结构化机器学习项目">
+                <i class="fa fa-chevron-left"></i> 03-结构化机器学习项目
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/25/05-序列模型/" rel="prev" title="05-序列模型">
+                05-序列模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Chen Shuai">
+            
+              <p class="site-author-name" itemprop="name">Chen Shuai</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/nocater" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#04-卷积神经网络"><span class="nav-number">1.</span> <span class="nav-text">04.卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#00-动态性策略如何与DL结合-预测之上的决策系统-？"><span class="nav-number">1.1.</span> <span class="nav-text">00? 动态性策略如何与DL结合(预测之上的决策系统)？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一周-卷积神经网络"><span class="nav-number">1.2.</span> <span class="nav-text">第一周 卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-计算机视觉-Computer-vision"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1 计算机视觉 (Computer vision)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-边缘检测示例-Edge-detection-example"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2 边缘检测示例 (Edge detection example)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-更多边缘检测内容-More-edge-detection"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.3 更多边缘检测内容 (More edge detection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Padding"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.4 Padding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-卷积步长-Strided-convolution"><span class="nav-number">1.2.5.</span> <span class="nav-text">1.5 卷积步长 (Strided convolution)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-三维卷积-Convolutions-over-volumes"><span class="nav-number">1.2.6.</span> <span class="nav-text">1.6 三维卷积 (Convolutions over volumes)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-单卷积层网络-One-layer-of-convolution-network"><span class="nav-number">1.2.7.</span> <span class="nav-text">1.7 单卷积层网络 (One layer of convolution network)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-简单卷积网络示例-A-simple-convolution-network-example"><span class="nav-number">1.2.8.</span> <span class="nav-text">1.8 简单卷积网络示例 (A simple convolution network example)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-池化层-Pooling-layers"><span class="nav-number">1.2.9.</span> <span class="nav-text">1.9 池化层 (Pooling layers)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-10-卷积神经网络示例（Convolutional-neural-network-example）"><span class="nav-number">1.2.10.</span> <span class="nav-text">1.10 卷积神经网络示例（Convolutional neural network example）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-11-为什么使用卷积神经网络-Why-convolutions"><span class="nav-number">1.2.11.</span> <span class="nav-text">1.11 为什么使用卷积神经网络 (Why convolutions?)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一周作业"><span class="nav-number">1.2.12.</span> <span class="nav-text">第一周作业</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二周-深度卷积网络：实例探究-Deep-convolutional-models-case-studies"><span class="nav-number">1.3.</span> <span class="nav-text">第二周 深度卷积网络：实例探究 (Deep convolutional models: case studies)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-为什么要进行实例探究-Why-look-at-case-studies"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 为什么要进行实例探究 (Why look at case studies?)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-经典网络-Classic-networks"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 经典网络 (Classic networks)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-残差网络-Residual-Networks-ResNets"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.3 残差网络 (Residual Networks (ResNets))</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#残差网络为什么有效-Why-ResNet-work"><span class="nav-number">1.3.4.</span> <span class="nav-text">残差网络为什么有效 (Why ResNet work)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-网络中的网络以及1x1卷积-Network-in-Network-and-1x1-convolutions"><span class="nav-number">1.3.5.</span> <span class="nav-text">2.5 网络中的网络以及1x1卷积 (Network in Network and 1x1 convolutions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-Google-Inception-network-简介"><span class="nav-number">1.3.6.</span> <span class="nav-text">2.6 Google Inception network 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-Inception-网络"><span class="nav-number">1.3.7.</span> <span class="nav-text">2.7 Inception 网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-使用开源的实现方案-Using-open-source-implementations"><span class="nav-number">1.3.8.</span> <span class="nav-text">2.8 使用开源的实现方案 (Using open-source implementations)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-卷积网络的迁移学习-Transfer-Learning"><span class="nav-number">1.3.9.</span> <span class="nav-text">2.9 卷积网络的迁移学习 (Transfer Learning)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-数据增强-Data-argumentation"><span class="nav-number">1.3.10.</span> <span class="nav-text">2.10 数据增强 (Data argumentation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-计算机视觉现状-The-state-of-computer-vision"><span class="nav-number">1.3.11.</span> <span class="nav-text">2.11 计算机视觉现状 (The state of computer vision)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三周-目标检测"><span class="nav-number">1.4.</span> <span class="nav-text">第三周 目标检测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-目标定位"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 目标定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-特征点检测-Landmark-detection"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 特征点检测 (Landmark detection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-目标检测-Object-detection"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.3 目标检测 (Object detection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-卷积的滑动窗口实现-Convolutional-implementation-of-sliding-windows"><span class="nav-number">1.4.4.</span> <span class="nav-text">3.4 卷积的滑动窗口实现 (Convolutional implementation of sliding windows)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-Bounding-Box预测-Bounding-box-predictions"><span class="nav-number">1.4.5.</span> <span class="nav-text">3.5 Bounding Box预测 (Bounding box predictions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-交并集-Intersection-over-union"><span class="nav-number">1.4.6.</span> <span class="nav-text">3.6 交并集 (Intersection over union)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-非极大值抑制-Non-max-suppression"><span class="nav-number">1.4.7.</span> <span class="nav-text">3.7 非极大值抑制(Non-max suppression)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-Anchor-Boxes"><span class="nav-number">1.4.8.</span> <span class="nav-text">3.8 Anchor Boxes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-YOLO-算法"><span class="nav-number">1.4.9.</span> <span class="nav-text">3.9 YOLO 算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-10-R-CNN"><span class="nav-number">1.4.10.</span> <span class="nav-text">3.10 R-CNN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第4周"><span class="nav-number">1.5.</span> <span class="nav-text">第4周</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-什么是人脸识别-What-is-face-recognition"><span class="nav-number">1.5.1.</span> <span class="nav-text">4.1 什么是人脸识别 (What is face recognition?)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-One-Shot学习-One-Shot-learning"><span class="nav-number">1.5.2.</span> <span class="nav-text">4.2 One-Shot学习 (One-Shot learning)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-Siamese网络-Siamese-network"><span class="nav-number">1.5.3.</span> <span class="nav-text">4.3 Siamese网络 (Siamese network)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Triplet损失-Triplet-loss"><span class="nav-number">1.5.4.</span> <span class="nav-text">4.4 Triplet损失 (Triplet loss)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-面部验证与二分类-Face-verification-and-binary-classification"><span class="nav-number">1.5.5.</span> <span class="nav-text">4.5 面部验证与二分类 (Face verification and binary classification)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-什么是神经风格转换-What-is-neural-style-transfer"><span class="nav-number">1.5.6.</span> <span class="nav-text">4.6 什么是神经风格转换 (What is neural style transfer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-什么是深度卷积网络？-What-are-deep-ConvNets-learning"><span class="nav-number">1.5.7.</span> <span class="nav-text">4.7 什么是深度卷积网络？(What are deep ConvNets learning?)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-代价函数-Cost-function"><span class="nav-number">1.5.8.</span> <span class="nav-text">4.8 代价函数 (Cost function)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-9-内容代价函数-Content-cost-function"><span class="nav-number">1.5.9.</span> <span class="nav-text">4.9 内容代价函数 (Content cost function)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-10-风格代价函数-Style-cost-function"><span class="nav-number">1.5.10.</span> <span class="nav-text">4.10 风格代价函数 (Style cost function)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-11-一维到三维推广-1D-and-3D-generalizations-of-models"><span class="nav-number">1.5.11.</span> <span class="nav-text">4.11 一维到三维推广 (1D and 3D generalizations of models)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.5.12.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright"> &copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Shuai</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.5.0"></script>
+
+
+
+  
+
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function ({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + "2miGsS0xYN9CvVc3BePXgOSf-gzGzoHsz")
+        .done(function ({ api_server }) {
+          var Counter = function (method, url, data) {
+            return $.ajax({
+              method: method,
+              url: `https://${api_server}/1.1${url}`,
+              headers: {
+                'X-LC-Id': "2miGsS0xYN9CvVc3BePXgOSf-gzGzoHsz",
+                'X-LC-Key': "ebj6IWvY4muYuOEDSUdJafIh",
+                'Content-Type': 'application/json',
+              },
+              data: data,
+            });
+          };
+          
+          addCount(Counter);
+          
+        })
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
