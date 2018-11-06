@@ -1,6 +1,7 @@
 ---
 title: git常用命令
 date: 2018-10-25 13:23:03
+mathjax: false
 tags:
 - git
 categories: other

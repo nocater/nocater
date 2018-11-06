@@ -85,7 +85,7 @@ deploy:
   repo: git@github.com:nocater/nocater.github.io.git
   branch: master
   
-# Add manual - algolia:
+# Add manual - algolia(Google Account login):
 algolia:
   applicationID: '415B8LG6UG'
   apiKey: '8a8cb341516db603092ecd5652bed6a6'

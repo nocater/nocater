@@ -1,6 +1,6 @@
 *
 !.gitignore
-!./source/
+!source/*
 !themes/next/_config.yml
 !scaffolds/*
 !_config.yml

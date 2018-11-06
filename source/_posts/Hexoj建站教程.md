@@ -1,12 +1,12 @@
 ---
 title: Hexo Blog 教程
 date: 2018-10-24 18:14:18
+mathjax: true
 tags: 
 - Hexo 
 - Github Page
 categories: other
 description: Hexo v3.8.0 NexT v6.4.2博客搭建流程
-mathjax: true
 ---
 
 # 安装及部署 
@@ -173,6 +173,72 @@ description: Hexo建站流程说明
 请查看[为NexT主题添加文章阅读量统计功能](https://notes.wanghao.work/2015-10-21-%E4%B8%BANexT%E4%B8%BB%E9%A2%98%E6%B7%BB%E5%8A%A0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E9%87%8F%E7%BB%9F%E8%AE%A1%E5%8A%9F%E8%83%BD.html#%E9%85%8D%E7%BD%AELeanCloud)
 
 ## 文章搜索 
+  
+### Hexo NexT 6.0+版本
+[Algolia教程]()  
+1.登陆注册[Algolia](https://www.algolia.com/),创建`Index`。详细步骤参考6.0以下或教程。
+2.安装
+``` bash 
+$ npm install --save hexo-algolia
+```
+3.修改`站点配置文件`:
+
+```
+algolia:
+  applicationID: 'Application ID'
+  apiKey: 'Search-only API key'
+  indexName: 'indexName'
+  chunkSize: 5000
+```
+
+4.创建环境变量，Win下可直接手动创建。
+``` bash
+$ export HEXO_ALGOLIA_INDEXING_KEY=Search-Only API key # Use Git Bash
+# set HEXO_ALGOLIA_INDEXING_KEY=Search-Only API key # Use Windows command line
+$ hexo clean
+$ hexo algolia
+```
+完成后执行`hexo algolia`,得到结果：
+``` bash
+INFO  [Algolia] Testing HEXO_ALGOLIA_INDEXING_KEY permissions.
+INFO  Start processing
+INFO  [Algolia] Identified 9 pages and posts to index.
+INFO  [Algolia] Indexing chunk 1 of 1 (50 items each)
+INFO  [Algolia] Indexing done.
+```
+
+5.安装依赖包。(可以选择修改CDN，参考教程)
+``` bash
+$ cd themes/next
+$ git clone https://github.com/theme-next/theme-next-algolia-instant-search source/lib/algolia-instant-search
+```
+
+6.修改`站点位置文件`，启用搜索
+``` bash
+# Algolia Search
+algolia_search:
+  enable: true
+  hits:
+    per_page: 10
+  labels:
+    input_placeholder: Search for Posts
+    hits_empty: "We didn't find any results for the search: ${query}"
+    hits_stats: "${hits} results found in ${time} ms"
+```
+
+7.配置URL
+修改`站点配置`文件，将`url`设置为`/`(或域名),防止出现搜索结果跳转链接域名为`http;//yoursite`:
+```
+# URL
+## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+#url: http://yoursite.com
+url: /
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults: 
+```
+
+### Hexo NexT 6.0以下版本
 1.安装`hexo-generator-searchdb`：
 ``` bash
 $ npm install hexo-generator-searchdb --save
@@ -245,8 +311,41 @@ INFO  [Algolia] Indexing done.
 ```
 
 ## 文章公式 
-- 先写下标，再写上标，否则无法编译。`$X_1^2$`
-- `{}`的转义不是`\{\}`，而是`\\{\\}`:$\\{\\}$
+
+首先卸载默认渲染器，如遇到错误可忽略。
+
+``` bash
+$ npm un hexo-renderer-marked --save
+```
+
+然后安装新的渲染器
+
+```bash
+$ npm i hexo-renderer-kramed --save
+```
+
+修改`主题配置文件`,开启公式支持
+``` 
+math:
+  enable: true
+  ...
+  engine: mathjax
+  #engine: katex
+```
+**最后注意**，在文章顶部为当前文章开启渲染支持
+```
+---
+title: 文章名称
+date: 2018-10-24 18:14:18
+mathjax: true
+...
+---
+```
+
+
+Hexo文章公式使用注意
+- 先写下标，再写上标，否则可能无法编译。`$X_1^2$`-$X^2_1$-$X_1^2$
+- `{}`的转义不是`\{\}`，而是`\\{\\}`: $\\{\\}$
 - 公式换行`\\`转义为`\\\\`:
 $$
 \begin{cases}
@@ -257,17 +356,11 @@ $$
 $$
 - 表头前要有一行空白，否则编译失败
 - `*` 需要转义为`\*`：$\*$
-- `<t>`需要转义`<t\>`:$x^{<t\>}$
+- `<t>`需要转义`<t\>`: $x^{<t\>}$
 
 **请注意**：  
 `mathjax`的编译，请选择不同cdn。
 ``` 
-mathjax:
-  enable: true
-  per_page: false
-  # 本地Latex编译 cdn: //cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML
-  # GithubLatex编译 cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML
-```
 
 ## 底部标签 ##
 将文章底部的标签由`#`改为<i class="fa fa-tag"></i>  

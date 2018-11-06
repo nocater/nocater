@@ -1,6 +1,7 @@
 ---
 title: Springboot使用说明
 date: 2018-10-25 13:29:09
+mathjax: false
 tags:
 - springboot
 categories: other
