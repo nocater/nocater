@@ -495,7 +495,7 @@
 <p>为了理解依赖性解析中增量性的约束，我们将首先考虑最直接的解析策略，即从左到右的自下而上解析，在这种情况下，它基本上等同于使用上下文的shift-reduce解析。 乔姆斯基正常形式的自由语法。 解析器以转换系统的形式定义，如图3所示（其中$w_i$和$w_j$是任意字标记）：<br><img src="http://pa54oihmf.bkt.clouddn.com/18-11-9/37190595.jpg" alt=""></p>
 <ol>
 <li><strong>Left-Reduce</strong>转换是结合了栈里的两个token，$w_i$和$w_j$，通过左向相连：$w_j \rightarrow w_i$，头是$w_j$</li>
-<li><strong>Right-Reduce</strong>转换是结合了栈里的两个token，$w_i$和$w_j$，通过右向相连：$w_ \rightarrow w_j$，头是$w_$</li>
+<li><strong>Right-Reduce</strong>转换是结合了栈里的两个token，$w<em>i$和$w_j$，通过右向相连：$w</em> \rightarrow w<em>j$，头是$w</em>$</li>
 <li><strong>Shift</strong>操作是将下一个token进栈。</li>
 </ol>
 <p><strong>Left-Reduce</strong>和<strong>Right-Reduce</strong> transitions的约束是保证满足单头<strong>Single head</strong>条件。<strong>Shift</strong>操作的约束是列表非空。</p>
@@ -521,8 +521,15 @@
 </ol>
 <p>可以看出，<strong>Left-Arc</strong> 和 <strong>Right-Arc</strong> 类似于 <strong>Right-Reduce</strong> 和 <strong>Right-Reduce</strong>。它们确保满足单头(Single head)约束，而只当栈顶token有头时候才能使用<strong>Reduce</strong> trainsition. <strong>Shift</strong>与之前一样，列表不为空就可以执行。</p>
 <p>比较两个算法，<strong>Left-Arc</strong> 和 <strong>Left-Reduce</strong>是对应的，但不同在于，出于对称原因，前者适用于栈顶元素token和下一个输入元素token而不是栈顶的两个元素token。但 <strong>Right-Reduce</strong> 和 <strong>Right-Reduce</strong>相比，前者并不减少(Reduce)元素而是简单的将新的右依赖项转移(shift)到栈顶，从而使依赖项可以有自己的右依赖项。但是为了允许多个多个右依赖项，必须还有一种机制来弹出栈中的依赖项。这就是 <strong>Reduce</strong> transition. 因此，我们可以说，标准自下而上算法中右Reduce transitions所执行的动作是通过<strong>Right-Arc</strong>结合弧激发(arc-eager)算法中的后续Reduce转换来执行的。由于Right-Arc和Reduce可以由任意数量的转换分隔，因此允许对任意长的右依赖链进行增量解析。对于Arc-eager算法而言，定义增量对于标准自下而上算法来说不那么简单。 简单地考虑堆栈的大小将不再起作用，因为堆栈现在可以包含形成依赖图的连接组件的token序列。另外，由于不再必须转移两个tokens组合到栈，并且因为出栈的任意token都可连接到栈的某个token,我们需要保证图 $(S,As)$ 是一直连接的。$As$表示$A$到$S$的约束，如： $As = {(w_i,w_j) \in A | w_i,w_j \in S }$</p>
-<p>给定增量性的定义后，图4中的2-5可以很好使用arc-eager算法的逐步解析，和标准的自下而上算法一样。<br>$$<br>\langle \textbf{nil}, abc, \emptyset \rangle \<br>\downarrow \textbf{Shift} \<br>\langle a,bc, \emptyset \rangle \<br>\downarrow \textbf{Right-Arc} \<br>\langle bc,a,{(a,b)} \rangle \<br>\downarrow \textbf{Right-Arc} \<br>\langle cba,\textbf{nil}, {(a,b), (b,c)} \rangle<br>$$</p>
-<p>我们得出结论，相对于依赖性解析中的递增性，arc-eager算法是最优的，即使它仍然适用于图4中的结构（6-7）不能以递增方式解析。接下来的问题是，在实际的解析过程中，出现这样结构的情况有多频繁。这个问题相当于说，Arc-eager算法对严格的增量处理偏离有多少。答案显然取决于选取的语言和理论框架，我们将在下一节来至少谈一谈这个问题。在此之前，我们希望结果能与之前的上下文(context-free)解析联系起来。</p>
+<p>给定增量性的定义后，图4中的2-5可以很好使用arc-eager算法的逐步解析，和标准的自下而上算法一样。  </p>
+<script type="math/tex; mode=display">
+\langle \textbf{nil}, abc, \emptyset \rangle \\
+\downarrow \textbf{Shift} \\
+\langle a,bc, \emptyset \rangle \\
+\downarrow \textbf{Right-Arc} \\
+\langle bc,a,\{(a,b)\} \rangle \\
+\downarrow \textbf{Right-Arc} \\
+\langle cba,\textbf{nil}, \{(a,b), (b,c)\} \rangle</script><p>我们得出结论，相对于依赖性解析中的递增性，arc-eager算法是最优的，即使它仍然适用于图4中的结构（6-7）不能以递增方式解析。接下来的问题是，在实际的解析过程中，出现这样结构的情况有多频繁。这个问题相当于说，Arc-eager算法对严格的增量处理偏离有多少。答案显然取决于选取的语言和理论框架，我们将在下一节来至少谈一谈这个问题。在此之前，我们希望结果能与之前的上下文(context-free)解析联系起来。</p>
 <p>首先可以知道，相比于其它context-free解析的标准应用，自下而上和自上而下的术语在依赖解析的上下文中有一点不同的含义。由于依赖图中没有终止节点，自上而下结构表示头节点是在其依赖被绑定前进行绑定的。然而，依赖图中的自上而下结构并不包含从高层节点<em>prediction</em>底层节点，因为所有的节点是输入字符串给定的。因此，就驱动解析过程的因素而言，这里讨论的所有算法都对应于无上下文解析中的自下而上算法。 有趣的是，如果我们将依赖解析的问题重新定义为使用CNF语法的无上下文解析，那么图4中的有问题的结构（1），（6-7）都对应于右分支结构，并且很好 - 已知自下而上的解析器可能需要无限量的内存来处理右分支结构（Miller和Chomsky，1963; Abney和Johnson，1991）。</p>
 <p>此外，如果我们在Abney和Johnson（1991）的框架下分析这里讨论的两种算法，它们对于枚举节点的顺序完全不同，而只是对枚举的顺序有所不同;第一种算法是电弧标准，而第二种算法是弧形标准。 Abney和Johnson（1991）提出的观察之一是，无弧上传解析的弧形策略有时可能需要比弧标准策略更少的空间，尽管它们可能会导致局部模糊性的增加。看起来关于图4中结构（1）的依赖关系解析的arc-eager策略的优点可以沿着相同的行解释，尽管依赖图中缺少非终结节点意味着本地没有相应的增加歧义。虽然详细讨论无上下文解析和依赖解析之间的关系超出了本文的范围，但我们推测这可能是依赖表示在解析中的真正优势。</p>
 <h1 id="5-Experimental-Evaluation"><a href="#5-Experimental-Evaluation" class="headerlink" title="5 Experimental Evaluation"></a>5 Experimental Evaluation</h1><p>结果可以在表1中找到，我们看到在解析613个句子（平均长度为14.0个单词）中使用的16545个配置中，68.9％在堆栈上有零个或一个连接组件，这是我们要求的 一个严格的增量解析器。 我们还发现，大多数违反增量的行为相当温和，因为超过90％的配置在堆栈上的连接组件不超过三个。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-11-9/4021877.jpg" alt=""></p>
