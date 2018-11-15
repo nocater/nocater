@@ -123,7 +123,7 @@
 <meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-11-9/70878698.jpg">
 <meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-11-9/4021877.jpg">
 <meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-11-9/48531444.jpg">
-<meta property="og:updated_time" content="2018-11-14T08:50:04.000Z">
+<meta property="og:updated_time" content="2018-11-15T09:37:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文:Incrementality in Deterministic Dependency Parsing">
 <meta name="twitter:description" content="增量式确定性依赖解析算法：Arc-eager">
@@ -413,7 +413,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-11-14 16:50:04" itemprop="dateModified" datetime="2018-11-14T16:50:04+08:00">2018-11-14</time>
+                <time title="修改时间：2018-11-15 17:37:26" itemprop="dateModified" datetime="2018-11-15T17:37:26+08:00">2018-11-15</time>
               
             
           </span>
@@ -477,7 +477,8 @@
       
 
       
-        <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>确定性依赖解析(<strong>Deterministic dependency parsing</strong>)是一个鲁棒和高效的非限制性自然语言文本句法解析方法。本文分析了其增量处理的可能性，并得出结论：在此框架内无法严格实现增量。但是我们还证明，通过选择最优解析算法，可以最小化需要非增量处理结构的数量。这一说法得到了实验证据的证实，该证据表明，当在瑞典文本的随机样本上进行测试时，该算法实现了对输入的68.9％的增量解析。 当限于解析器接受的句子时，增量程度增加到87.9％。</p>
+        <p><a href="https://www.aclweb.org/anthology/W/W04/W04-0308.pdf" target="_blank" rel="noopener">Incrementality in Deterministic Dependency Parsing</a><br>Joakim Nivre<br>Vaxjo University</p>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>确定性依赖解析(<strong>Deterministic dependency parsing</strong>)是一个鲁棒和高效的非限制性自然语言文本句法解析方法。本文分析了其增量处理的可能性，并得出结论：在此框架内无法严格实现增量。但是我们还证明，通过选择最优解析算法，可以最小化需要非增量处理结构的数量。这一说法得到了实验证据的证实，该证据表明，当在瑞典文本的随机样本上进行测试时，该算法实现了对输入的68.9％的增量解析。 当限于解析器接受的句子时，增量程度增加到87.9％。</p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>增量解析被提倡是出于至少两个不同的原因。第一从实用性上讲，语音识别等实时任务需要对当前输入进行不断的更新的分析。第二从理论上来说，增量解析将解析和认知建模(<strong>congnitive modeling</strong>)联系在一起。<br>然而，由于不同的原因，目前大多数最先进的解析方法都不遵循增量性原则。尝试完全消除输入歧义的解析器 - 即<strong>完全解析</strong> - 通常首先使用某种动态编程算法来派生<em>包解析林</em>(packed parse forest)，然后应用概率自上而下模型以选择最可能的分析(Collins, 1997; Charniak, 2000)。由于第一步是基本不确定的，这似乎至少在严格意义上排除了增量性。与之相反，只对输入消除部分歧义的解析器-即<strong>部分解析(partial parsing)</strong>-通常是确定的，通过一次输入构建最终分析(Abney, 1991; Daelemans et al., 1999)。但由于它们通常会输出一系列未连接的短语或块，因此不能满足增量性的限制。<br>最近提出的<em>确定性依赖解析</em>(<strong>Deterministic dependency parsing</strong>)作为用于语法分析非受限自然语言文本的方法，具有鲁棒性和高效性(Yamada and Matsumoto, 2003; Nivre, 2003)。在某些方面，这种方法可以看作是传统的完整解析和部分解析之间的折衷。本质上，它是一种全解析，其目标是构建一个对输入字符的完整的语法分析，而不是仅仅是确定主要成分。但它和部分解析类似，是具有鲁棒，高效和确定性的。总而言之，这些属性似乎是依赖解析适应于增量处理，尽管有些实现并不满足这些约束。例如，Yamada和Matsumoto（2003）使用多通道自下而上算法，结合支持向量机，其方式不会导致增量处理。<br>在本文中，我们分析了确定性依赖解析中增量性的约束，并认为严格的增量是不可实现的。 然后，我们分析了Nivre（2003）中提出的算法，并且表明，鉴于先前的结果，该算法从增量性的角度来看是最优的。 最后，我们实验性地评估了算法在实际解析中实现的增量程度。</p>
 <h1 id="2-Dependency-Parsing"><a href="#2-Dependency-Parsing" class="headerlink" title="2 Dependency Parsing"></a>2 Dependency Parsing</h1><p>在依赖结构中，每个word token是依赖于最多一个的其它word token，通常称之为它的<em>head</em>或<em>regent</em>。也就是说，依赖结构可以使用有向图(directed graph)来表示。节点node表示word token，边arcs表示依赖关系。此外，边arcs可以标记特定依赖类型。图1为瑞典语句的标记依赖图。<br><img src="http://pa54oihmf.bkt.clouddn.com/18-11-8/78536165.jpg" alt=""><br>在下文中，我们将注意力限制在未标记的依赖图上，即没有标记弧的图，但结果也将适用于标记的依赖图。 我们也将自己局限于投影依赖图（Mel’cuk，1988）。 在形式上，我们通过以下方式定义这些结构：</p>
 <ol>
@@ -651,7 +652,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

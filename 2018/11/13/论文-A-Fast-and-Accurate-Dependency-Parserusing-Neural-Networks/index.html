@@ -108,13 +108,13 @@
 
 
 
-  <meta name="description" content="论文">
+  <meta name="description" content="基于神经网络的依赖解析器">
 <meta name="keywords" content="cs224n,nlp,自然语言处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文:A Fast and Accurate Dependency Parserusing Neural Networks">
 <meta property="og:url" content="https://nocater.github.io/2018/11/13/论文-A-Fast-and-Accurate-Dependency-Parserusing-Neural-Networks/index.html">
 <meta property="og:site_name" content="Nocater&#39;s Blog">
-<meta property="og:description" content="论文">
+<meta property="og:description" content="基于神经网络的依赖解析器">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-11-13/73748246.jpg">
 <meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-11-13/92800880.jpg">
@@ -128,10 +128,10 @@
 <meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-11-14/95150842.jpg">
 <meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-11-14/71995894.jpg">
 <meta property="og:image" content="http://pa54oihmf.bkt.clouddn.com/18-11-14/49837344.jpg">
-<meta property="og:updated_time" content="2018-11-14T08:49:52.000Z">
+<meta property="og:updated_time" content="2018-11-15T09:30:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="论文:A Fast and Accurate Dependency Parserusing Neural Networks">
-<meta name="twitter:description" content="论文">
+<meta name="twitter:description" content="基于神经网络的依赖解析器">
 <meta name="twitter:image" content="http://pa54oihmf.bkt.clouddn.com/18-11-13/73748246.jpg">
 
 
@@ -418,7 +418,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-11-14 16:49:52" itemprop="dateModified" datetime="2018-11-14T16:49:52+08:00">2018-11-14</time>
+                <time title="修改时间：2018-11-15 17:30:26" itemprop="dateModified" datetime="2018-11-15T17:30:26+08:00">2018-11-15</time>
               
             
           </span>
@@ -466,7 +466,7 @@
           
 
           
-              <div class="post-description">论文</div>
+              <div class="post-description">基于神经网络的依赖解析器</div>
           
 
         </div>
@@ -482,7 +482,8 @@
       
 
       
-        <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>现在几乎所有的依赖解析器(dependency parsers)都是基于数百万个稀疏指示器特征(sparse indicator feature)进行分类。这些特征泛化能力差，计算成本高。本文提出了一种新的贪婪式(greedy),基于转移(trasition-based)依赖解析器(dependency parser)来实现神经网络学习。由于分类器学习和使用少量的dense feature，所以它运行快，不论是在中文还是英文上有LAS或UAS提高了2%。具体来说，我们的解析器能在92%的UAS数据上每秒处理1000个句子。</p>
+        <p><a href="https://cs.stanford.edu/people/danqi/papers/emnlp2014.pdf" target="_blank" rel="noopener">A Fast and Accurate Dependency Parser using Neural Networks</a><br>Danqi Chen, Christopher D. Manning<br>Stanford University  </p>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>现在几乎所有的依赖解析器(dependency parsers)都是基于数百万个稀疏指示器特征(sparse indicator feature)进行分类。这些特征泛化能力差，计算成本高。本文提出了一种新的贪婪式(greedy),基于转移(trasition-based)依赖解析器(dependency parser)来实现神经网络学习。由于分类器学习和使用少量的dense feature，所以它运行快，不论是在中文还是英文上有LAS或UAS提高了2%。具体来说，我们的解析器能在92%的UAS数据上每秒处理1000个句子。</p>
 <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>现在，基于特征的判别式依赖解析器(feature-based discriminative dependency parser)(K¨ubler et al., 2009)。应用中基于转换的及其子类解析器都比较快速。<br>但这些解析器仍不完美。首先，从统计学角度来讲，他们使用数百万并不是很好的特征权重<br>，虽然整体上词汇特征和高级交互特征在提升算法，但没有足够数据来给这些权重正确赋值。其次，所有的解析器都需要手工设计特征模板，这需要专业性，通常并不完整。再而，许多特征模板在研究很少的问题：现在解析器，最大的耗时不是算法，而是特征提取。Bohnet说他的算法虽然有效，但99%的时候都在特征提取。</p>
 <p>受词向量成功的启发(POS任务)，我们想使用dense feature来解决问题。低维，密集的特征是不错的良好的开始。</p>
 <p>然而，如何对<em>配置</em>信息中所有有用信息进行编码，如何建模基于密集表示的高层特征都是挑战。我们训练了一个神经网络分类器，来在trainsition-based 依赖解析器中做解析决策。神经网络能生成词向量，POS，和依赖标签。我们仅使用200个特征在中文和英文的两个不同雨来任务中取得快速而准确的效果。本文贡献：</p>
@@ -594,6 +595,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/11/15/论文-Globally-Normalized-Transition-Based-Neural-Networks/" rel="prev" title="论文:Globally Normalized Transition-Based Neural Networks">
+                论文:Globally Normalized Transition-Based Neural Networks <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -664,7 +669,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
