@@ -25,14 +25,14 @@ Vaxjo University
 
 # 2 Dependency Parsing
 在依赖结构中，每个word token是依赖于最多一个的其它word token，通常称之为它的*head*或*regent*。也就是说，依赖结构可以使用有向图(directed graph)来表示。节点node表示word token，边arcs表示依赖关系。此外，边arcs可以标记特定依赖类型。图1为瑞典语句的标记依赖图。
-![](http://pa54oihmf.bkt.clouddn.com/18-11-8/78536165.jpg)
+![](http://img.nocater.com/18-11-8/78536165.jpg)
 在下文中，我们将注意力限制在未标记的依赖图上，即没有标记弧的图，但结果也将适用于标记的依赖图。 我们也将自己局限于投影依赖图（Mel'cuk，1988）。 在形式上，我们通过以下方式定义这些结构：
 
 1. 一个依赖图的单词集合$W = w_1...w_n$,边集合$D = (W, A)$。A是由边的集合组成，$(w_i, w_j), (w_i, w_j \in W)$。$w_i < w_j$表示$w_i$先于$w_j$在字符串$W$出现。$w_i \rightarrow w_j$ 表示一条边，$\rightarrow^*$ 表示弧关系的重新闭合和传递闭合。 $\leftrightarrow$ 和表示 $\leftrightarrow^*$ 对应的无向关系。
 
 2. 依赖图 $D = \{W, A\}$ 的约束如图2。
 
-![](http://pa54oihmf.bkt.clouddn.com/18-11-8/51326678.jpg)
+![](http://img.nocater.com/18-11-8/51326678.jpg)
 
 将字符串$W = w_1...w_n$在满足约束的条件下映射到依赖图的任务，我们称之为**依赖解析(dependency parsing)**。更多的细节参考Nivre (2003)。
 
@@ -46,7 +46,7 @@ Vaxjo University
 我们使用 $\langle S,I,A \rangle$ 表示解析器配置。$S$是由一个列表表示的栈，$I$ 是输入token列表。$A$ 是依赖图的当前边关系。(由于依赖图的节点由输入字符串给出，因此只需要明确表示弧关系)。给定输入字符串$W$后， 解析器初始化为 $\langle \textbf{nil}, W, \emptyset \rangle$，并在达到 $\langle S, \textbf{nil},A \rangle$条件时终止。如果在结束时图$D=(W,A)$是结构良好的，则接收accept字符串$W$,否则拒绝reject.
 
 为了理解依赖性解析中增量性的约束，我们将首先考虑最直接的解析策略，即从左到右的自下而上解析，在这种情况下，它基本上等同于使用上下文的shift-reduce解析。 乔姆斯基正常形式的自由语法。 解析器以转换系统的形式定义，如图3所示（其中$w_i$和$w_j$是任意字标记）：
-![](http://pa54oihmf.bkt.clouddn.com/18-11-9/37190595.jpg)
+![](http://img.nocater.com/18-11-9/37190595.jpg)
 
 1. **Left-Reduce**转换是结合了栈里的两个token，$w_i$和$w_j$，通过左向相连：$w_j \rightarrow w_i$，头是$w_j$
 2. **Right-Reduce**转换是结合了栈里的两个token，$w_i$和$w_j$，通过右向相连：$w_ \rightarrow w_j$，头是$w_$
@@ -59,7 +59,7 @@ Vaxjo University
 我们现代可以定义这个框架中解析器的增量的含义。理想情况下，我们希望图表 $\langle W-I，A\rangle$始终连接。 然而，考虑到Left-Reduce和Right-Reduce的定义，不可能在没有将其移动到堆栈的情况下连接新单词，因此似乎更合理的条件是堆栈的大小不应超过2。 通过这种方式，我们要求每个单词一旦被移动到堆栈上就被附加在依赖图中的某处。
 
 我们现在可能会问，是否有可能通过从左到右的自下而上依赖性解析器实现递增性，并且在一般情况下答案结果为“否”。 这可以通过考虑仅包含三个节点的所有可能的投影依赖图并且检查哪些可以递增地解析来证明。 图4显示了相关结构，其中共有七个结构。
-![](http://pa54oihmf.bkt.clouddn.com/18-11-9/6662759.jpg)
+![](http://img.nocater.com/18-11-9/6662759.jpg)
 
 2-5都可以实现结构化增量，首先将两个token进栈，2-3使用**Right Reduce**, 4-5使用**Left Reduce**， 之后再都进栈，最后2，4再使用**Right Reduce**, 3,5 使用**Left Reduce**。
 
@@ -85,7 +85,7 @@ Vaxjo University
 为了增加确定性依赖解析的递增性，我们需要结合自下而上和自上而下的处理。 更确切地说，我们需要自上而下处理左依赖者自下而上和右依赖者。 通过这种方式，只要相应的头部和从属关系可用，就会将弧添加到依赖关系图中，即使依赖关系对于其自己的依赖关系是不完整的。 在Abney和Johnson（1991）之后，我们将这种热切的解析称为与前一节中讨论的标准自下而上策略区别开来。
 
 使用与以前相同的解析器配置表示，可以通过图5中给出的转换来定义arc-eager算法，其中wi和wj是任意字标记（Nivre，2003）：
-![](http://pa54oihmf.bkt.clouddn.com/18-11-9/70878698.jpg)  
+![](http://img.nocater.com/18-11-9/70878698.jpg)  
 
 1. **Left-Arc** transition：$w_j \overset{r}{\rightarrow} w_i$，含义是，将下一个输入token $w_j$指向栈顶元素$w_i$并出栈(pop stack)
 2.  **Right-Arc** transition：$w_i \overset{r}{\rightarrow} w_j$，含义是，将栈顶元素$w_i$并出栈(pop stack)指向下一个输入token $w_j$,并将$w_j$入栈
@@ -115,11 +115,11 @@ $$
 
 # 5 Experimental Evaluation 
 结果可以在表1中找到，我们看到在解析613个句子（平均长度为14.0个单词）中使用的16545个配置中，68.9％在堆栈上有零个或一个连接组件，这是我们要求的 一个严格的增量解析器。 我们还发现，大多数违反增量的行为相当温和，因为超过90％的配置在堆栈上的连接组件不超过三个。
-![](http://pa54oihmf.bkt.clouddn.com/18-11-9/4021877.jpg)
+![](http://img.nocater.com/18-11-9/4021877.jpg)
 
 许多违反增量的行为是由无法解析为良好的依赖图的句子引起的，即单个映射依赖树，但解析器的输出是一组内部连接的组件。 为了测试不完全解析对增量统计的影响，我们进行了第二个实验，其中我们将测试数据限制为444个句子（613个中），本文生成了一个格式良好的依赖图。 结果可以在表2中看到。在这种情况下，87.1％的配置实际上满足增量性的约束，并且堆栈中具有不超过三个连接组件的配置的比例高达99.5％。
 
-![](http://pa54oihmf.bkt.clouddn.com/18-11-9/48531444.jpg)
+![](http://img.nocater.com/18-11-9/48531444.jpg)
 
 **似乎可以得出结论，尽管在确定性依赖性解析中不可能采用严格的逐字增量，但实际上，Arc-eager算法可以被视为增量解析的近似近似。**
 

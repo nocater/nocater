@@ -118,7 +118,7 @@ $$p_G(d_{1:n} | x_{1:n}) = \frac{\exp \sum_{i=1}^n \rho(d_{1:i-1}, d_i, x_{1:i})
 
 **Model Conﬁguration**  
 **Result**
-![@图](http://pa54oihmf.bkt.clouddn.com/18-11-19/25877847.jpg)
+![@图](http://img.nocater.com/18-11-19/25877847.jpg)
 
 ## 4.2 依赖解析
 **数据集**  
@@ -126,8 +126,8 @@ $$p_G(d_{1:n} | x_{1:n}) = \frac{\exp \sum_{i=1}^n \rho(d_{1:i-1}, d_i, x_{1:i})
 **Model Conﬁguration**  
 与 Chen and Manning (2014)一致。  
 **Result**  
-![](http://pa54oihmf.bkt.clouddn.com/18-11-19/33082398.jpg)
-![](http://pa54oihmf.bkt.clouddn.com/18-11-19/33203968.jpg)
+![](http://img.nocater.com/18-11-19/33082398.jpg)
+![](http://img.nocater.com/18-11-19/33203968.jpg)
 
 ## 4.3 语句压缩
 **数据集**  
@@ -135,7 +135,7 @@ Filippova(2015)数据集。
 **Model Conﬁguration**  
 与transition system相似，将左右替换成*keep*和*drop*。  
 **Result**  
-![](http://pa54oihmf.bkt.clouddn.com/18-11-19/4280990.jpg)
+![](http://img.nocater.com/18-11-19/4280990.jpg)
 
 # 5 Discussion
 略
