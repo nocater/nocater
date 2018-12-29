@@ -108,30 +108,35 @@
 
 
 
-  <meta name="description" content="SyntaxNet模型">
-<meta name="keywords" content="cs224n,nlp,自然语言处理">
+  <meta name="description" content="word2vec两篇论文及Skip-gram详解">
+<meta name="keywords" content="word2vec,word embedding">
 <meta property="og:type" content="article">
-<meta property="og:title" content="论文:Globally Normalized Transition-Based Neural Networks">
-<meta property="og:url" content="https://nocater.github.io/2018/11/15/论文-Globally-Normalized-Transition-Based-Neural-Networks/index.html">
+<meta property="og:title" content="word2vec详解">
+<meta property="og:url" content="https://nocater.github.io/2018/12/29/word2vec详解/index.html">
 <meta property="og:site_name" content="Nocater&#39;s Blog">
-<meta property="og:description" content="SyntaxNet模型">
+<meta property="og:description" content="word2vec两篇论文及Skip-gram详解">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://img.nocater.com/18-11-19/25877847.jpg">
-<meta property="og:image" content="http://img.nocater.com/18-11-19/33082398.jpg">
-<meta property="og:image" content="http://img.nocater.com/18-11-19/33203968.jpg">
-<meta property="og:image" content="http://img.nocater.com/18-11-19/4280990.jpg">
-<meta property="og:updated_time" content="2018-12-17T10:29:48.000Z">
+<meta property="og:image" content="http://img.nocater.com/18-12-29/48848268.jpg">
+<meta property="og:image" content="http://img.nocater.com/18-12-29/1523022.jpg">
+<meta property="og:image" content="http://mccormickml.com/assets/word2vec/training_data.png">
+<meta property="og:image" content="http://mccormickml.com/assets/word2vec/skip_gram_net_arch.png">
+<meta property="og:image" content="http://mccormickml.com/assets/word2vec/word2vec_weight_matrix_lookup_table.png">
+<meta property="og:image" content="http://mccormickml.com/assets/word2vec/matrix_mult_w_one_hot.png">
+<meta property="og:image" content="http://mccormickml.com/assets/word2vec/output_weights_function.png">
+<meta property="og:image" content="http://mccormickml.com/assets/word2vec/training_data.png">
+<meta property="og:image" content="http://mccormickml.com/assets/word2vec/subsample_func_plot.png">
+<meta property="og:updated_time" content="2018-12-29T11:07:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="论文:Globally Normalized Transition-Based Neural Networks">
-<meta name="twitter:description" content="SyntaxNet模型">
-<meta name="twitter:image" content="http://img.nocater.com/18-11-19/25877847.jpg">
+<meta name="twitter:title" content="word2vec详解">
+<meta name="twitter:description" content="word2vec两篇论文及Skip-gram详解">
+<meta name="twitter:image" content="http://img.nocater.com/18-12-29/48848268.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="https://nocater.github.io/2018/11/15/论文-Globally-Normalized-Transition-Based-Neural-Networks/">
+  <link rel="canonical" href="https://nocater.github.io/2018/12/29/word2vec详解/">
 
 
 
@@ -141,7 +146,7 @@
   };
 </script>
 
-  <title>论文:Globally Normalized Transition-Based Neural Networks | Nocater's Blog</title>
+  <title>word2vec详解 | Nocater's Blog</title>
   
 
 
@@ -351,7 +356,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://nocater.github.io/2018/11/15/论文-Globally-Normalized-Transition-Based-Neural-Networks/">
+    <link itemprop="mainEntityOfPage" href="https://nocater.github.io/2018/12/29/word2vec详解/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen Shuai">
@@ -368,7 +373,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">论文:Globally Normalized Transition-Based Neural Networks
+          <h1 class="post-title" itemprop="name headline">word2vec详解
               
             
           </h1>
@@ -393,47 +398,17 @@
                 
               
 
-              <time title="创建时间：2018-11-15 10:21:43" itemprop="dateCreated datePublished" datetime="2018-11-15T10:21:43+08:00">2018-11-15</time>
+              <time title="创建时间：2018-12-29 15:03:42 / 修改时间：19:07:06" itemprop="dateCreated datePublished" datetime="2018-12-29T15:03:42+08:00">2018-12-29</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-17 18:29:48" itemprop="dateModified" datetime="2018-12-17T18:29:48+08:00">2018-12-17</time>
               
             
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/CS224n/" itemprop="url" rel="index"><span itemprop="name">CS224n</span></a></span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -441,7 +416,7 @@
 
           
           
-             <span id="/2018/11/15/论文-Globally-Normalized-Transition-Based-Neural-Networks/" class="leancloud_visitors" data-flag-title="论文:Globally Normalized Transition-Based Neural Networks">
+             <span id="/2018/12/29/word2vec详解/" class="leancloud_visitors" data-flag-title="word2vec详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -458,7 +433,7 @@
           
 
           
-              <div class="post-description">SyntaxNet模型</div>
+              <div class="post-description">word2vec两篇论文及Skip-gram详解</div>
           
 
         </div>
@@ -474,51 +449,63 @@
       
 
       
-        <p><strong>SyntaxNet</strong> :<a href="https://arxiv.org/pdf/1603.06042.pdf" target="_blank" rel="noopener">Globally Normalized Transition-Based Neural Networks</a><br>Daniel Andor, Chris Alberti, David Weiss, Aliaksei Severyn et.al<br>Google Inc  </p>
-<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>我们设计了一个全局正则化的基于转移的神经网络模型(a globally normalized transition-based neural network)，在POS,依赖解析，语句压缩达到了最好的效果。我们的模型是一个在特定trainsition任务上简单的前向传播神经网络，与其它模型相比，准确率更高。我们讨论了global normalization及local normalization：一个重要的概念是标签的偏差意味着globally normalized 模型比locally normalized模型更严格的表达。</p>
-<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>NN在NLP领域应用广泛，LSTM在POS,语法解析，语义角色标注应用广泛。一个观点是因为循环神经网络才得到这样的效果</p>
-<p>我们验证了使用仅globally normalized，精度也能达到甚至超过使用RNN的模型。详见第二节。<em>我们不使用任何循环结构，但用集束搜索验证多个假设，并使用条件随机场(CRF)目标引入globally normalized，以克服locally normalized所遇到的标签偏差问题(???读不懂)</em>。由于我们使用<strong>集束推断</strong>，我们通过对集束中的元素求和来近似分割函数，并使用早期更新（Collins和Roark，2004; Zhou等，2015）。 我们基于该近似全局归一化来计算梯度，并基于CRF损失对所有神经网络参数执行完全反向传播训练。</p>
-<p>章节3重新回顾了下标签偏差问题，说明globally normalized 模型比local normalized模型能更严格的表达。我们的模型在词性标注POS，依赖解析和语句压缩上取得最好的精度，特别是华尔街日报的依赖解析达到历史最好94.61%。</p>
-<p>章节5中，我们模型也优于以前用于基于神经网络转换的解析的结构化训练方法。为了在实践过程中进一步阐述标签偏差问题，我们提供了一个语句压缩的例子，其中local 模型几乎完全失败。然后我们证明了没有任何lookahead features的globally normalized模型几乎与我们的最佳模型一样准确。</p>
-<p>最后，我们提供了一个名为SyntaxNet的方法的开源实现，我们已将其集成到流行的TensorFlow框架中。 我们还提供了一个预先训练的，最先进的英语依赖解析器，名为“Parsey McParseface”，我们在速度，简单性和准确性方面进行了调整。</p>
-<h1 id="2-Model"><a href="#2-Model" class="headerlink" title="2 Model"></a>2 Model</h1><p>我们的模型是增量式基于转移的解析器。将它应用到不同的任务上只需要调整transition system和 input feature。</p>
-<h2 id="2-1-Transition-system"><a href="#2-1-Transition-system" class="headerlink" title="2.1 Transition system"></a>2.1 Transition system</h2><p>对于输入 $x$，通常是一个语句，我们定义：</p>
+        <p>词向量(词嵌入，Word Embedding)已经比较熟悉了，但还是整体梳理一下比较好。不再详细介绍它的背景和简介，而是将能想到的细节进行整理说明。</p>
+<h1 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h1><p>语言模型的任务定义:对于语言序列$w_1,w_2,w_3,…,w_n$,语言模型就是计算该序列的概率，即$P(w_1,w_2,w_3,….,w_n)$。从机器学习角度来看，语言模型就是对语句的<strong>概率分布</strong>进行建模。简单来说，可以用语言模型来比较两个语句哪个更加正常,如 $P(\text{I am Light}) &gt; P(\text{Light I am})$。由概率公式可得：<br>$$P(w_1,w_2,w_3,….,w_n) = P(w_1)\cdot P(w_2 | w_1) \cdot P(w_3 |w_1, w_2)\cdot \ … \ P(w_n|w_1,w_2,…w_{n-1})$$</p>
+<p>在统计学领域，语言模型通常是使用<strong>n-gram语言模型</strong>，即使用size为n的window对序列切分建模，这里不再展开。</p>
+<p>2003年，Bengio发表了神经网络语言模型(<strong>NNLM</strong>)论文[1]，其网络结构如下图所示：<br><img src="http://img.nocater.com/18-12-29/48848268.jpg" alt="神经网络语言模型">  </p>
+<p>NNLM包含输入层，隐层，输出层三层神经网络，首先来看输入层，将单词$w_t$的上文(前n个单词)使用one-hot形式表示，并乘以矩阵$C$(跟据one-hot形式可发现是查表操作)。然后将得到的向量拼接在一起得到 $[C(w_{t-n+1}), …C(W_{t-2}), C(W_{t-1})]$ ，其作为隐层的输入。隐层的激活函数为<strong>tanh</strong>。最后输出层使用Softmax进行词汇表 $V$ 上的分类。矩阵$C$初始是随机初始化的，通过NNLM任务发现，学习后的矩阵$C$是一个密集且包含语义的词向量矩阵。通过one-hot进行相乘可得到每个单词对应的词向量。</p>
+<blockquote>
+<p>one-hot向量长度为词汇表$V$维向量，嵌入维度m可自行设定。在cs224n课程中，矩阵$C$及隐层权重$W$都用来表示词嵌入，后者被成为上下文向量。 在吴恩达课程中，嵌入矩阵即为矩阵$C$。</p>
+</blockquote>
+<p>通过NNLM任务，作为副产品的词向量效果良好，进而将其发扬光大。</p>
+<h1 id="Word2vec"><a href="#Word2vec" class="headerlink" title="Word2vec"></a>Word2vec</h1><p>Word Embedding的常用技术：word2vec主要任务目标就是为了训练得到词向量，而不再是NNLM的任务。word2vec包含两个模型<strong>CBOW</strong>，<strong>Skip-gram</strong>。word2vec是由两篇论文[2][3]完成的，第一篇论文提出了两个模型，第二篇论文提出了两个训练技巧，使训练更加有效可行。</p>
+<h2 id="模型细节"><a href="#模型细节" class="headerlink" title="模型细节"></a>模型细节</h2><p><img src="http://img.nocater.com/18-12-29/1523022.jpg" alt="@word2vec模型"><br>CBOW模型是将中心词的上下文作为输入来进行预测，而Skip-gram是根据中心词来预测其上下文单词。二者其实差不多。现在以Skip-gram为例来介绍下细节[4]。</p>
+<p>我们想要训练一个神经网络，抽取语句中的一个中间词来作为输入单词，然后随机选择’临近’的一个单词(‘临近’即超参数window size，通常选择5，即中心词前后各五个单词)。网络的输出概率应该为那些比较相关的单词。比如输入单词为”Soviet”,那输出结果 “Union” 和 “Russia”的概率应该高于其它不相关的单词。</p>
+<p><img src="http://mccormickml.com/assets/word2vec/training_data.png" alt="@skip-gram的训练样本"><br>网络应该能从单词组的共现次数上学习到统计信息。比如词组(“Soviet”, “Union”)出现是高于(“Soviet”, “Sasquatch”)，当网络在训练完成后，输入”Soviet”得到的结果中，”Union” 或 “Russia” 的概率应高于 “Sqsquatch”。  </p>
+<p><img src="http://mccormickml.com/assets/word2vec/skip_gram_net_arch.png" alt="@网络结构">  </p>
+<p>加入词汇表长度为10000，首先使用one-hot形式表示每一个单词，经过隐层300个神经元计算，最后使用Softmax层对单词概率输出。每一对单词组，前者作为x输入，后者作为y标签。  </p>
+<h2 id="隐层细节"><a href="#隐层细节" class="headerlink" title="隐层细节"></a>隐层细节</h2><p>假如我们想要学习的词向量维度为300，则需要将隐层的神经元个数设置为300(300是Google在其发布的训练模型中使用的维度，可调)。  </p>
+<p>隐层的权重矩阵就是词向量，我们模型学习到的就是隐层的权重矩阵。  </p>
+<p><img src="http://mccormickml.com/assets/word2vec/word2vec_weight_matrix_lookup_table.png" alt=""></p>
+<p>之所以这样，来看一下one-hot输入后与隐层的计算就明白了。  </p>
+<p><img src="http://mccormickml.com/assets/word2vec/matrix_mult_w_one_hot.png" alt=""></p>
+<p>当使用One-hot去乘以矩阵的时候，会将某一行选择出来，即查表操作，所以权重矩阵是所有词向量组成的列表。</p>
+<h2 id="输出层细节"><a href="#输出层细节" class="headerlink" title="输出层细节"></a>输出层细节</h2><p>Softmax细节不再阐述，其能将输出进行概率归一化。<br><img src="http://mccormickml.com/assets/word2vec/output_weights_function.png" alt=""><br>注意，神经网络并没有学习到输出相对于输入的偏移量。比如，在我们的语料库中，’York’每次前面都有’New’这个单词，所以，从训练数据角度来讲，’New’与’York’附近的概率为100%，但在’York’附近随机取10个单词，那概率就不再是100%了。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>假如使用词向量维度为300，词汇量为10000个单词，那么神经网络输入层与隐层，隐层与输出层的参数量会达到惊人的300x10000=300万！训练如词庞大的神经网络需要庞大的数据量，还要避免过拟合。因此，Google在其第二篇论文中说明了训练的trick，其创新点如下：</p>
 <ul>
-<li>状态集合$S(x)$</li>
-<li>特定的开始符号 $S^{\dagger} \in S(x)$</li>
-<li>允许的决策集合 $A(s,x)$, 所有的$s \in S(x)$</li>
-<li>转移函数 $t(s,d,x)$, 对任一决策$d \in A(s,x)$返回一个新的状态$s^\prime$</li>
+<li>将常用词对或短语视为模型中的单个”word”。</li>
+<li>对频繁的词进行子采样以减少训练样例的数量。</li>
+<li>在损失函数中使用”负采样(<strong>Negative Sampling</strong>)”的技术，使每个训练样本仅更新模型权重的一小部分。</li>
 </ul>
-<p>我们会使用函数 $\rho(s,d,x;\theta)$ 来计算输入$x$在状态$s$做决策$d$的得分。向量 $\theta$ 包含模型的所有参数，我们认为 $\rho(s,d,x;\theta)$ 和 $\theta$ 是不同的表示。</p>
-<p>本节中，我们省略$x$，函数记为 $S,A(s),t(s,d),\rho(s,d;\theta)$。</p>
-<p>在整个工作中，我们使用transition system，相同输入$x$的完整结构，具有相同数量$n(x)$(或简单记为n)的决策。例如，在依赖解析中，<em>arc-standard</em> 和 <em>arc-eager</em> transition system 都是如此，对于长度为$m$的语句输入$x$，完整解析的决策为$n(x) = 2 \times m$。<em>完整结构(complete structure)</em> 是决策/状态序列 $(s_1,d_1)…(s_n,d_n)$, $s_1= s^{\dagger}, d_i \in S(s_i)$, 每个$i = 1…n$, $s_{i+1} = t(s_i,d_i)$。我们用 $d_{1:j}$ 来表示决策序列$d_1…d_j$。</p>
-<p>我们认为决策序列 $d_{i:j}$ 和状态 $s_j$是一对一映射：也就是说，我们基本假设一个状态编码了整个决策历史。因此每个序列可以通过从 $S^{\dagger}$ 开始的唯一的决策序列得到。决策序列 $d_{1:j-1}$ 和状态可替换表示，我们定义 $\rho(d_{1:j-1},d;\theta)$ 与 $rho(s,d;\theta)$等同，其中s是 $d_{1:j-1}$ 到达的状态。</p>
-<p>得分函数的定义有很多种，我们通过前向传播神经网络来定义：<br>$$\rho(s,d;\theta)=\phi(s;\theta^{(l)}) \cdot \theta^{(d)}.$$<br>$\theta^{(l)}$ 是神经网络出去最后一层的所有参数。$\theta^{(d)}$ 是对决策$d$的最后一层参数。 $\phi(s;\theta^{(l)})$ 表示神经网络在参数 $\theta^{(l)}$ 计算得到的状态 $s$。注意，在参数 $\theta^{(d)}$下得分是线性的。我们之后会解释 softmax-style normalization 是如何应用在global和local级的。</p>
-<h2 id="2-2-Global-vs-Local-Normalization"><a href="#2-2-Global-vs-Local-Normalization" class="headerlink" title="2.2 Global vs. Local Normalization"></a>2.2 Global vs. Local Normalization</h2><p>在Chen&amp;Manning(2014)的贪婪式神经网络解析中，在上下文 $d_{1:j-1}$ 下决策 $d_j$ 的条件概率分布定义如下：<br>$$p(d_j | d_{1:j-1;\theta}) = \frac{\exp \rho(d_{1:j-1}, d_j; \theta)}{Z_L(d_{1:j-1}; \theta)} \tag{1}$$<br>其中：<br>$$Z_L(d_{1:j-1}; \theta) = \sum_{d^\prime \in A(d_{1:j-1})} \exp \rho(d_{1:j-1},d^\prime; \theta)$$</p>
-<p>每一个 $Z_L(d_{1:j-1}; \theta)$是一个 <em>local</em> normalization 项。决策序列 $d_{1:n}$ 的概率为：<br>$$<br>p_L(d^{1:n} = \prod_{j=1}^n p(d_j | d_{1:j-1; \theta})\<br>=\frac{\exp \sum_{j=1}^n \rho(d_{1:j-1, d_j; \theta})}{\prod_{n=1}^{n}Z_L(d_{1:j-1}; \theta)}. \tag{2}<br>$$<br><strong>集束搜索</strong>尝试找到Eq.(2)的最大化。集束搜索终得附加分是对每个决策使用logsoftmax，$\ln p(d_j | d_{1:j-1}; \theta)$,而不是原始分数 $\rho(d_{1:j-1}, d_j; \theta)$。</p>
-<p>相反，条件随机场(CRF)定义的 $p_G(d_{1:n})$ 如下：<br>$$<br>p_G(d_{1:n}) = \frac{\exp \sum_{j=1}^n \rho(d_{1:j-1}, d_j; \theta)}{Z_G(\theta)} \tag{3}<br>$$<br>其中，<br>$$<br>Z_G(\theta) = \sum_{d_{1:n}^\prime \in D_n} \exp \sum_{j=1}^n \rho(d_{1:j-1}^\prime, d_j^\prime; \theta)<br>$$<br>$D_n$是所有的长度为n的有效决策序列集合， $Z_G(\theta)$是<em>global</em> normalization 项。现在推断问题成为找到：<br>$$\text{argmax}_{d_{1:n} \in D_n} = \text{argmax}_{d_{1:n}\in D_n} \sum_{j=1}^n \rho(d_{1:j-1}, d_j; \theta).<br>$$</p>
-<p>可以再次使用集束搜索来找到近似argmax。</p>
-<h2 id="2-3-Training"><a href="#2-3-Training" class="headerlink" title="2.3 Training"></a>2.3 Training</h2><p>训练数据是由输入 $x$ 和 gold decision 序列 $d_{1:n}^<em>$ 组合而成。我们使用随机梯度下降和对数似然估计(negative log-likehood)函数。在 locally normalized model中，negative log-likehood 函数为：<br>$$ L_{local}(d_{1:n}^</em>;\theta) = -\ln p_L(d_{1:n}^<em>;\theta) = \ -\sum_{j=1}^n \rho(d_{1:n}^</em>, d_j^<em>; \theta) + \sum_{j=1}^n\ln Z_L(d_{1:n}^</em>; \theta) \tag{4}$$<br>而globally normalized model 的似然估计函数为：<br>$$ L_{global}(d_{1:n}^<em>;\theta) = -\ln p_G(d_{1:n}^</em>;\theta) = \ -\sum_{j=1}^n \rho(d_{1:n}^<em>, d_j^</em>; \theta) + \sum_{j=1}^n\ln Z_G(d_{1:n}^*; \theta) \tag{5}$$ </p>
-<p>locally normalized 的一个显著优势是公式4中 $Z_L$及其导数计算快速有效。而Eq.5中  $Z_G$ 项在很多情况下是难以处理的。</p>
-<p>为了使globally normalized 模型更易学习，我们使用<strong>集束搜索</strong>和<strong>early updates</strong>。随着训练序列解码，我们记录集束中的gold path，如果gold path落在 $j$ 布集束之外，将对以下目标进行随机梯度步骤：<br>$$L_{global-beam}(d_{1:n}^<em>:\theta) = \<br>-\sum_{i=1}^j \rho(d_{1:i-1}^</em>;\theta) + \ln \sum_{d_{1:j} \in \mit{B_j} } \exp \sum_{i=1}^j \rho(d_{1:n}^\prime, d_i^\prime; \theta) . \tag{6}$$</p>
-<p>其中， $\mit{B}<em>j$ 是 $j$ 步集束的所有路径, 前缀 $d</em>{i:j}^*$。可以直接计算Eq.6 中loss的梯度，并反向传播。如果gold path 在整个解码过程中保留，则使用解码结束后的集束 $\mit{b_n}$执行梯度步骤。</p>
-<h1 id="3-The-Label-Bias-Problem"><a href="#3-The-Label-Bias-Problem" class="headerlink" title="3 The Label Bias Problem"></a>3 The Label Bias Problem</h1><p>直观来讲，我们希望模型能够在发现错误后，能够修改之前的决策错误。乍一看，使用集束搜索或其它确定搜索结合的locally normalized模型能够修改之前的决策。但是<strong>label bias</strong>问题(see Bottou (1991), Collins (1999) pages 222-226, Lafferty et al. (2001), Bottou and LeCun (2005), Smith and Johnson (2007))说明其在这方面能力非常弱。</p>
-<p>本节通过证明全局规范化模型比局部规范化模型更具表现力，证明了标签偏差问题的正式观点。</p>
-<p><strong>Global Models can be Strictly More Expressive than Local Models</strong><br>来考虑将输入序列 $x_{1:n}$ 映射成决策序列 $d_{1:n}$任务中的 tagging problem。首先，考虑到locally normalized 模型， 在对决策 $d_i$ 评分时，我们将限制评分函数取到前 $i$ 个输入符号 $x_{1:i}$。 评分函数 $rho$ 可以是元组 $\langle d_{1:i-1}, d_i, x_{1:i}\rangle$ 的其他任意函数:</p>
-<p>$$<br>p_L(d_{1:n} | x_{1:n}) = \prod_{i=1}^n p_L(d_i|d_{1:i-1}, x_{1:i}) \<br>= \frac{\exp \sum_{i=1}^n \rho(d_{1:i-1}, d_i, x_{1:i})}{\prod_{i=1}^n Z_L(d_{1:i-1}, x_{1:i})}<br>$$<br>其次，考虑 globally normalized模型：<br>$$p_G(d_{1:n} | x_{1:n}) = \frac{\exp \sum_{i=1}^n \rho(d_{1:i-1}, d_i, x_{1:i}) }{Z_G(x_{1:n})}$$<br>这个模型同样的得分函数，在对决策 $d_i$ 评分时，限制于前 $i$ 个输入。</p>
-<p>定义 $\mit{P_L}$ 为locallly normalized 模型下得分 $\rho$ 所有可能的分布集合 $P_L(d_{1:n} | x_{1:n})$。同理，可以定义 globally normalized 模型$P_G$。这里的“分布”是一个从 $(x_{1:n}, d_{1:n})$ 到概率 $p(d_{1:n}|x_{1:n}$。我们的主要结果如下(证明可参考论文)。</p>
-<h1 id="4-Experiments"><a href="#4-Experiments" class="headerlink" title="4 Experiments"></a>4 Experiments</h1><p>我们在POS，依赖解析，语句压缩三个任务上进行实验。</p>
-<h2 id="4-1-POS"><a href="#4-1-POS" class="headerlink" title="4.1 POS"></a>4.1 POS</h2><p><strong>数据集</strong>：</p>
+<p>子采样和负采样技术不仅降低了计算量，还提升了词向量的效果。</p>
+<h2 id="对频繁词子采样"><a href="#对频繁词子采样" class="headerlink" title="对频繁词子采样"></a>对频繁词子采样</h2><p><img src="http://mccormickml.com/assets/word2vec/training_data.png" alt="@&#39;the&#39;问题"><br>在以上例子中，可以看到频繁单词’the’的两个问题:</p>
 <ul>
-<li>the English Wall Street Journal (WSJ) part of the Penn Treebank  </li>
-<li>the English “Treebank Union” multi-domain corpus containing data from the OntoNotes corpus version 5 </li>
-<li>the CoNLL ’09 multi-lingual shared task </li>
+<li>对于单词对(‘fox’,’the’)，其对单词’fox’的语义表达并没有什么有效帮助，’the’在每个单词的上下文中出现都非常频繁。</li>
+<li>预料中有很多单词对(‘the’,…)，我们应更好的学习单词’the’</li>
 </ul>
-<p><strong>Model Conﬁguration</strong><br><strong>Result</strong><br><img src="http://img.nocater.com/18-11-19/25877847.jpg" alt="@图"></p>
-<h2 id="4-2-依赖解析"><a href="#4-2-依赖解析" class="headerlink" title="4.2 依赖解析"></a>4.2 依赖解析</h2><p><strong>数据集</strong><br>与POS任务数据集一样，此外，使用WSJ的标准依赖切分。<br><strong>Model Conﬁguration</strong><br>与 Chen and Manning (2014)一致。<br><strong>Result</strong><br><img src="http://img.nocater.com/18-11-19/33082398.jpg" alt=""><br><img src="http://img.nocater.com/18-11-19/33203968.jpg" alt=""></p>
-<h2 id="4-3-语句压缩"><a href="#4-3-语句压缩" class="headerlink" title="4.3 语句压缩"></a>4.3 语句压缩</h2><p><strong>数据集</strong><br>Filippova(2015)数据集。<br><strong>Model Conﬁguration</strong><br>与transition system相似，将左右替换成<em>keep</em>和<em>drop</em>。<br><strong>Result</strong><br><img src="http://img.nocater.com/18-11-19/4280990.jpg" alt=""></p>
-<h1 id="5-Discussion"><a href="#5-Discussion" class="headerlink" title="5 Discussion"></a>5 Discussion</h1><p>略</p>
-<h1 id="6-Conclusion"><a href="#6-Conclusion" class="headerlink" title="6 Conclusion"></a>6 Conclusion</h1><p>我们提出了一种简单但功能强大的模型体系结构，可为POS标记，依赖性解析和句子压缩生成最好的结果。 我们的模型结合了 transition-based 的算法的灵活性和神经网络的建模能力。 我们的研究结果表明，没有循环的前馈网络在通过全局规范化训练时可以胜过LSTM等RNN模型。 我们进一步支持我们的实证结果，证明全局标准化有助于模型克服局部标准化模型所遭受的标签偏差问题。</p>
+<p>Word2vec使用子采样技术来解决以上问题，根据单词的频次来削减该单词的采样率。以window size为10为例子，我们删除’the’：</p>
+<ul>
+<li>当我们训练其余单词时候，’the’不会出现在他们的上下文中。</li>
+<li>当中心词为’the’时，训练样本数量少于10。</li>
+</ul>
+<p><strong>采样率(Sampling rate)</strong><br>使用 $w_i$来表示单词，$z(w_i)$来表示单词的频次。采样率是一个参数，默认值为0.001。$P(w_i)$ 表示单词保留的概率：<br>$$P(w_i)=(\sqrt{\frac{z(w_i)}{0.0001}} +1) \cdot \frac{0.001}{z(w_i)}$$<br>该函数的图像为：<br><img src="http://mccormickml.com/assets/word2vec/subsample_func_plot.png" alt="">  </p>
+<p>可以发现随着频次x的增加，其保留的概率越低。关于此函数有三个点需要注意：</p>
+<ul>
+<li>$P(w_i) = 1.0$(100%保留)，对应的 $z(w_i)&lt;=0.0026$。(表示词频大于0.0026的单词才会进行子采样)</li>
+<li>$P(w_i) = 0.5$(50%保留)，对应的 $z(w_i)=0.00746$。</li>
+<li>$P(w_i) = 0.033$(3.3%保留)，对应的 $z(w_i)=1.0$。(不可能)</li>
+</ul>
+<h2 id="负采样-Negative-Sampling"><a href="#负采样-Negative-Sampling" class="headerlink" title="负采样(Negative Sampling)"></a>负采样(Negative Sampling)</h2><p>训练一个网络是说，计算训练样本然后轻微调整所有的神经元权重来提高准确率。换句话说，每一个训练样本都需要更新所有神经网络的权重。</p>
+<p>就像如上所说，当词汇表特别大的时候，如此多的神经网络参数在如此大的数据量下，每次都要进行权重更新，负担很大。</p>
+<p>在每个样本训练时，只修改部分的网络参数，负采样是通过这种方式来解决这个问题的。</p>
+<p>当我们的神经网络训练到单词组(‘fox’, ‘quick’)时候，得到的输出或label都是一个one-hot向量，也就是说，在表示’quick’的位置数值为1，其它全为0。</p>
+<p>负采样是随机选择较小数量的’负(Negative)’单词(比如5个)，来做参数更新。这里的’负’表示的是网络输出向量种位置为0表示的单词。当然，’正(Positive)’(即正确单词’quick’)权重也会更新。</p>
+<blockquote>
+<p>论文中表述，小数量级上采用5-20，大数据集使用2-5个单词。</p>
+</blockquote>
+<p>我们的模型权重矩阵为300x10000，更新的单词为5个’负’词和一个’正’词，共计1800个参数，这是输出层全部3M参数的0.06%！！</p>
+<p>负采样的选取是和频次相关的，频次越高，负采样的概率越大：<br>$$P(w_i) = \frac{f(w_i)^{3/4}}{\sum_{j=0}^n(f(w_j)^{3/4})}$$<br>论文选择0.75作为指数是因为实验效果好。C语言实现的代码很有意思：首先用索引值填充多次填充词汇表中的每个单词，单词索引出现的次数为$P(w_i) * \text{table_size}$。然后负采样只需要生成一个1到100M的整数，并用于索引表中数据。由于概率高的单词在表中出现的次数多，很可能会选择这些词。</p>
+<h2 id="分层Softmax"><a href="#分层Softmax" class="headerlink" title="分层Softmax"></a>分层Softmax</h2><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>[1] <a href="http://120.52.51.18/www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf" target="_blank" rel="noopener">A Neural Probabilistic Language Model</a><br>[2] <a href="http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf" target="_blank" rel="noopener">Distributed Representations of Words and Phrases and their Compositionality</a><br>[3] <a href="https://arxiv.org/pdf/1301.3781.pdf" target="_blank" rel="noopener">Efficient Estimation of Word Representations in Vector Space</a><br>[4] <a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">cs224n: Word2Vec Tutorial - The Skip-Gram Model</a><br>[5] <a href="https://arxiv.org/pdf/1411.2738.pdf" target="_blank" rel="noopener">word2vec Parameter Learning Explained</a></p>
 
       
     </div>
@@ -539,11 +526,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/cs224n/" rel="tag"># cs224n</a>
+            <a href="/tags/word2vec/" rel="tag"># word2vec</a>
           
-            <a href="/tags/nlp/" rel="tag"># nlp</a>
-          
-            <a href="/tags/自然语言处理/" rel="tag"># 自然语言处理</a>
+            <a href="/tags/word-embedding/" rel="tag"># word embedding</a>
           
         </div>
       
@@ -556,8 +541,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/13/论文-A-Fast-and-Accurate-Dependency-Parserusing-Neural-Networks/" rel="next" title="论文:A Fast and Accurate Dependency Parserusing Neural Networks">
-                <i class="fa fa-chevron-left"></i> 论文:A Fast and Accurate Dependency Parserusing Neural Networks
+              <a href="/2018/11/15/论文-Globally-Normalized-Transition-Based-Neural-Networks/" rel="next" title="论文:Globally Normalized Transition-Based Neural Networks">
+                <i class="fa fa-chevron-left"></i> 论文:Globally Normalized Transition-Based Neural Networks
               </a>
             
           </div>
@@ -565,10 +550,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/12/29/word2vec详解/" rel="prev" title="word2vec详解">
-                word2vec详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -739,7 +720,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Model"><span class="nav-number">3.</span> <span class="nav-text">2 Model</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Transition-system"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 Transition system</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Global-vs-Local-Normalization"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 Global vs. Local Normalization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Training"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 Training</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-The-Label-Bias-Problem"><span class="nav-number">4.</span> <span class="nav-text">3 The Label Bias Problem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Experiments"><span class="nav-number">5.</span> <span class="nav-text">4 Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-POS"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 POS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-依赖解析"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 依赖解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-语句压缩"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 语句压缩</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Discussion"><span class="nav-number">6.</span> <span class="nav-text">5 Discussion</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Conclusion"><span class="nav-number">7.</span> <span class="nav-text">6 Conclusion</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#语言模型"><span class="nav-number">1.</span> <span class="nav-text">语言模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Word2vec"><span class="nav-number">2.</span> <span class="nav-text">Word2vec</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型细节"><span class="nav-number">2.1.</span> <span class="nav-text">模型细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隐层细节"><span class="nav-number">2.2.</span> <span class="nav-text">隐层细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出层细节"><span class="nav-number">2.3.</span> <span class="nav-text">输出层细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.4.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对频繁词子采样"><span class="nav-number">2.5.</span> <span class="nav-text">对频繁词子采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负采样-Negative-Sampling"><span class="nav-number">2.6.</span> <span class="nav-text">负采样(Negative Sampling)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分层Softmax"><span class="nav-number">2.7.</span> <span class="nav-text">分层Softmax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
