@@ -118,7 +118,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://img.nocater.com/19-1-13/76472347.jpg">
 <meta property="og:image" content="http://img.nocater.com/19-1-13/35034999.jpg">
-<meta property="og:updated_time" content="2019-01-13T13:57:50.000Z">
+<meta property="og:updated_time" content="2019-01-13T14:08:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Attention模型详解">
 <meta name="twitter:description" content="Attention机制及相关模型介绍">
@@ -391,7 +391,7 @@
                 
               
 
-              <time title="创建时间：2019-01-13 19:14:12 / 修改时间：21:57:50" itemprop="dateCreated datePublished" datetime="2019-01-13T19:14:12+08:00">2019-01-13</time>
+              <time title="创建时间：2019-01-13 19:14:12 / 修改时间：22:08:32" itemprop="dateCreated datePublished" datetime="2019-01-13T19:14:12+08:00">2019-01-13</time>
             
 
             
@@ -476,7 +476,7 @@
 <h2 id="Global-Attention"><a href="#Global-Attention" class="headerlink" title="Global Attention"></a>Global Attention</h2><p>我们使用$h_s$表示source hidden state(encoder的隐藏层对不同time-step输入的$x_t$的编码结果)。使用 $\bar{h}_t$表示target hidden state(decoder的隐层状态)。Attention的思想是对每个$h_s$设置一个权重 $\mathbf{a}_t(\mathbf{s})$,下标t表示decoder的time-step。假如$h_s$的长度为$n_h$,则我们可以设置$n_h$个权重值：{$a_0^{1}, a_0^2,…, a_0^{n_h}$},每个权重值下标表示decoder的time-step，上标表示对应的source hidden state。权重的计算函数可以记为<strong>score</strong>(李宏毅中使用match)，函数的输入为 $\text{score}(\mathbf{h}_t,\bar{\mathbf{h}_s})$。score函数的实现有多种方式：</p>
 <p>$$\text{score}(\mathbf{h}_t,\bar{\mathbf{h}_s}) = \begin{cases}<br>\mathbf{h}_t^T \bar{\mathbf{h}_s} \qquad\qquad\qquad dot \\<br>\mathbf{h}_t^T \mathbf{W}_a \bar{\mathbf{h}_s} \qquad\qquad general \\<br>\mathbf{v}_a^T \text{tanh}[\mathbf{h}_t^T : \bar{\mathbf{h}_s}] \quad concat \\<br>\end{cases}$$</p>
 <p>在得到每个权重后，还需要对其进行softmax:<br>$$\mathbf{a}_t(\mathbf{s}) = \text{align}(\mathbf{h_t}, \bar{\mathbf{h}}_s)$$</p>
-<p>$$=\frac{\exp(\text{score}(\mathbf{h}_t^T,\bar{\mathbf{h}<em>s}))}{\sum</em>{s^{\prime}} \exp(\mathbf{h}<em>t^T,\bar{\mathbf{h}</em>{s^\prime}})}$$</p>
+<p>$$=\frac{\exp(\text{score}(\mathbf{h}_t^T,\bar{\mathbf{h}_s}))}{ \sum_s \exp(\mathbf{h}_t^T,\bar{\mathbf{h}_s})}$$</p>
 <p>在得到权重的最终值$a_t(s)$后，我们将权重和source hidden state相乘，可以得到向量$c_t$:<br>$$c_t = \sum a_t(s)\cdot\bar{h}_s$$<br>最后decoder的最终输出为 $\tilde{\mathbf{h}}_t$:<br>$$\tilde{\mathbf{h}}_t = \text{tanh}(\mathbf{W}_c[c_t;\mathbf{h}_t])$$<br>最后经过softmax可以得到预测单词$y_t$:<br>$$p(y_t|y_{&lt;t}, x) = \text{softmax}(\mathbf{W}_s \tilde{\mathbf{h}_t})$$</p>
 <p>Attention层中的$W_a,W_c$是超参数，通过训练学习。</p>
 <p><img src="http://img.nocater.com/19-1-13/76472347.jpg" alt=""></p>
