@@ -118,7 +118,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://img.nocater.com/19-1-13/76472347.jpg">
 <meta property="og:image" content="http://img.nocater.com/19-1-13/35034999.jpg">
-<meta property="og:updated_time" content="2019-01-13T13:52:12.000Z">
+<meta property="og:updated_time" content="2019-01-13T13:57:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Attention模型详解">
 <meta name="twitter:description" content="Attention机制及相关模型介绍">
@@ -391,7 +391,7 @@
                 
               
 
-              <time title="创建时间：2019-01-13 19:14:12 / 修改时间：21:52:12" itemprop="dateCreated datePublished" datetime="2019-01-13T19:14:12+08:00">2019-01-13</time>
+              <time title="创建时间：2019-01-13 19:14:12 / 修改时间：21:57:50" itemprop="dateCreated datePublished" datetime="2019-01-13T19:14:12+08:00">2019-01-13</time>
             
 
             
@@ -471,7 +471,7 @@
 <h1 id="Attention模型之一详解"><a href="#Attention模型之一详解" class="headerlink" title="Attention模型之一详解"></a>Attention模型之一详解</h1><p>参考论文<a href="https://arxiv.org/abs/1508.04025" target="_blank" rel="noopener">Effective Approaches to Attention-based Neural Machine Translation</a>及<a href="https://zhuanlan.zhihu.com/p/51383402" target="_blank" rel="noopener">完全解析RNN, Seq2Seq, Attention注意力机制(知乎专栏)</a>。</p>
 <p>“attention”产生于机器翻译领域，其含义是允许模型学习不同任务间的对齐(learn alignments between different modalities)，比如图片描述生成，语音识别。神经机器翻译(NMT)相比于传统MT,占用内存小，decoder实现简单以及end-to-end。</p>
 <p>NMT系统是神经网络模型在条件概率$p(y|x)$下将source sentence，$x_1,…,x_n$ 翻译成target sentence, $y_1,…,y_n$,的过程。NMT的一般由Encoder和Decoder，前者学习source sentence的向量化表示，后者是每次生成一个目标单词，故条件概率为：<br>$$\log p(y|x) = \sum_{j=1}^m \log p(y_j|y_{&lt;j}, \mathbf{s})$$<br>$\mathbf{s}$ 表示source sentence。encoder和decoder一般使用RNN(GRU/LSTM)来实现。对于预测单词$y_j$，其概率计算可归纳为：<br>$$p(y_j|y_{&lt;j},\mathbf{s}) = \text{softmax}(g(\textbf{h}_j))$$</p>
-<p>softmax是在整个词汇表长度上进行的，$\mathbf{h}_j$是RNN的单元，其计算可归纳为：<br>$$\textbf{h}<em>j = f(\textbf{h}</em>{j-1},\textbf{s})$$</p>
+<p>softmax是在整个词汇表长度上进行的，$\mathbf{h}_j$是RNN的单元，其计算可归纳为：<br>$$\mathbf{h_j} = f(h_{j-1},\mathbf{s})$$</p>
 <p>$f$可以表示普通RNN单元、GRU或LSTM计算实现。</p>
 <h2 id="Global-Attention"><a href="#Global-Attention" class="headerlink" title="Global Attention"></a>Global Attention</h2><p>我们使用$h_s$表示source hidden state(encoder的隐藏层对不同time-step输入的$x_t$的编码结果)。使用 $\bar{h}_t$表示target hidden state(decoder的隐层状态)。Attention的思想是对每个$h_s$设置一个权重 $\mathbf{a}_t(\mathbf{s})$,下标t表示decoder的time-step。假如$h_s$的长度为$n_h$,则我们可以设置$n_h$个权重值：{$a_0^{1}, a_0^2,…, a_0^{n_h}$},每个权重值下标表示decoder的time-step，上标表示对应的source hidden state。权重的计算函数可以记为<strong>score</strong>(李宏毅中使用match)，函数的输入为 $\text{score}(\mathbf{h}_t,\bar{\mathbf{h}_s})$。score函数的实现有多种方式：</p>
 <p>$$\text{score}(\mathbf{h}_t,\bar{\mathbf{h}_s}) = \begin{cases}<br>\mathbf{h}_t^T \bar{\mathbf{h}_s} \qquad\qquad\qquad dot \\<br>\mathbf{h}_t^T \mathbf{W}_a \bar{\mathbf{h}_s} \qquad\qquad general \\<br>\mathbf{v}_a^T \text{tanh}[\mathbf{h}_t^T : \bar{\mathbf{h}_s}] \quad concat \\<br>\end{cases}$$</p>
