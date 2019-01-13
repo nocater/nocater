@@ -108,21 +108,28 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https://nocater.github.io/categories/index.html">
+  <meta name="description" content="Attention机制及相关模型介绍">
+<meta name="keywords" content="nlp,自然语言处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attention模型详解">
+<meta property="og:url" content="https://nocater.github.io/2019/01/13/Attention模型详解/index.html">
 <meta property="og:site_name" content="Nocater&#39;s Blog">
+<meta property="og:description" content="Attention机制及相关模型介绍">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-05T07:38:10.000Z">
+<meta property="og:image" content="http://img.nocater.com/19-1-13/76472347.jpg">
+<meta property="og:image" content="http://img.nocater.com/19-1-13/35034999.jpg">
+<meta property="og:updated_time" content="2019-01-13T13:36:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
+<meta name="twitter:title" content="Attention模型详解">
+<meta name="twitter:description" content="Attention机制及相关模型介绍">
+<meta name="twitter:image" content="http://img.nocater.com/19-1-13/76472347.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="https://nocater.github.io/categories/">
+  <link rel="canonical" href="https://nocater.github.io/2019/01/13/Attention模型详解/">
 
 
 
@@ -132,7 +139,7 @@
   };
 </script>
 
-  <title>categories | Nocater's Blog</title>
+  <title>Attention模型详解 | Nocater's Blog</title>
   
 
 
@@ -238,7 +245,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
   </li>
@@ -274,28 +281,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -350,68 +335,219 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nocater.github.io/2019/01/13/Attention模型详解/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Shuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nocater's Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">categories</h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                
-                
-                  
-                    
-                  
-                
-                  
-                    
-                  
-                
-                  
-                    
-                  
-                
-                  
-                    
-                  
-                
-                目前共计 4 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CS224n/">CS224n</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NLP/">NLP</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/other/">other</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/深度学习-吴恩达/">深度学习[吴恩达]</a><span class="category-list-count">4</span></li></ul>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">Attention模型详解
+              
+            
+          </h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-13 19:14:12 / 修改时间：21:36:16" itemprop="dateCreated datePublished" datetime="2019-01-13T19:14:12+08:00">2019-01-13</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/NLP/" itemprop="url" rel="index"><span itemprop="name">NLP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/13/Attention模型详解/" class="leancloud_visitors" data-flag-title="Attention模型详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">Attention机制及相关模型介绍</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="Attention论文列表"><a href="#Attention论文列表" class="headerlink" title="Attention论文列表"></a>Attention论文列表</h1><ul>
+<li>Sequence to Sequence Learning with Neural Networks, 2014. 机器翻译(Machine Translation)领域论文，使用两个RNN进行机器翻译，亮点在于将source sentence做了<strong>逆向输入</strong>。未看</li>
+<li>Neural Machine Translation by Jointly Learning to Align and Translation, 2015. 同样属于MT领域，作者认为将source sentence由Encoder映射成一个向量，无法突破翻译瓶颈，并提出了动态搜索relevant part of source sentence， 即Attention思想。未看</li>
+<li><a href="https://arxiv.org/abs/1508.04025" target="_blank" rel="noopener">Effective Approaches to Attention-based Neural Machine Translation</a>, 2015. 论文提出了<strong>global attention</strong> 及 <strong>local attention</strong>, <a href="https://zhuanlan.zhihu.com/p/51383402" target="_blank" rel="noopener">博文</a>对其做了比较详细的解释，我也会在下面详细介绍。</li>
+<li><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Attention is All You Need</a>, 2017. self-attention机制及Transformer模型。</li>
+<li><a href="">Pointer Sentinel Mixture Models</a>, 2016. cs224n课程曾提到过的，当时并没理解。李宏毅老师的<a href="https://www.bilibili.com/video/av9770302/?p=8" target="_blank" rel="noopener">课程视频</a>也有讲解。以往的RNN模型虽然对输入序列长度适应，但输出的序列仍然属于固定的集合。Pointer模型能从输入序列中学习输出单词，从而解决模型无法输出未学习到的单词情况。</li>
+<li>Listen, Attend and Spell, 2015. 李宏毅老师曾调侃Attenion模型一定要以三个动词开始。</li>
+</ul>
+<h1 id="Attention模型之一详解"><a href="#Attention模型之一详解" class="headerlink" title="Attention模型之一详解"></a>Attention模型之一详解</h1><p>参考论文<a href="https://arxiv.org/abs/1508.04025" target="_blank" rel="noopener">Effective Approaches to Attention-based Neural Machine Translation</a>及<a href="https://zhuanlan.zhihu.com/p/51383402" target="_blank" rel="noopener">完全解析RNN, Seq2Seq, Attention注意力机制(知乎专栏)</a>。</p>
+<p>“attention”产生于机器翻译领域，其含义是允许模型学习不同任务间的对齐(learn alignments between different modalities)，比如图片描述生成，语音识别。神经机器翻译(NMT)相比于传统MT,占用内存小，decoder实现简单以及end-to-end。</p>
+<p>NMT系统是神经网络模型在条件概率$p(y|x)$下将source sentence，$x_1,…,x_n$ 翻译成target sentence, $y_1,…,y_n$,的过程。NMT的一般由Encoder和Decoder，前者学习source sentence的向量化表示，后者是每次生成一个目标单词，故条件概率为：<br>$$\log p(y|x) = \sum_{j=1}^m \log p(y_j|y_{&lt;j}, \mathbf{s})$$<br>$\mathbf{s}$ 表示source sentence。encoder和decoder一般使用RNN(GRU/LSTM)来实现。对于预测单词$y_j$，其概率计算可归纳为：<br>$$p(y_j|y_{&lt;j},\mathbf{s}) = \text{softmax}(g(\textbf{h}_j))$$<br>softmax是在整个词汇表长度上进行的，$\mathbf{h}_j$是RNN的单元，其计算可归纳为：<br>$$\mathbf{h}<em>j = f(\mathbf{h}</em>{j-1}, \mathbf{s})$$<br>$f$可以表示普通RNN单元、GRU或LSTM计算实现。</p>
+<h2 id="Global-Attention"><a href="#Global-Attention" class="headerlink" title="Global Attention"></a>Global Attention</h2><p>我们使用$h_s$表示source hidden state(encoder的隐藏层对不同time-step输入的$x_t$的编码结果)。使用 $\bar{h}_t$表示target hidden state(decoder的隐层状态)。Attention的思想是对每个$h_s$设置一个权重 $\mathbf{a}_t(\mathbf{s})$,下标t表示decoder的time-step。假如$h_s$的长度为$n_h$,则我们可以设置$n_h$个权重值：{$a_0^{1}, a_0^2,…, a_0^{n_h}$},每个权重值下标表示decoder的time-step，上标表示对应的source hidden state。权重的计算函数可以记为<strong>score</strong>(李宏毅中使用match)，函数的输入为 $\text{score}(\mathbf{h}_t,\bar{\mathbf{h}_s})$。score函数的实现有多种方式：<br>$$\text{score}(\mathbf{h}_t,\bar{\mathbf{h}_s}) = \begin{cases}<br>\mathbf{h}_t^T \bar{\mathbf{h}_s} \qquad\qquad\qquad dot \<br>\mathbf{h}_t^T \mathbf{W}_a \bar{\mathbf{h}_s} \qquad\qquad general \<br>\mathbf{v}_a^T \text{tanh}[\mathbf{h}_t^T : \bar{\mathbf{h}_s}] \quad concat \<br>\end{cases}$$<br>在得到每个权重后，还需要对其进行softmax:<br>$$\mathbf{a}_t(\mathbf{s}) = \text{align}(\mathbf{h_t}, \bar{\mathbf{h}}_s)$$<br>$$=\frac{\exp(\text{score}(\mathbf{h}_t^T,\bar{\mathbf{h}<em>s}))}{\sum</em>{s^{\prime}} \exp(\mathbf{h}<em>t^T,\bar{\mathbf{h}</em>{s^\prime}})}$$<br>在得到权重的最终值$a_t(s)$后，我们将权重和source hidden state相乘，可以得到向量$c_t$:<br>$$c_t = \sum a_t(s)\cdot\bar{h}_s$$<br>最后decoder的最终输出为 $\tilde{\mathbf{h}}_t$:<br>$$\tilde{\mathbf{h}}_t = \text{tanh}(\mathbf{W}_c[c_t;\mathbf{h}_t])$$<br>最后经过softmax可以得到预测单词$y_t$:<br>$$p(y_t|y_{&lt;t}, x) = \text{softmax}(\mathbf{W}_s \tilde{\mathbf{h}_t})$$</p>
+<p>Attention层中的$W_a,W_c$是超参数，通过训练学习。</p>
+<p><img src="http://img.nocater.com/19-1-13/76472347.jpg" alt=""></p>
+<blockquote>
+<p>$h_t$与$a_t$的连线为实线，因为对于每一个 $\bar{h}_s$的权重计算都需要使用 $h_t$。而 $\bar{h}_s$是逐个计算的，因此是虚线。$a_t$经过softmax后，与每个source hidden state相乘得到 $c_t$。$c_t$与 $h_t$相乘得到 $\tilde{h}_t$。</p>
+</blockquote>
+<h2 id="Local-Attention"><a href="#Local-Attention" class="headerlink" title="Local Attention"></a>Local Attention</h2><p>Local Attention是受soft/hard attention启发。其思想是当序列过长的时候，将注意力分散到全部的source hidden state并不合适，计算量很大。因此，想缩小attention的范围。根据经验设置一个超参数$D$，对于每次预测的time-step t选择一个position $p_t$。然后在 $[p_t-D , p_t+D]$窗口范围进行Attention。$p_t$的选取有两种：</p>
+<ul>
+<li><em>Monotonic</em> alignment (<strong>local-m</strong>)：$p_t = t$</li>
+<li><em>Predictive</em> alignment (<strong>local-p</strong>)：$p_t = S \cdot \text{sigmoid}(v_p^T\text{tanh}(W_p\mathbf{h}_t))$ 当然$a_t(s)$函数也有变动，可详见论文。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>论文整体的架构如下图，其中提到了<strong>Input-feeding方法</strong>。其目的是将每次的attention连续起来，是出于如果每次attention的决策都是独立的情况是不合理的直觉。从这个图可以看出，decoder的输入为 $[h_{t-1},\tilde{h}_t,y_t]$,及上一个隐层状态，上一个输出单词以及attention layer输出的最终decoder状态$\tilde{h}_t$。这里和其它Attention有些不同，后来模型是使用$c_t$替代$\tilde{h}_t$。并且从模型角度讲，$\tilde{h}_t$经过softmax得到输出$y_t$，然后二者同时输入到下一个隐层，感觉有点重复，还没找到相关解答。<br><img src="http://img.nocater.com/19-1-13/35034999.jpg" alt=""></p>
+<h1 id="Attention模型之二详解"><a href="#Attention模型之二详解" class="headerlink" title="Attention模型之二详解"></a>Attention模型之二详解</h1><p>待更新<br>BERT模型中的QKV概念<br>总结一下，attention就是算一个encoder output的加权和，叫做context；计算方法为，query和key计算相关程度，然后归一化得到alignment，即权重；然后用alignment和memory算加权和，得到的向量就是context。<br><a href="https://zhuanlan.zhihu.com/p/38485843" target="_blank" rel="noopener">Attention和Transformer</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<li><a href="https://arxiv.org/abs/1508.04025" target="_blank" rel="noopener">Effective Approaches to Attention-based Neural Machine Translation</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/51383402" target="_blank" rel="noopener">完全解析RNN, Seq2Seq, Attention注意力机制(知乎专栏)</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/38485843" target="_blank" rel="noopener">Attention和Transformer</a></li>
+</ul>
+
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nlp/" rel="tag"># nlp</a>
+          
+            <a href="/tags/自然语言处理/" rel="tag"># 自然语言处理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/29/word2vec详解/" rel="next" title="word2vec详解">
+                <i class="fa fa-chevron-left"></i> word2vec详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
@@ -441,8 +577,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -550,6 +695,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention论文列表"><span class="nav-number">1.</span> <span class="nav-text">Attention论文列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention模型之一详解"><span class="nav-number">2.</span> <span class="nav-text">Attention模型之一详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Global-Attention"><span class="nav-number">2.1.</span> <span class="nav-text">Global Attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-Attention"><span class="nav-number">2.2.</span> <span class="nav-text">Local Attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention模型之二详解"><span class="nav-number">3.</span> <span class="nav-text">Attention模型之二详解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1051,43 +1212,42 @@
   
   <script>
     
-    function showTime(Counter) {
-      var entries = [];
+    function addCount(Counter) {
       var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { "$in": entries } }) })
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
         .done(function ({ results }) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
           }
         })
-        .fail(function ({ responseJSON }) {
-          console.log("LeanCloud Counter Error: " + responseJSON.code + " " + responseJSON.error);
-        });
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
     }
     
 
@@ -1107,9 +1267,7 @@
             });
           };
           
-          if ($('.post-title-link').length >= 1) {
-            showTime(Counter);
-          }
+          addCount(Counter);
           
         })
     });
