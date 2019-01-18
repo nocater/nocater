@@ -125,7 +125,7 @@
 <meta property="og:image" content="http://mccormickml.com/assets/word2vec/output_weights_function.png">
 <meta property="og:image" content="http://mccormickml.com/assets/word2vec/training_data.png">
 <meta property="og:image" content="http://mccormickml.com/assets/word2vec/subsample_func_plot.png">
-<meta property="og:updated_time" content="2019-01-18T09:23:20.000Z">
+<meta property="og:updated_time" content="2019-01-18T09:25:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="word2vec详解">
 <meta name="twitter:description" content="word2vec两篇论文及Skip-gram详解">
@@ -415,7 +415,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-01-18 17:23:20" itemprop="dateModified" datetime="2019-01-18T17:23:20+08:00">2019-01-18</time>
+                <time title="修改时间：2019-01-18 17:25:14" itemprop="dateModified" datetime="2019-01-18T17:25:14+08:00">2019-01-18</time>
               
             
           </span>
@@ -546,7 +546,7 @@
 <p>不过即使使用了子采样，the的中心词数据也在30W+,调参不如直接删除~  用博士处理后的数据训练效果会好一些，但那个数据的分词也挺烂的~<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">samples,counts,vocabulary = load_data()</span><br><span class="line">reverse_vocab = &#123;v:k <span class="keyword">for</span> k,v <span class="keyword">in</span> vocabulary.items()&#125;</span><br><span class="line">center_words = [x <span class="keyword">for</span> (x,y) <span class="keyword">in</span> samples]</span><br><span class="line">target_words = [y <span class="keyword">for</span> (x,y) <span class="keyword">in</span> samples]</span><br><span class="line"></span><br><span class="line">train(center_words, target_words, vocabulary, reverse_vocab, list(counts))</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <p>总之，skip-gram的效果还是可以看到的。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>[1] <a href="http://120.52.51.18/www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf" target="_blank" rel="noopener">A Neural Probabilistic Language Model</a><br>[2] <a href="http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf" target="_blank" rel="noopener">Distributed Representations of Words and Phrases and their Compositionality</a><br>[3] <a href="https://arxiv.org/pdf/1301.3781.pdf" target="_blank" rel="noopener">Efficient Estimation of Word Representations in Vector Space</a><br>[4] <a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">cs224n: Word2Vec Tutorial - The Skip-Gram Model</a><br>[5] <a href="https://arxiv.org/pdf/1411.2738.pdf" target="_blank" rel="noopener">word2vec Parameter Learning Explained</a><br>[6] [<a href="https://github.com/tensorflow/models/tree/master/tutorials/embedding" target="_blank" rel="noopener">Tensorflow word2vec模型</a><br>]<br>[7] <a href="http://qwone.com/~jason/20Newsgroups/" target="_blank" rel="noopener">20newsgroups数据集</a>  </p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>[1] <a href="http://120.52.51.18/www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf" target="_blank" rel="noopener">A Neural Probabilistic Language Model</a><br>[2] <a href="http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf" target="_blank" rel="noopener">Distributed Representations of Words and Phrases and their Compositionality</a><br>[3] <a href="https://arxiv.org/pdf/1301.3781.pdf" target="_blank" rel="noopener">Efficient Estimation of Word Representations in Vector Space</a><br>[4] <a href="http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/" target="_blank" rel="noopener">cs224n: Word2Vec Tutorial - The Skip-Gram Model</a><br>[5] <a href="https://arxiv.org/pdf/1411.2738.pdf" target="_blank" rel="noopener">word2vec Parameter Learning Explained</a><br>[6] [<a href="https://github.com/tensorflow/models/tree/master/tutorials/embedding" target="_blank" rel="noopener">Tensorflow word2vec模型</a>]<br>[7] <a href="http://qwone.com/~jason/20Newsgroups/" target="_blank" rel="noopener">20newsgroups数据集</a>  </p>
 
       
     </div>
