@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[收藏夹]]></title>
     <url>%2F2019%2F03%2F20%2F%E6%94%B6%E8%97%8F%E5%A4%B9%2F</url>
-    <content type="text"><![CDATA[Understanding LSTM Networks:英文,多图说明LSTM机制]]></content>
+    <content type="text"><![CDATA[Understanding LSTM Networks:英文,多图说明LSTM机制。来源cs224n推荐。 Attention and Augmented Recurrent Neural Networks:讲解Attention,关于NMT query的部分理解还不够。]]></content>
       <categories>
         <category>other</category>
       </categories>
