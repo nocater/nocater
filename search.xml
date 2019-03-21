@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[AWS_EC2使用教程]]></title>
+    <url>%2F2019%2F03%2F21%2FAWS-EC2%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[既可以选择使用一年的AWS免费服务器，也可以选择购买GPU服务器。 注册AWS首先注册AWS，需要一张外币信用卡(Master卡可行)。 选择服务器地区及版本在查看各地区版本价格。一定要先确定服务器地区及版本，不同地区的相同版本价格是不一样的。以p2.xlarge为例，美国等地区基本是0.9$/hour，但是亚洲地区的是在1.1$起步。 更改上限在选择好地区及版本后，还需要去EC2 Service Limit report配置一下示例的运行上限，此步骤是不需要钱的。如果是先选择了购买，在最后一步可能会提示：123456Launch FailedYou have requested more instances (1) than your current instance limit of 0 allows for the specified instance type. Please visit http://aws.amazon.com/contact-us/ec2-request to request an adjustment to this limit.Hide launch logInitiating launches FailureRetry 在Support Center提交修改limit申请即可，需要十分钟及4 5封邮件时间。 购买实例访问EC2 Management Console选择 Launch Instance。 在左侧选择AWS Marketplace，输入deep learning ubuntu进行搜索，选择Deep Learning AMI(Ubuntu)。 在价格详细页面选择Continue。 选择已经决定的服务器配置类型。 Configure Instance(配置实例)、Add Storage(添加存储)、Add Tags(添加标签)这几步俊保留默认配置，在Configure Security Group(配置安全组)需要自定义配置。创建一个自定义的TCP规则来允许8888端口，并选择Anywhere来允许任何IP访问。 在创建示例过程最后，系统会询问你想要创建新的连接密钥还是重复使用现有的，如果没有使用过创建一个新的就可以了。 运行实例参考 Launch an AWS Deep Learning AMI with Amazon EC2 Amazon EC2 定价 DeepLearning笔记：如何用亚马逊云服务 GPU 训练神经网络]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>AWS_EC2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[收藏夹]]></title>
     <url>%2F2019%2F03%2F20%2F%E6%94%B6%E8%97%8F%E5%A4%B9%2F</url>
     <content type="text"><![CDATA[Understanding LSTM Networks:英文,多图说明LSTM机制。来源cs224n推荐。 Attention and Augmented Recurrent Neural Networks:讲解Attention,关于NMT query的部分理解还不够。]]></content>
