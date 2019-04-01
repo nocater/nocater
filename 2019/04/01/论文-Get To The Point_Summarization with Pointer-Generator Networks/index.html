@@ -108,20 +108,28 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Nocater&#39;s Blog">
-<meta property="og:url" content="https://nocater.github.io/archives/2018/index.html">
+  <meta name="description" content="Pointer模型，用于解决OOV问题">
+<meta name="keywords" content="nlp,自然语言处理,cs224n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文:Get To The Point">
+<meta property="og:url" content="https://nocater.github.io/2019/04/01/论文-Get To The Point_Summarization with Pointer-Generator Networks/index.html">
 <meta property="og:site_name" content="Nocater&#39;s Blog">
+<meta property="og:description" content="Pointer模型，用于解决OOV问题">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/04/01/5ca1f0fd48350.jpg">
+<meta property="og:image" content="https://i.loli.net/2019/04/01/5ca1f8f535f5f.jpg">
+<meta property="og:updated_time" content="2019-04-01T12:00:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nocater&#39;s Blog">
+<meta name="twitter:title" content="论文:Get To The Point">
+<meta name="twitter:description" content="Pointer模型，用于解决OOV问题">
+<meta name="twitter:image" content="https://i.loli.net/2019/04/01/5ca1f0fd48350.jpg">
 
 
 
 
 
 
-  <link rel="canonical" href="https://nocater.github.io/archives/2018/">
+  <link rel="canonical" href="https://nocater.github.io/2019/04/01/论文-Get To The Point_Summarization with Pointer-Generator Networks/">
 
 
 
@@ -131,7 +139,7 @@
   };
 </script>
 
-  <title>归档 | Nocater's Blog</title>
+  <title>论文:Get To The Point | Nocater's Blog</title>
   
 
 
@@ -180,7 +188,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -229,7 +237,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
   </li>
@@ -273,28 +281,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -347,397 +333,214 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://nocater.github.io/2019/04/01/论文-Get To The Point_Summarization with Pointer-Generator Networks/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen Shuai">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nocater's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">论文:Get To The Point
+              
+            
+          </h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-01 18:30:36 / 修改时间：20:00:46" itemprop="dateCreated datePublished" datetime="2019-04-01T18:30:36+08:00">2019-04-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 16 篇日志。 继续努力。
-      </span>
-      
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/CS224n/" itemprop="url" rel="index"><span itemprop="name">CS224n</span></a></span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2019/04/01/论文-Get To The Point_Summarization with Pointer-Generator Networks/" class="leancloud_visitors" data-flag-title="论文:Get To The Point">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/29/word2vec详解/" itemprop="url">
-              
-                <span itemprop="name">word2vec详解</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-29T15:03:42+08:00" content="2018-12-29">
-          12-29
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
+              <div class="post-description">Pointer模型，用于解决OOV问题</div>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/15/论文-Globally-Normalized-Transition-Based-Neural-Networks/" itemprop="url">
-              
-                <span itemprop="name">论文:Globally Normalized Transition-Based Neural Networks</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-15T10:21:43+08:00" content="2018-11-15">
-          11-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/13/论文-A-Fast-and-Accurate-Dependency-Parserusing-Neural-Networks/" itemprop="url">
-              
-                <span itemprop="name">论文:A Fast and Accurate Dependency Parserusing Neural Networks</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-13T15:37:14+08:00" content="2018-11-13">
-          11-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/08/论文-Incrementality-in-Deterministic-Dependency-Parsing/" itemprop="url">
-              
-                <span itemprop="name">论文:Incrementality in Deterministic Dependency Parsing</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-08T15:54:38+08:00" content="2018-11-08">
-          11-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p><a href="https://arxiv.org/abs/1704.04368" target="_blank" rel="noopener">Get To The Point: Summarization with Pointer-Generator Networks</a><br>Abigail See, Peter J. Liu, Christopher D. Manning</p>
+<h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>本文提出了一个Sequence-to-Sequence attentional 模型，用于生成文本摘要，数据集使用的 <em>CNN/Daily Mail</em>。此模型思想可用于解决OOV(out of vocabulary)问题。</p>
+<h1 id="Our-Models"><a href="#Our-Models" class="headerlink" title="Our Models"></a>Our Models</h1><p>Baseline 模型与 Nallapati et al. (2016)相似，包含Encoder及Decoder，前者为单层双向LSTM，后者为单向LSTM。<br><img src="https://i.loli.net/2019/04/01/5ca1f0fd48350.jpg" alt="gtp_1.jpg"></p>
+<h2 id="2-1-Sequence-to-sequence-attentional-model"><a href="#2-1-Sequence-to-sequence-attentional-model" class="headerlink" title="2.1 Sequence-to-sequence attentional model"></a>2.1 Sequence-to-sequence attentional model</h2><p>首先使用Attention机制(Bahdanau et al. (2015))，<br>$$e_i^t = v^T \text{tanh}(W_h h_i + W_s s_t + b_{attn})$$<br>$$a^t = softmax(e^t)$$<br>其中, $V, W_h, W_s, b_{attn}$ 都是学习参数，然后可以计算 <em>上下文向量(context vector)</em> $h^<em>$ ：<br>$$h_t^</em> = \sum_i a_i^t h_i$$<br>然后是模型新添加的模块：将上下文向量 $h^<em>$ 与 decoder隐层状态 $s_t$ 拼接，并经过两层线性层，再使用softmax进行归一化，得到 vocabulary distribution $Pvocab$：<br>$$P_{vocab} = \text{softmax} (V^\prime (V [s_t, h_t^</em>]+b)+b\prime)$$<br>这时候可以得到预测单词 $w$ 最终的分布： $P(w) = P_{vocab}(w)$ 。<br>在训练时候，每个time-step的 $t$ ，目标单词的 $w_t^<em>$ 的负对数似然估计为：<br>$$\text{loss}_t = -\log P(w_t^</em>)$$<br>整个sequence的损失为:<br>$$\text{loss} = \frac{1}{T}\sum_{t=0}^T \text{loss}_t$$</p>
+<h2 id="2-2-Pointer-generator-Network"><a href="#2-2-Pointer-generator-Network" class="headerlink" title="2.2 Pointer-generator Network"></a>2.2 Pointer-generator Network</h2><p>模型的Pointer-generator网络是baseline模型与pointer 模型的结合。其中time-step t 的<em>generation probability</em> $P_{gen} \in [0,1]$ 是由context vector ， decoder state, decoder input计算得到的：<br>$$P_{gen} = \sigma (w_{h^<em>}^T h_t^</em> + w_s^Ts_t + w_x^Tx_t + b)$$<br>可以看出， $P_{gen}$是一个软开关，表示通过从 $P_{vocab}$ 中采样来从词汇表中<strong>生成(generate)</strong>一个单词的概率，或者从输入序列中采样attention $a^t$ 来复制一个单词。我们将原始文档中的所有单词记为 <strong>拓展词汇表(extended vocabulary)</strong>，则其对应的分布(distribution)为：<br>$$P(w) = p_{gen}P_{vocab}(w) + (1-p_{gen}) \sum_{i:w_i=w} a_i^t$$<br>如果w是OOV，那么 $P_{vocab}(w)$ 为0，如果w没有出现在源文档中，则公式后者为0。这使得模型能够解决OOV问题。</p>
+<p><img src="https://i.loli.net/2019/04/01/5ca1f8f535f5f.jpg" alt="gtp_2.jpg"><br>生成一个概率值，将两个distribution进行叠加，从而既可以从源序列中提取单词，也可以从词汇表中选择单词。</p>
+<h2 id="2-3-Coverage-mechanism"><a href="#2-3-Coverage-mechanism" class="headerlink" title="2.3 Coverage mechanism"></a>2.3 Coverage mechanism</h2><p>重复是Seq2Seq的常见问题。使用 <strong>converage model</strong> 来解决这个问题。首先添加一个 <strong>converage vector</strong> $c^t$ ，它是decoder的之前的time-step的attention distribution和：<br>$$c^t = \sum_{t\prime = 0} ^{t-1} a^{t^\prime}$$<br>直觉上，$c^t$ 是源文档单词的分布，表示这些单词受到attention机制覆盖的长远。其中 $c^0$ 是一个零向量。</p>
+<p>converage vector是作为attention机制额外的输入：<br>$$e_i^t = v^T \text{tanh} (W_h h_i + W_s s_t + W_c c_i^t + b)$$</p>
+<p>这使Attention能简单的不在重复输出内容。</p>
+<p>注意，添加 <strong>coverage loss</strong> 来惩罚相同位置重复attention 是非常必要的：<br>$$\text{covloss}_t = \sum_i \text{min}(a_i^t, c_i^t)$$</p>
+<p>最后，整体loss为(添加了超参数 $\lambda$ )：<br>$$\text{loss}_t = -\log P(w_t^*) + \lambda \sum_i min(a_i^t, c_i^t)$$</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/06/TODO/" itemprop="url">
-              
-                <span itemprop="name">TODO</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-06T17:32:47+08:00" content="2018-11-06">
-          11-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/25/Springboot使用说明/" itemprop="url">
-              
-                <span itemprop="name">Springboot使用说明</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-25T13:29:09+08:00" content="2018-10-25">
-          10-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/25/git常用命令/" itemprop="url">
-              
-                <span itemprop="name">git常用命令</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-25T13:23:03+08:00" content="2018-10-25">
-          10-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/25/05-序列模型/" itemprop="url">
-              
-                <span itemprop="name">05-序列模型</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-25T11:10:43+08:00" content="2018-10-25">
-          10-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/25/04-卷积神经网络/" itemprop="url">
-              
-                <span itemprop="name">04-卷积神经网络</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-25T10:59:52+08:00" content="2018-10-25">
-          10-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/25/03-结构化机器学习项目/" itemprop="url">
-              
-                <span itemprop="name">03-结构化机器学习项目</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-25T10:38:02+08:00" content="2018-10-25">
-          10-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nlp/" rel="tag"># nlp</a>
+          
+            <a href="/tags/自然语言处理/" rel="tag"># 自然语言处理</a>
+          
+            <a href="/tags/cs224n/" rel="tag"># cs224n</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/21/AWS-EC2使用教程/" rel="next" title="AWS_EC2使用教程">
+                <i class="fa fa-chevron-left"></i> AWS_EC2使用教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -758,8 +561,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -871,6 +683,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Our-Models"><span class="nav-number">2.</span> <span class="nav-text">Our Models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Sequence-to-sequence-attentional-model"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Sequence-to-sequence attentional model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Pointer-generator-Network"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Pointer-generator Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Coverage-mechanism"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Coverage mechanism</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1001,6 +829,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
 
   
 
@@ -1368,43 +1200,42 @@
   
   <script>
     
-    function showTime(Counter) {
-      var entries = [];
+    function addCount(Counter) {
       var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
 
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { "$in": entries } }) })
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
         .done(function ({ results }) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', `/classes/Counter/${counter.objectId}`, JSON.stringify({ time: { "__op":"Increment", "amount":1 } }))
+            
+            .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            })
+            
+            .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+            })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1}))
+                .done(function () {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function () {
+                  console.log('Failed to create');
+                });
+            
           }
         })
-        .fail(function ({ responseJSON }) {
-          console.log("LeanCloud Counter Error: " + responseJSON.code + " " + responseJSON.error);
-        });
+      .fail(function ({ responseJSON }) {
+        console.log('LeanCloud Counter Error:' + responseJSON.code + " " + responseJSON.error);
+      });
     }
     
 
@@ -1424,9 +1255,7 @@
             });
           };
           
-          if ($('.post-title-link').length >= 1) {
-            showTime(Counter);
-          }
+          addCount(Counter);
           
         })
     });
@@ -1446,6 +1275,30 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

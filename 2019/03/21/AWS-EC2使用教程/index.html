@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="Nocater&#39;s Blog">
 <meta property="og:description" content="关于建立AWS EC2服务器的创建方式">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-21T12:00:54.000Z">
+<meta property="og:updated_time" content="2019-03-21T12:15:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AWS_EC2使用教程">
 <meta name="twitter:description" content="关于建立AWS EC2服务器的创建方式">
@@ -388,7 +388,7 @@
                 
               
 
-              <time title="创建时间：2019-03-21 19:19:48 / 修改时间：20:00:54" itemprop="dateCreated datePublished" datetime="2019-03-21T19:19:48+08:00">2019-03-21</time>
+              <time title="创建时间：2019-03-21 19:19:48 / 修改时间：20:15:20" itemprop="dateCreated datePublished" datetime="2019-03-21T19:19:48+08:00">2019-03-21</time>
             
 
             
@@ -459,7 +459,7 @@
       
         <p>既可以选择使用一年的AWS免费服务器，也可以选择购买GPU服务器。</p>
 <h1 id="注册AWS"><a href="#注册AWS" class="headerlink" title="注册AWS"></a>注册AWS</h1><p>首先注册AWS，需要一张外币信用卡(Master卡可行)。</p>
-<h1 id="选择服务器地区及版本"><a href="#选择服务器地区及版本" class="headerlink" title="选择服务器地区及版本"></a>选择服务器地区及版本</h1><p>在<a href="https://aws.amazon.com/cn/ec2/pricing/on-demand/" target="_blank" rel="noopener"></a>查看各地区版本价格。一定要先确定服务器地区及版本，不同地区的相同版本价格是不一样的。以<code>p2.xlarge</code>为例，美国等地区基本是0.9$/hour，但是亚洲地区的是在1.1$起步。</p>
+<h1 id="选择服务器地区及版本"><a href="#选择服务器地区及版本" class="headerlink" title="选择服务器地区及版本"></a>选择服务器地区及版本</h1><p>在<a href="https://aws.amazon.com/cn/ec2/pricing/on-demand/" target="_blank" rel="noopener">Amazon EC2 定价</a>查看各地区版本价格。一定要先确定服务器地区及版本，不同地区的相同版本价格是不一样的。以<code>p2.xlarge</code>为例，美国等地区基本是0.9$/hour，但是亚洲地区的是在1.1$起步。</p>
 <h1 id="更改上限"><a href="#更改上限" class="headerlink" title="更改上限"></a>更改上限</h1><p>在选择好地区及版本后，还需要去<a href="https://console.aws.amazon.com/ec2/v2/home?#Limits" target="_blank" rel="noopener">EC2 Service Limit report</a>配置一下示例的运行上限，此步骤是不需要钱的。如果是先选择了购买，在最后一步可能会提示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Launch Failed</span><br><span class="line">You have requested more instances (1) than your current instance limit of 0 allows for the specified instance type. Please visit http://aws.amazon.com/contact-us/ec2-request to request an adjustment to this limit.</span><br><span class="line">Hide launch log</span><br><span class="line">Initiating launches</span><br><span class="line"> </span><br><span class="line">FailureRetry</span><br></pre></td></tr></table></figure></p>
 <p>在<a href="http://aws.amazon.com/contact-us/ec2-request" target="_blank" rel="noopener">Support Center</a>提交修改limit申请即可，需要十分钟及4 5封邮件时间。</p>
 <h1 id="购买实例"><a href="#购买实例" class="headerlink" title="购买实例"></a>购买实例</h1><p>访问<a href="https://console.aws.amazon.com/ec2/v2/home" target="_blank" rel="noopener">EC2 Management Console</a>选择 <code>Launch Instance</code>。</p>
@@ -468,7 +468,11 @@
 <p>选择已经决定的服务器配置类型。</p>
 <p><code>Configure Instance(配置实例)</code>、<code>Add Storage(添加存储)</code>、<code>Add Tags(添加标签)</code>这几步俊保留默认配置，在<code>Configure Security Group(配置安全组)</code>需要自定义配置。创建一个自定义的TCP规则来允许8888端口，并选择<code>Anywhere</code><br>来允许任何IP访问。</p>
 <p>在创建示例过程最后，系统会询问你想要创建新的连接密钥还是重复使用现有的，如果没有使用过创建一个新的就可以了。</p>
-<h1 id="运行实例"><a href="#运行实例" class="headerlink" title="运行实例"></a>运行实例</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<h1 id="运行实例"><a href="#运行实例" class="headerlink" title="运行实例"></a>运行实例</h1><p>Window可以使用Git的终端进行操作。</p>
+<p>使用SSH连接实例,请自行替换部分内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /Users/your_username/Downloads/</span><br><span class="line"></span><br><span class="line">chmod 0400 &lt;your .pem filename&gt;  </span><br><span class="line"></span><br><span class="line">ssh -L localhost:8888:localhost:8888 -i &lt;your .pem filename&gt; ubuntu@&lt;your instance DNS&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在终端中，使用<code>jupyter notebook</code>启动程序，然后复制打开链接。</p>
+<h1 id="终止实例"><a href="#终止实例" class="headerlink" title="终止实例"></a>终止实例</h1><p>返回到<a href="https://console.aws.amazon.com/" target="_blank" rel="noopener">AWS Management Console </a>，选择实例，选择<code>Action</code>，找到<code>Instance State,</code>，单击<code>Terminate</code>。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
 <li><a href="https://aws.amazon.com/cn/getting-started/tutorials/get-started-dlami/?trk=gs_card" target="_blank" rel="noopener">Launch an AWS Deep Learning AMI with Amazon EC2</a></li>
 <li><a href="https://aws.amazon.com/cn/ec2/pricing/on-demand/" target="_blank" rel="noopener">Amazon EC2 定价</a></li>
 <li><a href="https://www.uegeek.com/180322-DeepLearning11-aws-gpu-training.html" target="_blank" rel="noopener">DeepLearning笔记：如何用亚马逊云服务 GPU 训练神经网络</a></li>
@@ -515,6 +519,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/01/论文-Get To The Point_Summarization with Pointer-Generator Networks/" rel="prev" title="论文:Get To The Point">
+                论文:Get To The Point <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -586,7 +594,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -691,7 +699,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#注册AWS"><span class="nav-number">1.</span> <span class="nav-text">注册AWS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择服务器地区及版本"><span class="nav-number">2.</span> <span class="nav-text">选择服务器地区及版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更改上限"><span class="nav-number">3.</span> <span class="nav-text">更改上限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#购买实例"><span class="nav-number">4.</span> <span class="nav-text">购买实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行实例"><span class="nav-number">5.</span> <span class="nav-text">运行实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#注册AWS"><span class="nav-number">1.</span> <span class="nav-text">注册AWS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择服务器地区及版本"><span class="nav-number">2.</span> <span class="nav-text">选择服务器地区及版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更改上限"><span class="nav-number">3.</span> <span class="nav-text">更改上限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#购买实例"><span class="nav-number">4.</span> <span class="nav-text">购买实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运行实例"><span class="nav-number">5.</span> <span class="nav-text">运行实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#终止实例"><span class="nav-number">6.</span> <span class="nav-text">终止实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
