@@ -495,6 +495,7 @@
         <h1 id="04-卷积神经网络"><a href="#04-卷积神经网络" class="headerlink" title="04.卷积神经网络"></a>04.卷积神经网络</h1><h2 id="00-动态性策略如何与DL结合-预测之上的决策系统-？"><a href="#00-动态性策略如何与DL结合-预测之上的决策系统-？" class="headerlink" title="00? 动态性策略如何与DL结合(预测之上的决策系统)？"></a>00? 动态性策略如何与DL结合(预测之上的决策系统)？</h2><h2 id="第一周-卷积神经网络"><a href="#第一周-卷积神经网络" class="headerlink" title="第一周 卷积神经网络"></a>第一周 卷积神经网络</h2><h3 id="1-1-计算机视觉-Computer-vision"><a href="#1-1-计算机视觉-Computer-vision" class="headerlink" title="1.1 计算机视觉 (Computer vision)"></a>1.1 计算机视觉 (Computer vision)</h3><p>将CV知识应用到新的领域，催生新的网络结构<br><em>目标检测</em> <em>风格迁移</em><br>一个64x64的图像，会有12288个维度，<br>一个1000x1000的图像，会有3M个维度，<br>假如第一层神经元有1000个，则$w^{[1]}$有3B个参数，这太大了！<br>故需要<strong>卷积</strong></p>
 <h3 id="1-2-边缘检测示例-Edge-detection-example"><a href="#1-2-边缘检测示例-Edge-detection-example" class="headerlink" title="1.2 边缘检测示例 (Edge detection example)"></a>1.2 边缘检测示例 (Edge detection example)</h3><p>*是卷积操作的标准符号<br>对卷积不了解可详细看这个视频<br><img src="http://img.nocater.com/18-7-10/46841974.jpg" alt="@垂直边的检测"><br><a href="https://github.com/fengdu78/deeplearning_ai_books/blob/master/%E5%8F%82%E8%80%83%E8%AE%BA%E6%96%87/files/786/Ren%20%E7%AD%89%E3%80%82%20-%202015%20-%20Faster%20R-CNN%20towards%20real-time%20object%20detection%20w.pdf" target="_blank" rel="noopener">参考论文</a></p>
 <h3 id="1-3-更多边缘检测内容-More-edge-detection"><a href="#1-3-更多边缘检测内容-More-edge-detection" class="headerlink" title="1.3 更多边缘检测内容 (More edge detection)"></a>1.3 更多边缘检测内容 (More edge detection)</h3><p>固定的卷积核：<br><strong>Sober过滤器：</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -521,7 +522,9 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p><strong>Scharr过滤器：</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -548,6 +551,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>另一种思想：<strong>将9个数字作为参数进行学习</strong>，是CV的有效思想之一。</p>
 <h3 id="1-4-Padding"><a href="#1-4-Padding" class="headerlink" title="1.4 Padding"></a>1.4 Padding</h3><p>普通的卷积操作</p>
 <ul>
@@ -562,7 +566,7 @@
 <blockquote>
 <p>$f^{[l]}$是卷积核的大小，$n_c^{[l]}$是卷积核的个数<br>$p^{[l]}$是padding, $s^{[l]}$是步长<br>输入为上一层的输出，所以为$n_H^{[l-1]} \times n_w^{[l-1]} \times n_c^{[l-1]}$<br>卷积计算：$n_H^{[l]} = \frac{n_H^{[l-1]}+2p^{[l]}-f^{l}}{s^{[l]}} + 1$，同理$n_w^{[l]}的计算$<br>每一个卷积核(过滤器)维度：$f^{[l]} \times f^{[l]} \times n_c^{[l-1]} $，$n_c^{[l-1]}$是上一层输出的channel。<br>激活函数：$a^{[l]} = n_H^{[l]} \times n_W^{[l]} \times n_c^{[l]}$<br>权重Weights：$f^{[l]} \times f^{[l]} \times n_c^{[l-1]} \times n_c^{[l]}$，$n_c^{[l]}$是卷积核的个数<br>偏置项bias：$n_c^{[l]}\rightarrow(1,1,1,n_c^{[l]})$</p>
 </blockquote>
-<h3 id="1-8-简单卷积网络示例-A-simple-convolution-network-example"><a href="#1-8-简单卷积网络示例-A-simple-convolution-network-example" class="headerlink" title="1.8 简单卷积网络示例 (A simple convolution network example)"></a>1.8 简单卷积网络示例 (A simple convolution network example)</h3><p>假设输入图片大小：$n_{H}^{[0]} = n_{W}^{[0]}=39$，$n_{c}^{[0]} =3$<br>第一层卷积：10个$f^{[1]} = 3$，$s^{[1]} = 1$，$p^{[1]} =0$，则$a^{[1]}=$37×37×10<br>第二层卷积：20个$f^{\left\lbrack 2 \right\rbrack}=5$，$s^{\left\lbrack 2 \right\rbrack}=2$，$p^{\left\lbrack 2 \right\rbrack} = 0$，则$a^{\left\lbrack 2 \right\rbrack}=$17x17x20<br>第三层卷积：40个$f^{\left\lbrack 3 \right\rbrack}=5$，$s^{\left\lbrack 3 \right\rbrack}=2$，$p^{\left\lbrack 3 \right\rbrack} = 0$，则$a^{\left\lbrack 3 \right\rbrack}=$7x7x40=1960<br>最后处理成向量，接softmax或logistic回归函数</p>
+<h3 id="1-8-简单卷积网络示例-A-simple-convolution-network-example"><a href="#1-8-简单卷积网络示例-A-simple-convolution-network-example" class="headerlink" title="1.8 简单卷积网络示例 (A simple convolution network example)"></a>1.8 简单卷积网络示例 (A simple convolution network example)</h3><p>假设输入图片大小：$n<em>{H}^{[0]} = n</em>{W}^{[0]}=39$，$n_{c}^{[0]} =3$<br>第一层卷积：10个$f^{[1]} = 3$，$s^{[1]} = 1$，$p^{[1]} =0$，则$a^{[1]}=$37×37×10<br>第二层卷积：20个$f^{\left\lbrack 2 \right\rbrack}=5$，$s^{\left\lbrack 2 \right\rbrack}=2$，$p^{\left\lbrack 2 \right\rbrack} = 0$，则$a^{\left\lbrack 2 \right\rbrack}=$17x17x20<br>第三层卷积：40个$f^{\left\lbrack 3 \right\rbrack}=5$，$s^{\left\lbrack 3 \right\rbrack}=2$，$p^{\left\lbrack 3 \right\rbrack} = 0$，则$a^{\left\lbrack 3 \right\rbrack}=$7x7x40=1960<br>最后处理成向量，接softmax或logistic回归函数</p>
 <p>典型的卷积神经网络层：</p>
 <ul>
 <li>Convolution (Conv)</li>
@@ -570,7 +574,7 @@
 <li>Fully connected (FC)</li>
 </ul>
 <h3 id="1-9-池化层-Pooling-layers"><a href="#1-9-池化层-Pooling-layers" class="headerlink" title="1.9 池化层 (Pooling layers)"></a>1.9 池化层 (Pooling layers)</h3><p><strong>Max pooling</strong>:如果在卷积核中提取到某个特征，则保留其最大值，如果没有提取到，最大值也很小。仅是直观理解，但实验效果良好。步长和大小不需要学习。p一般为0<br><img src="http://img.nocater.com/18-7-10/86370149.jpg" alt="@Max pooling"><br><strong>Average pooling</strong>:不太常用。</p>
-<h3 id="1-10-卷积神经网络示例（Convolutional-neural-network-example）"><a href="#1-10-卷积神经网络示例（Convolutional-neural-network-example）" class="headerlink" title="1.10 卷积神经网络示例（Convolutional neural network example）"></a>1.10 卷积神经网络示例（Convolutional neural network example）</h3><p>类似于Le-Net-5<br>逐步讲解各卷积层的输出维度<br>有的文献将卷积和池化作为一层神经网络。<br>随着网络的加深，高度$n_{H}$和宽度$n_{W}$通常都会减少，而通道数量会增加。</p>
+<h3 id="1-10-卷积神经网络示例（Convolutional-neural-network-example）"><a href="#1-10-卷积神经网络示例（Convolutional-neural-network-example）" class="headerlink" title="1.10 卷积神经网络示例（Convolutional neural network example）"></a>1.10 卷积神经网络示例（Convolutional neural network example）</h3><p>类似于Le-Net-5<br>逐步讲解各卷积层的输出维度<br>有的文献将卷积和池化作为一层神经网络。<br>随着网络的加深，高度$n<em>{H}$和宽度$n</em>{W}$通常都会减少，而通道数量会增加。</p>
 <p>在神经网络中，另一种常见模式就是一个或多个卷积后面跟随一个池化层，然后一个或多个卷积层后面再跟一个池化层，然后是几个全连接层，最后是一个softmax。这是神经网络的另一种常见模式。</p>
 <p><img src="http://img.nocater.com/18-7-10/31131334.jpg" alt="@激活层大小"></p>
 <p>有几点要注意，第一，池化层和最大池化层没有参数；第二卷积层的参数相对较少，前面课上我们提到过，其实许多参数都存在于神经网络的全连接层。观察可发现，随着神经网络的加深，激活值尺寸会逐渐变小，如果激活值尺寸下降太快，也会影响神经网络性能。示例中，激活值尺寸在第一层为6000，然后减少到1600，慢慢减少到84，最后输出softmax结果。我们发现，许多卷积网络都具有这些属性，模式上也相似。</p>
@@ -666,7 +670,11 @@
 <p>集成大概可以提高1%或2%，但消耗时间。<br>Muti-crop 是说将你的测试图片进行多次裁剪，每张都进行预测，然后综合考虑结果。<br>这两种方式在实际生产情况下，很少考虑，在基准测试和竞赛上做得很好。</p>
 <p>最后，其他人可能已经在几路GPU上花了几个星期的时间来训练一个模型，训练超过一百万张图片，所以通过使用其他人的预先训练得模型，然后在数据集上进行微调，你可以在应用程序上运行得更快。当然如果你有电脑资源并且有意愿，我不会阻止你从头开始训练你自己的网络。事实上，如果你想发明你自己的计算机视觉算法，这可能是你必须要做的。</p>
 <h2 id="第三周-目标检测"><a href="#第三周-目标检测" class="headerlink" title="第三周 目标检测"></a>第三周 目标检测</h2><h3 id="3-1-目标定位"><a href="#3-1-目标定位" class="headerlink" title="3.1 目标定位"></a>3.1 目标定位</h3><p>识别一张图片中是否有车的分类问题已经很熟悉了，现在还要输出车在图片中的位置，即定位分类问题<strong>Classification with Location</strong>。进一步，如果图片中包含多个物体需要定位，就是目标检测。</p>
-<p>例：识别一张图片是1 行人 2 汽车 3 自行车 4 背景 类别。首先记图像左上角为(0,0)，右下角记(1,1)。图像的边框用bx,by,bh,bw来表示中心坐标点和宽高。这时候神经网络的输出向量可以定义为$[P_c,bx,by,bh,bw,c1,c2,c3]$。$pc$表示是前三类与否，如果为1，则$bx,by,bh,bw$来表示坐标，$c1,c2,c3$来表示具体的某一类。<br>此外，损失函数也需要修改：<br>$$L(\hat{y},y)=\begin{cases}<br>\sum_i(\hat{y}_i-y_i)^2&amp; \text{if} \ y_1=1\\<br>(\hat{y}_1-y_1)^2&amp; \text{if} \ y_1=0\<br>\end{cases}$$<br>实际中，可以不对$c_{1}$、$c_{2}$、$c_{3}$和softmax激活函数应用对数损失函数，并输出其中一个元素值，通常做法是对边界框坐标应用平方差或类似方法，对$p_{c}$应用逻辑回归函数，甚至采用平方预测误差也是可以的。</p>
+<p>例：识别一张图片是1 行人 2 汽车 3 自行车 4 背景 类别。首先记图像左上角为(0,0)，右下角记(1,1)。图像的边框用bx,by,bh,bw来表示中心坐标点和宽高。这时候神经网络的输出向量可以定义为$[P_c,bx,by,bh,bw,c1,c2,c3]$。$pc$表示是前三类与否，如果为1，则$bx,by,bh,bw$来表示坐标，$c1,c2,c3$来表示具体的某一类。<br>此外，损失函数也需要修改：</p>
+<script type="math/tex; mode=display">L(\hat{y},y)=\begin{cases}
+\sum_i(\hat{y}_i-y_i)^2& \text{if} \ y_1=1\\\\
+(\hat{y}_1-y_1)^2& \text{if} \ y_1=0\\
+\end{cases}</script><p>实际中，可以不对$c<em>{1}$、$c</em>{2}$、$c<em>{3}$和softmax激活函数应用对数损失函数，并输出其中一个元素值，通常做法是对边界框坐标应用平方差或类似方法，对$p</em>{c}$应用逻辑回归函数，甚至采用平方预测误差也是可以的。</p>
 <h3 id="3-2-特征点检测-Landmark-detection"><a href="#3-2-特征点检测-Landmark-detection" class="headerlink" title="3.2 特征点检测 (Landmark detection)"></a>3.2 特征点检测 (Landmark detection)</h3><p>如果需要检测64个人脸关键点，则可以使卷积神经网络输出为129个，第一个代表有无人脸，剩余的表示各个特征的坐标。</p>
 <h3 id="3-3-目标检测-Object-detection"><a href="#3-3-目标检测-Object-detection" class="headerlink" title="3.3 目标检测 (Object detection)"></a>3.3 目标检测 (Object detection)</h3><p>使用卷积神经网络进行对象检测，采用是基于滑动窗口的目标检测算法。<br><img src="http://img.nocater.com/18-7-24/8405147.jpg" alt=""><br>选用不同的窗口和步长会有一定的影响，太小计算量大，太大影响效果。<br>不过计算成本得到了解决，见下。</p>
 <h3 id="3-4-卷积的滑动窗口实现-Convolutional-implementation-of-sliding-windows"><a href="#3-4-卷积的滑动窗口实现-Convolutional-implementation-of-sliding-windows" class="headerlink" title="3.4 卷积的滑动窗口实现 (Convolutional implementation of sliding windows)"></a>3.4 卷积的滑动窗口实现 (Convolutional implementation of sliding windows)</h3><p>之前讲的滑动检测计算效率太低，其中一个原始是因为重复计算问题。<br>而现在，不需要将图片每次切割单独放入神经网络去计算，可是将卷积神经网络的最后全连接层也改用为卷积层。输入也只需要输入原图片完整一次。</p>
@@ -713,11 +721,12 @@
 <h3 id="4-3-Siamese网络-Siamese-network"><a href="#4-3-Siamese网络-Siamese-network" class="headerlink" title="4.3 Siamese网络 (Siamese network)"></a>4.3 Siamese网络 (Siamese network)</h3><p>论文：DeepFace closing the gap to human level performance</p>
 <p>Siamese网络，学习函数$d$来计算两张人脸的相似度。<br>思想是，将人脸编码(映射)成固定维度向量(非one-hot)<br>将$x^{(1)}$和$x^{(2)}$的距离定义为这两幅图片的编码之差的范数，$d( x^{( 1)},x^{( 2)}) =|| f( x^{( 1)}) - f( x^{( 2)})||_{2}^{2}$。<br>如果$x^{(i)}$和$x^{(j)}$是同一个人，则$||f(x^{(i)}) - f(x^{(j)})||^2$很小，相反很大。使用反向传播来学习网络参数。如果定义真正的目标函数呢？使用<strong>三元组损失函数</strong></p>
 <h3 id="4-4-Triplet损失-Triplet-loss"><a href="#4-4-Triplet损失-Triplet-loss" class="headerlink" title="4.4 Triplet损失 (Triplet loss)"></a>4.4 Triplet损失 (Triplet loss)</h3><p>论文：<a href="https://arxiv.org/pdf/1503.03832.pdf" target="_blank" rel="noopener">FaceNet: A Unified Embedding for Face Recognition and Clustering</a></p>
-<p>Anchor Positive Negative<br>用三元组术语来说，对于一个Anchor图片，Positive图片和其是同一个人，距离更近，Negative非同一个人，距离更远。简写成$A$,$P$,$N$<br>三元组损失，我们的目标是想要$|| f(A) - f(P) ||^{2}$，你希望这个数值很小，准确地说，你想让它小于等$f(A)$和$f(N)$之间的距离，或者说是它们的范数的平方（即：$|| f(A) - f(P)||^{2} \leq ||f(A) - f(N)||^{2}$）。（$|| f(A) - f(P) ||^{2}$）当然这就是$d(A,P)$，（$|| f(A) - f(N) ||^{2}$）这是$d(A,N)$，你可以把$d$ 看作是距离(distance)函数，这也是为什么我们把它命名为$d$。<br><img src="http://img.nocater.com/18-8-23/92960861.jpg" alt=""><br>网络中的参数全为0的话，也是可以满足条件的，为了避免这个问题，添加一个超参数$\alpha$，代表间隔<strong>margin</strong>。<br>最后我们可以定义损失函数：<br>$$L(A,P,N) = max(||f(A) - f(P)||^2 - ||f(A) - f(N)||^2 + \alpha, 0)$$<br>不难发现，当$|| f( A) - f( P)||^{2} -|| f( A) - f( N)||^{2} + \alpha \ge 0$，则得到一个正的损失值。 相反，网络不会关心负值大小。</p>
+<p>Anchor Positive Negative<br>用三元组术语来说，对于一个Anchor图片，Positive图片和其是同一个人，距离更近，Negative非同一个人，距离更远。简写成$A$,$P$,$N$<br>三元组损失，我们的目标是想要$|| f(A) - f(P) ||^{2}$，你希望这个数值很小，准确地说，你想让它小于等$f(A)$和$f(N)$之间的距离，或者说是它们的范数的平方（即：$|| f(A) - f(P)||^{2} \leq ||f(A) - f(N)||^{2}$）。（$|| f(A) - f(P) ||^{2}$）当然这就是$d(A,P)$，（$|| f(A) - f(N) ||^{2}$）这是$d(A,N)$，你可以把$d$ 看作是距离(distance)函数，这也是为什么我们把它命名为$d$。<br><img src="http://img.nocater.com/18-8-23/92960861.jpg" alt=""><br>网络中的参数全为0的话，也是可以满足条件的，为了避免这个问题，添加一个超参数$\alpha$，代表间隔<strong>margin</strong>。<br>最后我们可以定义损失函数：</p>
+<script type="math/tex; mode=display">L(A,P,N) = max(||f(A) - f(P)||^2 - ||f(A) - f(N)||^2 + \alpha, 0)</script><p>不难发现，当$|| f( A) - f( P)||^{2} -|| f( A) - f( N)||^{2} + \alpha \ge 0$，则得到一个正的损失值。 相反，网络不会关心负值大小。</p>
 <p>对于训练集，至少保证一个人有多张图片。训练的时候，可以随机选取照片来构成APN三元组，但使用相近图像的AP才能更好地训练网络。<br>人脸识别模型可以选择其它公司或研究机构训练好的网络模型。</p>
 <h3 id="4-5-面部验证与二分类-Face-verification-and-binary-classification"><a href="#4-5-面部验证与二分类-Face-verification-and-binary-classification" class="headerlink" title="4.5 面部验证与二分类 (Face verification and binary classification)"></a>4.5 面部验证与二分类 (Face verification and binary classification)</h3><p>论文：<a href="https://research.fb.com/wp-content/uploads/2016/11/deepface-closing-the-gap-to-human-level-performance-in-face-verification.pdf" target="_blank" rel="noopener">DeepFace:Closing the gap to human-level performance in face verification</a></p>
-<p>除了Triplet loss方法外，还可以把人脸识别看作二分类问题。<br>选取一堆Siamese网络，将两章图片进行编码(映射)，然后输入逻辑回归单元如Sigmoid，进行输出1或0。此时损失函数为：<br>$$\hat{y} = \sigma ( \sum_{k=1}^{128} \omega_i |f(x^{(i)})_k - f(x^{(j)})_k| + b)$$</p>
-<blockquote>
+<p>除了Triplet loss方法外，还可以把人脸识别看作二分类问题。<br>选取一堆Siamese网络，将两章图片进行编码(映射)，然后输入逻辑回归单元如Sigmoid，进行输出1或0。此时损失函数为：</p>
+<script type="math/tex; mode=display">\hat{y} = \sigma ( \sum_{k=1}^{128} \omega_i |f(x^{(i)})_k - f(x^{(j)})_k| + b)</script><blockquote>
 <p>$f(x^{(i)})$是图片$x^{(i)}$的编码，$k$代表第$k$个元素。</p>
 </blockquote>
 <p>这样就可以将其转化成二分类问题。</p>
@@ -729,8 +738,8 @@
 <li>$J_{\text{content}}(C,G)$，内容代价函数，用来度量生成图片$G$的内容与内容图片$C$的内容有多相似。</li>
 <li>$J_{\text{style}}(S,G)$，风格代价函数，用来度量图片$G$的风格和图片$S$的风格的相似度。</li>
 </ul>
-<p>最终的代价函数为($\alpha$ 是权重超参数)：<br>$$J( G) = a J_{\text{content}}( C,G) + \beta J_{\text{style}}(S,G)$$</p>
-<h3 id="4-9-内容代价函数-Content-cost-function"><a href="#4-9-内容代价函数-Content-cost-function" class="headerlink" title="4.9 内容代价函数 (Content cost function)"></a>4.9 内容代价函数 (Content cost function)</h3><p>$J( G) = \alpha J_{\text{content}}( C,G) + \beta J_{\text{style}}(S,G)$<br>内容代价函数：</p>
+<p>最终的代价函数为($\alpha$ 是权重超参数)：</p>
+<script type="math/tex; mode=display">J( G) = a J_{\text{content}}( C,G) + \beta J_{\text{style}}(S,G)</script><h3 id="4-9-内容代价函数-Content-cost-function"><a href="#4-9-内容代价函数-Content-cost-function" class="headerlink" title="4.9 内容代价函数 (Content cost function)"></a>4.9 内容代价函数 (Content cost function)</h3><p>$J( G) = \alpha J<em>{\text{content}}( C,G) + \beta J</em>{\text{style}}(S,G)$<br>内容代价函数：</p>
 <ul>
 <li>选取隐层$l$来计算内容代价， use hidden layer l to compute content cost.</li>
 <li>使用预训练的卷积神经网络，如VGG</li>
@@ -739,18 +748,18 @@
 </ul>
 <p>内容代价函数求得就是两个图片之间$l$层激活值差值的平方和。</p>
 <h3 id="4-10-风格代价函数-Style-cost-function"><a href="#4-10-风格代价函数-Style-cost-function" class="headerlink" title="4.10 风格代价函数 (Style cost function)"></a>4.10 风格代价函数 (Style cost function)</h3><p>论文：A neural algorithm of artistic style</p>
-<p>风格的数据表达：相关性(correlation)<br>计算$l$层的输出，通道间的相关性。<br>风格矩阵(<strong>style matrix</strong>)<br>使用$a_{i,\ j,\ k}^{[l]}$来表示隐层$l$中$(i,j,k)$位置的激活项，$i$，$j$，$k$分别代表该位置的高度、宽度以及对应的通道数。计算风格矩阵$G^{l}$，它是一个$n_{c} \times n_{c}$的矩阵，同样地，我们也对生成的图像进行这个操作。</p>
-<p>$G_{kk^{‘}}^{[l][S]} = \sum_{i = 1}^{n_{H}^{[l]}}{\sum_{j = 1}^{n_{W}^{[l]}}{a_{i,\ j,\ k}^{[l][S]}a_{i,\ j,\ k^{‘}}^{[l][S]}}}$</p>
+<p>风格的数据表达：相关性(correlation)<br>计算$l$层的输出，通道间的相关性。<br>风格矩阵(<strong>style matrix</strong>)<br>使用$a<em>{i,\ j,\ k}^{[l]}$来表示隐层$l$中$(i,j,k)$位置的激活项，$i$，$j$，$k$分别代表该位置的高度、宽度以及对应的通道数。计算风格矩阵$G^{l}$，它是一个$n</em>{c} \times n_{c}$的矩阵，同样地，我们也对生成的图像进行这个操作。</p>
+<p>$G<em>{kk^{‘}}^{[l][S]} = \sum</em>{i = 1}^{n<em>{H}^{[l]}}{\sum</em>{j = 1}^{n<em>{W}^{[l]}}{a</em>{i,\ j,\ k}^{[l][S]}a_{i,\ j,\ k^{‘}}^{[l][S]}}}$</p>
 <blockquote>
-<p>用符号$i$，$j$表示下界，对$i$，$j$，$k$位置的激活项$a_{i,\ j,\ k}^{[l]}$，乘以同样位置的激活项，也就是$i$,$ j$,$k’$位置的激活项，即$a_{i,j,k^{‘}}^{[l]}$，将它们两个相乘。然后$i$和$j$分别加到l层的高度和宽度，即$n_{H}^{[l]}$和$n_{W}^{[l]}$，将这些不同位置的激活项都加起来。$(i,j,k)$和$(i,j,k’)$中$x$坐标和$y$坐标分别对应高度和宽度，将$k$通道和$k’$通道上这些位置的激活项都进行相乘。我一直以来用的这个公式，严格来说，它是一种非标准的互相关函数，因为我们没有减去平均数，而是将它们直接相乘。</p>
+<p>用符号$i$，$j$表示下界，对$i$，$j$，$k$位置的激活项$a<em>{i,\ j,\ k}^{[l]}$，乘以同样位置的激活项，也就是$i$,$ j$,$k’$位置的激活项，即$a</em>{i,j,k^{‘}}^{[l]}$，将它们两个相乘。然后$i$和$j$分别加到l层的高度和宽度，即$n<em>{H}^{[l]}$和$n</em>{W}^{[l]}$，将这些不同位置的激活项都加起来。$(i,j,k)$和$(i,j,k’)$中$x$坐标和$y$坐标分别对应高度和宽度，将$k$通道和$k’$通道上这些位置的激活项都进行相乘。我一直以来用的这个公式，严格来说，它是一种非标准的互相关函数，因为我们没有减去平均数，而是将它们直接相乘。</p>
 </blockquote>
-<p>同样计算生成图像的的风格矩阵：<br>$G_{kk^{‘}}^{[l][G]} = \sum_{i = 1}^{n_{H}^{[l]}}{\sum_{j = 1}^{n_{W}^{[l]}}{a_{i,\ j,\ k}^{[l][G]}a_{i,\ j,\ k^{‘}}^{[l][G]}}}$</p>
+<p>同样计算生成图像的的风格矩阵：<br>$G<em>{kk^{‘}}^{[l][G]} = \sum</em>{i = 1}^{n<em>{H}^{[l]}}{\sum</em>{j = 1}^{n<em>{W}^{[l]}}{a</em>{i,\ j,\ k}^{[l][G]}a_{i,\ j,\ k^{‘}}^{[l][G]}}}$</p>
 <blockquote>
 <p><strong>Gram matrix</strong>，所以用$G$来表示。</p>
 </blockquote>
 <p>最后，整体的风格代价函数为两个风格矩阵的F范数的平方，可以乘以一个归一化常数，或者乘以一个超参数$\beta$就好了。</p>
-<p>$J_{style}^{[l]}(S,G) = \frac{1}{(2n_H^{[l]}n_W^{[l]}n_C^{[l]})^2} \sum_k \sum_{k’}(G_{KK’}^{[l][S]} - G_{KK’}^{[l][G]})$</p>
-<p>最终，整体的代价函数为：<br>$J(G) = a J_{\text{content}( C,G)} + \beta J_(S,G)$</p>
+<p>$J<em>{style}^{[l]}(S,G) = \frac{1}{(2n_H^{[l]}n_W^{[l]}n_C^{[l]})^2} \sum_k \sum</em>{k’}(G<em>{KK’}^{[l][S]} - G</em>{KK’}^{[l][G]})$</p>
+<p>最终，整体的代价函数为：<br>$J(G) = a J<em>{\text{content}( C,G)} + \beta J</em>(S,G)$</p>
 <h3 id="4-11-一维到三维推广-1D-and-3D-generalizations-of-models"><a href="#4-11-一维到三维推广-1D-and-3D-generalizations-of-models" class="headerlink" title="4.11 一维到三维推广 (1D and 3D generalizations of models)"></a>4.11 一维到三维推广 (1D and 3D generalizations of models)</h3><p>卷积操作可以应用到1D和3D上，1D可以使用序列模型，会在下次课程中讲解并对比。<br>应用到3D，channel层是额外的。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="nocater/deeplearning_ai_books">深度学习笔记-黄海广</a></p>
 
