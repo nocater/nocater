@@ -83,7 +83,7 @@ Word2vec使用子采样技术来解决以上问题，根据单词的频次来削
 
 **采样率(Sampling rate)**  
 使用 $w_i$来表示单词，$z(w_i)$来表示单词的频次。采样率是一个参数，默认值为0.001。$P(w_i)$ 表示单词保留的概率：
-$$P(w_i)=(\sqrt{\frac{z(w_i)}{0.0001}} +1) \cdot \frac{0.001}{z(w_i)}$$  
+$$P(w_i)=(\sqrt{\frac{z(w_i)}{0.001}} +1) \cdot \frac{0.001}{z(w_i)}$$  
 该函数的图像为：  
 ![](http://mccormickml.com/assets/word2vec/subsample_func_plot.png)  
 
@@ -365,6 +365,5 @@ train(center_words, target_words, vocabulary, reverse_vocab, list(counts))
 [3] [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/pdf/1301.3781.pdf)  
 [4] [cs224n: Word2Vec Tutorial - The Skip-Gram Model](http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/)  
 [5] [word2vec Parameter Learning Explained](https://arxiv.org/pdf/1411.2738.pdf)  
-[6] [[Tensorflow word2vec模型](https://github.com/tensorflow/models/tree/master/tutorials/embedding)
-]  
+[6] [[Tensorflow word2vec模型](https://github.com/tensorflow/models/tree/master/tutorials/embedding)]  
 [7] [20newsgroups数据集](http://qwone.com/~jason/20Newsgroups/)  
