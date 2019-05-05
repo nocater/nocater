@@ -469,28 +469,28 @@
       
 
       
-        <h1 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h1><p>git diff &lt;filename> 比较<em>工作区</em>和<em>暂存区</em>的文件<br>git diff –cached &lt;filename> 比较<em>暂存区</em>和版本库的文件<br>git diff –staged &lt;filename> 比较<em>暂存区</em>和版本库的文件<br>git diff HEAD 比较<em>工作区</em>和<em>版本库</em>的文件<br>patch 恢复操作</p>
-<h1 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a>git clone</h1><p>git clone &lt;git_url> &lt;local_floder> 克隆项目<br>git colne &lt;git_url> -b 远程分支 &lt;local_floder> 拉取特定分支  </p>
+        <h1 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a>git diff</h1><p>git diff <filename\> 比较<em>工作区</em>和<em>暂存区</em>的文件<br>git diff —cached <filename\> 比较<em>暂存区</em>和版本库的文件<br>git diff —staged <filename\> 比较<em>暂存区</em>和版本库的文件<br>git diff HEAD 比较<em>工作区</em>和<em>版本库</em>的文件<br>patch 恢复操作</filename\></filename\></filename\></p>
+<h1 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a>git clone</h1><p>git clone <git_url\> <local_floder\> 克隆项目<br>git colne <git_url\> -b 远程分支 <local_floder\> 拉取特定分支  </local_floder\></git_url\></local_floder\></git_url\></p>
 <h1 id="git-branch"><a href="#git-branch" class="headerlink" title="git branch"></a>git branch</h1><p>git branch new_branch 创建新的分支<br>git branch -l 显示本地分支<br>git branch -v 显示分支最后commit信息<br>git branch -a 显示远程分支<br>git branch -d branch 删除分支<br>git branch -D 强制删除未合并的分支  </p>
 <h1 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h1><p>git status -s 简要显示状态信息</p>
 <h1 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h1><p>git add .  提交所有到<em>暂存区</em><br>git add -u 将被追踪的文件全部提交到<em>暂存区</em><br>git add -A 将改动和新加文件提交到<em>暂存区</em><br>git add -f 强制提交<br>git add -i 交互提交  </p>
-<h1 id="git-checkout"><a href="#git-checkout" class="headerlink" title="git checkout"></a>git checkout</h1><p>git checkout 汇总显示<em>工作区</em>、<em>暂存区</em> 与HEAD的差异[显示与origin/master一致与否]<br>git checkout [&lt;brach>] 切换分支<br><strong>git checout <file> 目标是工作区的文件</file></strong><br>git checkout [-q] [&lt;commit>] [–] &lt;paths>…  使用&lt;commit>版本覆盖工作区 如果省略&lt;commit>则指定<em>暂存区</em>进行覆盖<br>git checkout &lt;filename> 撤销git .add &lt;filename> 命令[使用<em>暂存区</em>文件覆盖<em>工作区</em>修改]<br>git checkout branch &lt;filename> 将branch所指向的提交中的filename替换<em>暂存区</em>和<em>工作区</em>中相应的文件。<br>git checkout . 重置<em>工作区</em>，使用<em>暂存区</em>进行覆盖<br>git checkout HEAD . 重置<em>工作区</em>，使用<em>版本库</em>进行覆盖<br>git checkout -b &lt;new_branch> &lt;remote>/&lt;branch>  拉取远程分支并创建新分支</p>
-<h1 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h1><p>&lt;paths> 有：重置指定路径文件 无：重置引用<br>git reset [HEAD] 重置<em>暂存区</em><br>git reset HEAD –hard 使用<em>版本库</em>重置<em>暂存区</em>和<em>工作区</em><br>git reset HEAD –soft 仅重置引用，不重置<em>暂存区</em>和<em>工作区</em><br>git reset [-mixed] HEAD^ 回退一次引用，并使用其覆盖<em>暂存区</em></p>
-<h1 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h1><p>git commit -a <strong>不推荐使用</strong> 将追踪文件直接提交<br>git commit –amend 修补命令<br>git commit -c 修改重用提交信息 -C直接使用不修改<br>git commit -F 从文件读取</p>
+<h1 id="git-checkout"><a href="#git-checkout" class="headerlink" title="git checkout"></a>git checkout</h1><p>git checkout 汇总显示<em>工作区</em>、<em>暂存区</em> 与HEAD的差异[显示与origin/master一致与否]<br>git checkout [<brach\>] 切换分支<br><strong>git checout <file> 目标是工作区的文件</file></strong><br>git checkout [-q] [<commit\>] [—] <paths\>…  使用<commit\>版本覆盖工作区 如果省略<commit\>则指定<em>暂存区</em>进行覆盖<br>git checkout <filename\> 撤销git .add <filename\> 命令[使用<em>暂存区</em>文件覆盖<em>工作区</em>修改]<br>git checkout branch <filename\> 将branch所指向的提交中的filename替换<em>暂存区</em>和<em>工作区</em>中相应的文件。<br>git checkout . 重置<em>工作区</em>，使用<em>暂存区</em>进行覆盖<br>git checkout HEAD . 重置<em>工作区</em>，使用<em>版本库</em>进行覆盖<br>git checkout -b <new_branch\> <remote\>/<branch\>  拉取远程分支并创建新分支</branch\></remote\></new_branch\></filename\></filename\></filename\></commit\></commit\></paths\></commit\></brach\></p>
+<h1 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h1><p><paths\> 有：重置指定路径文件 无：重置引用<br>git reset [HEAD] 重置<em>暂存区</em><br>git reset HEAD —hard 使用<em>版本库</em>重置<em>暂存区</em>和<em>工作区</em><br>git reset HEAD —soft 仅重置引用，不重置<em>暂存区</em>和<em>工作区</em><br>git reset [-mixed] HEAD^ 回退一次引用，并使用其覆盖<em>暂存区</em></paths\></p>
+<h1 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h1><p>git commit -a <strong>不推荐使用</strong> 将追踪文件直接提交<br>git commit —amend 修补命令<br>git commit -c 修改重用提交信息 -C直接使用不修改<br>git commit -F 从文件读取</p>
 <h1 id="git-stash"><a href="#git-stash" class="headerlink" title="git stash"></a>git stash</h1><p>git stash list 显示所有<br>git stash save <em>message</em> 保存<br>git stash pop pop Stash<br>git stash apply 恢复不删除<br>git stash drop 删除<br>git stash clear 清空Stash</p>
-<h1 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h1><p>git tag  显示所有标签<br>git tag -a <em>tagtName</em> -m <em>tagMessage</em> 创建tag<br>git show <em>tagNmae</em>  显示tag详细信息<br>git tag -s GPG密钥签署<br>git tag -v GPG验证<br>git push origin <em>tagName</em> 推送标签到远程版本库<br>git push &lt;remote_url>  :&lt;tagname> 删除远程版本库tag  </p>
+<h1 id="git-tag"><a href="#git-tag" class="headerlink" title="git tag"></a>git tag</h1><p>git tag  显示所有标签<br>git tag -a <em>tagtName</em> -m <em>tagMessage</em> 创建tag<br>git show <em>tagNmae</em>  显示tag详细信息<br>git tag -s GPG密钥签署<br>git tag -v GPG验证<br>git push origin <em>tagName</em> 推送标签到远程版本库<br>git push <remote_url\>  :<tagname\> 删除远程版本库tag  </tagname\></remote_url\></p>
 <ul>
 <li>里程碑共享，必须显式的推送。即在推送命令的参数中，标明要推送哪个里程碑。</li>
 <li>执行获取或拉回操作，自动从远程版本库获取新里程碑，并在本地版本库中创建。</li>
 <li>如果本地已有同名的里程碑，默认不会从上游同步里程碑，即使两者里程碑的指向是不同的。</li>
 </ul>
-<h1 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h1><p>git push &lt;remote> &lt;new_branch> 创建远程分支<br>git push &lt;remote|&gt; :&lt;branch> 删除远程分支<br>git remote -v 显示remote信息<br>git remote set-url <em>remoteName</em> 修改remote信息<br>git remote add 添加remote  </p>
-<h1 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h1><p>git pull –rebase  设置变基而不是合并<br>git config branch.&lt;branchname>.rebase true 设置pull默认采用rebase  </p>
-<h1 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h1><p>git log –graph  图显日志<br>git log –pretty=online <filnename> 查看文件提交历史  </filnename></p>
+<h1 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h1><p>git push <remote\> <new_branch\> 创建远程分支<br>git push <remote|> :<branch\> 删除远程分支<br>git remote -v 显示remote信息<br>git remote set-url <em>remoteName</em> 修改remote信息<br>git remote add 添加remote  </branch\></remote|></new_branch\></remote\></p>
+<h1 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h1><p>git pull —rebase  设置变基而不是合并<br>git config branch.<branchname\>.rebase true 设置pull默认采用rebase  </branchname\></p>
+<h1 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h1><p>git log —graph  图显日志<br>git log —pretty=online <filnename> 查看文件提交历史  </filnename></p>
 <blockquote>
 <p>一种格式化日志输出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config alias.lg <span class="built_in">log</span> --graph --pretty=format:<span class="string">'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset'</span> --abbrev-commit --date=relative core.quotepath=<span class="literal">false</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><p>git rm –cache &lt;filename> 取消文件追踪<br>git reflog show master | head -5 显示<br>HEAD^ HEAD~3 master@{n} 引用表示<br>git config –global –list 显示git global 配置信息  </p>
+<h1 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h1><p>git rm —cache <filename\> 取消文件追踪<br>git reflog show master | head -5 显示<br>HEAD^ HEAD~3 master@{n} 引用表示<br>git config —global —list 显示git global 配置信息  </filename\></p>
 <h1 id="Markdown-的使用"><a href="#Markdown-的使用" class="headerlink" title="Markdown 的使用"></a>Markdown 的使用</h1><p># 一级标题  ##二级标题<br>两个空格换行<br>.+-序列使用<br>*斜体* _斜体_<br>**粗体**，__粗体__</p>
 
       
@@ -609,7 +609,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -685,7 +685,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
