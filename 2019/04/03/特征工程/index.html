@@ -471,10 +471,8 @@
 <h2 id="无量纲化"><a href="#无量纲化" class="headerlink" title="无量纲化"></a>无量纲化</h2><p>无量纲化能使不同规格(范围)的数据转换到同一规格(范围)。常用的无量纲化方法包括<strong>标准化</strong>和<strong>区间缩放法</strong>。<strong>标准化</strong>的前提使特征值服从正态分布，标准化后，其转化成正态分布。区间缩放法利用了边界值信息，将特征的取值区间缩放到某个特征的范围，例如[0,1]。</p>
 <p>常用的方法及划分，网络上的资料负责多样。维基百科中<a href="https://en.wikipedia.org/wiki/Feature_scaling" target="_blank" rel="noopener">Feature scaling(特征缩放)</a>包含四种方式：<strong>Rescaling (min-max normalization)</strong>、<strong>Mean normalization</strong>、<strong>Standardization</strong>、<strong>Scaling to unit length</strong>。</p>
 <h3 id="Standardization"><a href="#Standardization" class="headerlink" title="Standardization"></a>Standardization</h3><p><strong>翻译问题：Normalization可以翻译成标准化或归一化，但是根据不同的用途(公式)其理解不同。</strong></p>
-<p>通常使用方法：<strong>Z-Score标准化</strong></p>
-<script type="math/tex; mode=display">x^\prime = \frac{x-\mu}{\sigma}</script><p>这会将特征数据转换成均值为0，方差为1。其方法可以使用<code>sklearn.preprocessing.StandardScaler</code></p>
-<h3 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h3><p><strong>Min-Max Normalization</strong></p>
-<script type="math/tex; mode=display">x^\prime = \frac{x-mean(x)}{max(x)-min(x)}</script><p>这将特征数据缩放到[0,1]范围，可以使用<code>sklearn.preprocessing。 MinMaxScaler</code></p>
+<p>通常使用方法：<strong>Z-Score标准化</strong><br>$$x^\prime = \frac{x-\mu}{\sigma}$$<br>这会将特征数据转换成均值为0，方差为1。其方法可以使用<code>sklearn.preprocessing.StandardScaler</code></p>
+<h3 id="Normalization"><a href="#Normalization" class="headerlink" title="Normalization"></a>Normalization</h3><p><strong>Min-Max Normalization</strong><br>$$x^\prime = \frac{x-mean(x)}{max(x)-min(x)}$$<br>这将特征数据缩放到[0,1]范围，可以使用<code>sklearn.preprocessing。 MinMaxScaler</code></p>
 <h2 id="对定量特征二值化"><a href="#对定量特征二值化" class="headerlink" title="对定量特征二值化"></a>对定量特征二值化</h2><p>设置阈值，大于阈值用1表示，相反用0表示。</p>
 <h2 id="对定性特征哑编码-one-hot"><a href="#对定性特征哑编码-one-hot" class="headerlink" title="对定性特征哑编码(one-hot)"></a>对定性特征哑编码(one-hot)</h2><p>对类别特征可以使用One-hot编码。</p>
 <h2 id="处理缺失值"><a href="#处理缺失值" class="headerlink" title="处理缺失值"></a>处理缺失值</h2><h1 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h1><p>当数据预处理完成后，我们需要选择有意义的特征输入机器学习的算法和模型进行训练。通常来说，从两个方面考虑来选择特征：</p>
@@ -490,12 +488,14 @@
 </ul>
 <h2 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h2><h3 id="方差选择法"><a href="#方差选择法" class="headerlink" title="方差选择法"></a>方差选择法</h3><p>使用方差选择法，先要计算各个特征的方差，然后根据阈值，选择方法大于阈值的特征。</p>
 <h3 id="相关系数-pearsonr"><a href="#相关系数-pearsonr" class="headerlink" title="相关系数(pearsonr)"></a>相关系数(pearsonr)</h3><p>使用相关系数(pearsonr)，先要计算各个特征值对目标值的相关系数和相关系数的P值。其定义为两个变量之间的协方差和标准差的商：</p>
-<script type="math/tex; mode=display">P_{X,Y} = \frac{\text{cov}(X,Y)}{\sigma_X \sigma_Y}</script><p>其能描述特征与目标值的线性相关性，绝对值越接近1相关性越强，&lt;0.3其意义不大。可以使用<code>scipy.stats.pearsonr</code>，其返回相关系数及p值，The p-value is a number between zero and one that represents the probability that your data would have arisen if the null hypothesis were true.</p>
+<p>$$P_{X,Y} = \frac{\text{cov}(X,Y)}{\sigma_X \sigma_Y}$$<br>其能描述特征与目标值的线性相关性，绝对值越接近1相关性越强，&lt;0.3其意义不大。可以使用<code>scipy.stats.pearsonr</code>，其返回相关系数及p值，The p-value is a number between zero and one that represents the probability that your data would have arisen if the null hypothesis were true.</p>
 <h3 id="卡方检验"><a href="#卡方检验" class="headerlink" title="卡方检验"></a>卡方检验</h3><p>经典的卡方检验是检验定性自变量对定性因变量的相关性。其根本思想就是在于比较理论频数和实际频数的吻合程度或拟合优度问题。假设自变量有N种取值，因变量有M种取值，考虑自变量等于i且因变量等于j的样本频数的观察值与期望的差距，构建统计量：</p>
-<script type="math/tex; mode=display">x^2 = \sum \frac{(A-E)^2}{E} = \sum_{i=1}^k \frac{(A_i - E_i)^2}{E_i} = \sum_{i=1}^{k} \frac{(A_i - np_i)}{np_i}</script><p>其中，Ai为i水平的观察频数，Ei为i水平的期望频数，n为总频数，pi为i水平的期望频率。</p>
+<p>$$x^2 = \sum \frac{(A-E)^2}{E} = \sum_{i=1}^k \frac{(A_i - E_i)^2}{E_i} = \sum_{i=1}^{k} \frac{(A_i - np_i)}{np_i}$$</p>
+<p>其中，Ai为i水平的观察频数，Ei为i水平的期望频数，n为总频数，pi为i水平的期望频率。</p>
 <p>可以使用<code>sklearn.feature_selection.chi2</code></p>
 <h3 id="互信息法"><a href="#互信息法" class="headerlink" title="互信息法"></a>互信息法</h3><p>经典的互信息也是评价定性自变量对定性因变量的相关性的：</p>
-<script type="math/tex; mode=display">I(X;Y)=\sum_{x\in X} \sum_{y\in Y} p(x,y)\log \frac{p(x,y)}{p(x)p(y)}</script><blockquote>
+<p>$$I(X;Y)=\sum_{x\in X} \sum_{y\in Y} p(x,y)\log \frac{p(x,y)}{p(x)p(y)}$$</p>
+<blockquote>
 <p>在机器学习领域，互信息与信息增益是等价的。 待重新确认。</p>
 </blockquote>
 <h2 id="Wrapper"><a href="#Wrapper" class="headerlink" title="Wrapper"></a>Wrapper</h2><h3 id="递归特征消除法"><a href="#递归特征消除法" class="headerlink" title="递归特征消除法"></a>递归特征消除法</h3><p>递归消除特征法使用一个基模型来进行多轮训练，每轮训练后，消除若干权值系数的特征，再基于新的特征集进行下一轮训练。使用feature_selection库的RFE类来选择特征。</p>
