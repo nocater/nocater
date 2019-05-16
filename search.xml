@@ -75,7 +75,7 @@
   <entry>
     <title><![CDATA[收藏夹]]></title>
     <url>%2F2019%2F03%2F20%2F%E6%94%B6%E8%97%8F%E5%A4%B9%2F</url>
-    <content type="text"><![CDATA[机器学习算法整体 算法汇总 各种机器学习算法的应用场景分别是什么 贝叶斯 简单详细化 深入详细化 SVM Linear SVM 和 LR 有什么异同？ LInear SVM和LR都是线性分类器，都是判别模型 Linear SVM部直接依赖数据分布，分类平面不受一类点影响；LR则受所有数据点的影响，如果数据不同类别非常不平衡，则需要处理平衡 Linear SVM依赖数据表达的距离测度，所以需要先对数据normalization;LR不受影响 Linear SVM依赖惩罚的系数，实验中需要验证 Linear SVM和LR都会收到outlier的影响，但敏感程度没有明确结论 Linear 只输出类别，LR输出概率。 深度学习 Understanding LSTM Networks:英文,多图说明LSTM机制。来源cs224n推荐。 Attention and Augmented Recurrent Neural Networks:讲解Attention,关于NMT query的部分理解还不够。 强化学习 强化学习_讲的比较完整 强化学习_代码 其它 数据集汇总 NLP数据汇总 BERT使用 推荐软件 typora:强大的Markdown编辑器 Mathpix Snippiong:截图识别Latex公式，效果非常棒 下载工具FDM(Free Download Manager)：无广告，支持.torrent文件]]></content>
+    <content type="text"><![CDATA[机器学习算法整体 算法汇总 各种机器学习算法的应用场景分别是什么 贝叶斯 简单详细化 深入详细化 SVM Linear SVM 和 LR 有什么异同？ LInear SVM和LR都是线性分类器，都是判别模型 Linear SVM部直接依赖数据分布，分类平面不受一类点影响；LR则受所有数据点的影响，如果数据不同类别非常不平衡，则需要处理平衡 Linear SVM依赖数据表达的距离测度，所以需要先对数据normalization;LR不受影响 Linear SVM依赖惩罚的系数，实验中需要验证 Linear SVM和LR都会收到outlier的影响，但敏感程度没有明确结论 Linear 只输出类别，LR输出概率。 深度学习 Understanding LSTM Networks:英文,多图说明LSTM机制。来源cs224n推荐。 Attention and Augmented Recurrent Neural Networks:讲解Attention,关于NMT query的部分理解还不够。 强化学习 强化学习_讲的比较完整 强化学习_代码 其它 数据集汇总 NLP数据汇总 BERT使用 推荐软件 typora:强大的Markdown编辑器 Mathpix Snippiong:截图识别Latex公式，效果非常棒 下载工具FDM(Free Download Manager)：无广告，支持.torrent文件 f.lux 好像和win10兼容性差]]></content>
       <categories>
         <category>other</category>
       </categories>
