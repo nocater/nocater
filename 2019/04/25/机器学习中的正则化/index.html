@@ -109,7 +109,7 @@
 
 
   <meta name="description" content="本文来自[知乎@管他叫大靖](https://www.zhihu.com/question/20924039/answer/653174504)">
-<meta name="keywords" content="正则化,机器学习,惩罚项">
+<meta name="keywords" content="机器学习,正则化,惩罚项">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习中的正则化">
 <meta property="og:url" content="https://nocater.github.io/2019/04/25/机器学习中的正则化/index.html">
@@ -471,8 +471,10 @@
       
         <p>本文来自<a href="https://www.zhihu.com/question/20924039/answer/653174504" target="_blank" rel="noopener">知乎@管他叫大靖</a></p>
 <p>首先，机器学习的一般结构是：</p>
-<script type="math/tex; mode=display">\hat{f}=\arg \min_{f \in \mathcal{H}} \sum_{i=1}^{n} l\left(y_{i}, f\left(x_{i}\right)\right) \tag{1}</script><p>等号右边的叫做损失项。其中 $(x_i,y_i)$ 是训练样本，$l$是损失函数，$\mathcal{H}$ 是假设空间。更多时候我们看到的是如下表达：</p>
-<script type="math/tex; mode=display">\hat{f}=\arg \min_{f \in \mathcal{H}} \sum_{i=1}^{n} l\left(y_{i}, f\left(x_{i}\right)\right)+\lambda \Omega(f) \tag{2}</script><p>多了的一项 $\lambda\Omega(f)$ 叫做<strong>正则项</strong>。其中， $\Omega(f)$ 是函数的复杂度， $\lambda$ 是超参数。</p>
+<p>$$\hat{f}=\arg \min_{f \in \mathcal{H}} \sum_{i=1}^{n} l\left(y_{i}, f\left(x_{i}\right)\right) \tag{1}$$</p>
+<p>等号右边的叫做损失项。其中 $(x_i,y_i)$ 是训练样本，$l$是损失函数，$\mathcal{H}$ 是假设空间。更多时候我们看到的是如下表达：</p>
+<p>$$\hat{f}=\arg \min_{f \in \mathcal{H}} \sum_{i=1}^{n} l\left(y_{i}, f\left(x_{i}\right)\right)+\lambda \Omega(f) \tag{2}$$</p>
+<p>多了的一项 $\lambda\Omega(f)$ 叫做<strong>正则项</strong>。其中， $\Omega(f)$ 是函数的复杂度， $\lambda$ 是超参数。</p>
 <h1 id="1-直观理解"><a href="#1-直观理解" class="headerlink" title="1. 直观理解"></a>1. 直观理解</h1><p>基于<strong>奥卡姆剃刀</strong>原则：如无必要，勿增实体。我们希望再假设空间 $mathcal{H}$ 中找到一个函数 $f$ ，这个函数再训练样本上的误差 $\sum_{i=1}^{n}l(y_i,f(x_i))$ 尽可能地小，同时这个函数也尽可能简单，即 $\Omega(f)$ 尽可能地小。比如当 $\mathcal{H}$ 是线性空间时候，函数维度小。 当 $\mathcal{H}$ 是决策树空间时候， $\Omega(f)$ 可以用叶子节点的数量来刻画。我们希望决策树的损失项尽可能小，但同时叶子又不要太多，$\lambda$ 在其中起到了权衡作用。</p>
 <h1 id="2-从优化角度理解"><a href="#2-从优化角度理解" class="headerlink" title="2. 从优化角度理解"></a>2. 从优化角度理解</h1><p>常见的机器学习模型，都可以看成某个特征空间中的线性模型。</p>
 <p>比如，一维空间上的多项式回归， $f(x)=\alpha_0+\alpha_1 x+\alpha_2 x^{2}+\alpha_3 x^{3}$ , 可以看成三位空间 $(x_1,x_2,x_3) = (x,x^2,x^3)$ 上的线性回归。</p>
@@ -480,26 +482,37 @@
 <p>因此，为了表达方便，下面直接拿线性回归举例。</p>
 <ol>
 <li><p>如果 $\Omega(f)=|\omega|_{2}^{2}$ , 这就是ridge回归：</p>
-<script type="math/tex; mode=display">\hat{f}=\arg \min_{\omega} \sum_{i=1}^{n} l\left(y_{i}, x_{i}^{T} \omega\right)+\lambda\|\omega\|_{2}^{2} \tag{3}</script><p>这是一个无约束问题， 需要求解参数 $\omega$，等价于如下带约束条件的优化问题：</p>
-<script type="math/tex; mode=display">\begin{array}{c}{\operatorname{minimi} z e_{\beta} \sum_{i=1}^{n} l\left(y_{i}, x_{i}^{T} \beta\right)} \\\\ {\text { s.t. }\|\beta\|_{2}^{2} \leq \tau}\end{array} \tag{4}</script><p>将(4)写成拉格朗日乘子形式，</p>
-<script type="math/tex; mode=display">\operatorname{minimize}_{\beta} \sum_{i=1}^{n} l\left(y_{i}, x_{i}^{T} \beta\right)+\gamma\left(\|\beta\|_2^2-\tau\right) \tag{5}</script><p>其中， $\gamma \geq 0$ ，不难看出(5)和(3)是等价的，从而(4)和(3)是等价的。因此，加了正则化的优化问题(2)等价于将参数限定再一个区域内(4)。又因参数空间和函数空间是对应的，从而原假设空间加正则项，等价于再子假设空间中上求解(1)。</p>
+<p>$$ \hat{f}=\arg \min_{\omega} \sum_{i=1}^{n} l\left(y_{i}, x_{i}^{T} \omega\right)+\lambda|\omega|_{2}^{2} \tag{3}$$</p>
+<p>这是一个无约束问题， 需要求解参数 $\omega$，等价于如下带约束条件的优化问题：</p>
+<p>$$\begin{array}{c}{\operatorname{minimi} z e_{\beta} \sum_{i=1}^{n} l\left(y_{i}, x_{i}^{T} \beta\right)} \\ {\text { s.t. }|\beta|_{2}^{2} \leq \tau}\end{array} \tag{4}$$</p>
+<p>将(4)写成拉格朗日乘子形式，</p>
+<p>$$\operatorname{minimize}<em>{\beta} \sum</em>{i=1}^{n} l\left(y_{i}, x_{i}^{T} \beta\right)+\gamma\left(|\beta|_2^2-\tau\right) \tag{5}$$</p>
+<p>其中， $\gamma \geq 0$ ，不难看出(5)和(3)是等价的，从而(4)和(3)是等价的。因此，加了正则化的优化问题(2)等价于将参数限定再一个区域内(4)。又因参数空间和函数空间是对应的，从而原假设空间加正则项，等价于再子假设空间中上求解(1)。</p>
 </li>
 <li><p>如果 $\Omega(f)=|\omega|_{1}^{1}$ ，这就是lasso回归：</p>
-<script type="math/tex; mode=display">\hat{f}=\arg \min_{\omega} \sum_{i=1}^{n} l\left(y_{i}, x_{i}^{T} \omega\right)+\lambda\|\omega\|_{1}^{1} \tag{6}</script><p>等价如下带约束问题：</p>
-<script type="math/tex; mode=display">\begin{array}{c}{\text { minimize }_{\omega} \sum_{i=1}^{n} l\left(y_{i}, x_{i}^{T} \omega\right)} \\ {\text { s.t. }\|\omega\|_{1}^{1} \leq \tau}\end{array} \tag{7}</script><p>可以看到，(7)的约束域是一个有尖点的区域(二维的话就是矩形)，有稀疏解。</p>
+<p>$$\hat{f}=\arg \min_{\omega} \sum_{i=1}^{n} l\left(y_{i}, x_{i}^{T} \omega\right)+\lambda|\omega|_{1}^{1} \tag{6}$$</p>
+<p>等价如下带约束问题：</p>
+<p>$$\begin{array}{c}{\text { minimize }<em>{\omega} \sum</em>{i=1}^{n} l\left(y_{i}, x_{i}^{T} \omega\right)} \ {\text { s.t. }|\omega|_{1}^{1} \leq \tau}\end{array} \tag{7}$$</p>
+<p>可以看到，(7)的约束域是一个有尖点的区域(二维的话就是矩形)，有稀疏解。</p>
 </li>
 </ol>
 <h1 id="从方差、偏差角度理解"><a href="#从方差、偏差角度理解" class="headerlink" title="从方差、偏差角度理解"></a>从方差、偏差角度理解</h1><p>机器学习的最终目的还是做预测，我们希望模型 $f$ 在未知数据上表现好，即泛化能力强，所以在理论上应该优化如下问题：</p>
-<script type="math/tex; mode=display">\arg \min_{f \in \mathcal{H}} E_{(x, y)} l(y, f(x)) \tag{8}</script><p>实际操作时，优化的是(1)或者(2)。假设 $l$ 是平方损失，则：</p>
-<script type="math/tex; mode=display">\begin{aligned} M S E &=E l(y, f(x)) \\ \\\\&=E(y-f(x))^{2} \\ \\\\&=E\left(y-f_{\rho}(x)+f_{\rho}(x)-\overline{f}(x)+\overline{f}(x)-f(x)\right)^{2} \\ \\\\&=E\left(y-f_{\rho}(x)\right)^{2}+E\left(f_{\rho}(x)-\overline{f}(x)\right)^{2}+E(\overline{f}(x)-f(x))^{2} \\ \\\\&=\sigma^{2}+\text { bias }+\text {variance} \end{aligned}</script><p>其中,bias反应了假设空间 $\mathcal{H}$ 的表达能力，variance反应了模型 $f$ 的波动性， $f(x)$ 本质上是一个依赖于训练样本的随机变量。关于Bias(偏差)和Variance(方差)更生动(深刻)的理解可以参考原作者的另一个回答<a href="https://www.zhihu.com/question/27068705/answer/634551971" target="_blank" rel="noopener">机器学习中的Bias(偏差)，Error(误差)，和Variance(方差)有什么区别和联系？</a>。</p>
+<p>$$\arg \min_{f \in \mathcal{H}} E_{(x, y)} l(y, f(x)) \tag{8}$$</p>
+<p>实际操作时，优化的是(1)或者(2)。假设 $l$ 是平方损失，则：</p>
+<p>$$\begin{aligned} M S E &amp;=E l(y, f(x)) \ \\&amp;=E(y-f(x))^{2} \ \\&amp;=E\left(y-f_{\rho}(x)+f_{\rho}(x)-\overline{f}(x)+\overline{f}(x)-f(x)\right)^{2} \ \\&amp;=E\left(y-f_{\rho}(x)\right)^{2}+E\left(f_{\rho}(x)-\overline{f}(x)\right)^{2}+E(\overline{f}(x)-f(x))^{2} \ \\&amp;=\sigma^{2}+\text { bias }+\text {variance} \end{aligned}$$</p>
+<p>其中,bias反应了假设空间 $\mathcal{H}$ 的表达能力，variance反应了模型 $f$ 的波动性， $f(x)$ 本质上是一个依赖于训练样本的随机变量。关于Bias(偏差)和Variance(方差)更生动(深刻)的理解可以参考原作者的另一个回答<a href="https://www.zhihu.com/question/27068705/answer/634551971" target="_blank" rel="noopener">机器学习中的Bias(偏差)，Error(误差)，和Variance(方差)有什么区别和联系？</a>。</p>
 <p>通常，假设空间 $\mathcal{H}$ 越大，对潜在函数 $f_p$ 的逼近效果越好(bias越小)，但模型的波动性越大(variance越大)。加载正则化，其实就是在约束假设空间，从(4)和(7)可知，假设空间变小了，表达能力就会变弱，因此bias会变大。但是，variance会变小。最后的MSE可能就减小了。具体操作中，对涉假空间的约束强度用(3)和(6)中的$\lambda$来表示， $\lambda$ 是需要调节的超参数。</p>
 <p>为什么假设空间越小，方差越小?举个例子，如果用一个常熟来训练模型，对于(8)就是用均值来预测，那么给定训练集，预测值的方差为0，达到最小，此时模型也就是最简单的。</p>
 <h1 id="4-从贝叶斯的角度理解"><a href="#4-从贝叶斯的角度理解" class="headerlink" title="4. 从贝叶斯的角度理解"></a>4. 从贝叶斯的角度理解</h1><p>从极大似然的角度，我们需要优化如下极大似然问题：</p>
-<script type="math/tex; mode=display">\arg \max_{\theta} P(Y, X | \theta)</script><p>其中，$\theta$是待求解的参数，如果误差服从正态分布，那么极大似然可以写成：</p>
-<script type="math/tex; mode=display">P(Y, X | \theta)=\Pi_{i=1}^{n} \frac{1}{\sqrt{2 \pi} \sigma} \exp \left\\{-\frac{1}{2 \sigma^{2}}(y-f(x; \theta))^{2}\right\\}</script><p>求对数，再取符号，等价于如下极小化问题：</p>
-<script type="math/tex; mode=display">\arg \min_{\theta} \sum_{i=1}^{n}\left(y_{i}-f\left(x_{i} ; \theta\right)\right)^{2} \tag{9}</script><p>这就是一般的最小二乘问题。</p>
+<p>$$\arg \max_{\theta} P(Y, X | \theta)$$</p>
+<p>其中，$\theta$是待求解的参数，如果误差服从正态分布，那么极大似然可以写成：</p>
+<p>$$P(Y, X | \theta)=\Pi_{i=1}^{n} \frac{1}{\sqrt{2 \pi} \sigma} \exp \left\{-\frac{1}{2 \sigma^{2}}(y-f(x; \theta))^{2}\right\}$$</p>
+<p>求对数，再取符号，等价于如下极小化问题：</p>
+<p>$$\arg \min_{\theta} \sum_{i=1}^{n}\left(y_{i}-f\left(x_{i} ; \theta\right)\right)^{2} \tag{9}$$</p>
+<p>这就是一般的最小二乘问题。</p>
 <p>贝叶斯认为参数不是一个给定的值，而是一个随机变量，服从一个分布。因此，我们需要极大化如下全概率：</p>
-<script type="math/tex; mode=display">\begin{aligned} & \arg \max _{\theta} P(Y, X | \theta) f(\theta) \\=& \arg \min _{\theta}-\log (P(Y, X | \theta))-\log (f(\theta)) \\=& \arg \min _{\theta} \sum_{i=1}^{n}\left(y_{i}-f\left(x_{i} ; \theta\right)\right)^{2}-\log (f(\theta)) \end{aligned} \tag{10}</script><p>其中$f(\theta)$ 是参数 $\theta$ 的先验分布。(10)和(9)相比，可以看到多了一项 $-\log(f(\theta))$ ， 这其实就是正则项。</p>
+<p>$$\begin{aligned} &amp; \arg \max _{\theta} P(Y, X | \theta) f(\theta) \=&amp; \arg \min _{\theta}-\log (P(Y, X | \theta))-\log (f(\theta)) \=&amp; \arg \min <em>{\theta} \sum</em>{i=1}^{n}\left(y_{i}-f\left(x_{i} ; \theta\right)\right)^{2}-\log (f(\theta)) \end{aligned} \tag{10}$$</p>
+<p>其中$f(\theta)$ 是参数 $\theta$ 的先验分布。(10)和(9)相比，可以看到多了一项 $-\log(f(\theta))$ ， 这其实就是正则项。</p>
 <ol>
 <li>当 $f(\theta)$ 服从(标准)正太分布的时候， $-\log(f(\theta)) = C||\theta||_2^2$， (10)就是Ridge回归，对应了L2正则化。</li>
 <li>当 $f(\theta)$ 服从拉普拉斯分布的时候， $-\log(f(\theta)) = C||\theta||_1^1$, (10)就是Lasso回归，对应了L1正则化。</li>
@@ -525,9 +538,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/正则化/" rel="tag"># 正则化</a>
-          
             <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/正则化/" rel="tag"># 正则化</a>
           
             <a href="/tags/惩罚项/" rel="tag"># 惩罚项</a>
           
