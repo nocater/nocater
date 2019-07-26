@@ -517,13 +517,14 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">print(matplotlib.get_configdir())</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<ol start="5">
+<ol>
 <li><p>重启kernel</p>
 <blockquote>
 <p>如果需要修改公式字体则修改<code>mathtext.fontset : custom</code>.</p>
 <p>Times New Roman 偏黑，使用宋体SinSun很像没有加粗的TimesNewRoman</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">&gt; <span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">&gt; </span><br><span class="line">&gt; <span class="keyword">from</span> matplotlib.font_manager <span class="keyword">import</span> _rebuild</span><br><span class="line">&gt; <span class="comment"># _rebuild() #如果修改了matplotlibrc而不想手动删除缓存 则用代码reload一下</span></span><br><span class="line">&gt; </span><br><span class="line">&gt; csfont = &#123;<span class="string">'fontname'</span>:<span class="string">'SimSun'</span>, <span class="string">'fontsize'</span>: <span class="number">10</span>&#125;</span><br><span class="line">&gt; </span><br><span class="line">&gt; x = [<span class="number">0.2</span>,<span class="number">0.3</span>,<span class="number">0.4</span>,<span class="number">0.5</span>,<span class="number">0.6</span>]</span><br><span class="line">&gt; y = [<span class="number">36</span>,<span class="number">21</span>,<span class="number">15</span>,<span class="number">12</span>,<span class="number">10</span>]</span><br><span class="line">&gt; </span><br><span class="line">&gt; plt.figure(dpi=<span class="number">180</span>)</span><br><span class="line">&gt; plt.plot(x, y, label=<span class="string">'$n_e(0)$'</span>)</span><br><span class="line">&gt; </span><br><span class="line">&gt; plt.xlabel(<span class="string">u'休眠参数'</span>+<span class="string">r'$\theta$'</span>, **csfont)</span><br><span class="line">&gt; plt.ylabel(<span class="string">u'休眠状态下云用户最优接入阈值'</span>+<span class="string">r'$G_&#123;soc&#125;$'</span>, **csfont)</span><br><span class="line">&gt; plt.legend()</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<p>&gt;</p>
 <blockquote>
 <p><a href="https://segmentfault.com/a/1190000005144275#articleHeader3" target="_blank" rel="noopener">python matplotlib 中文显示参数设置</a></p>
 </blockquote>
@@ -662,7 +663,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -740,7 +741,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

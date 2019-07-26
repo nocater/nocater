@@ -475,15 +475,22 @@
         <p><a href="https://arxiv.org/abs/1704.04368" target="_blank" rel="noopener">Get To The Point: Summarization with Pointer-Generator Networks</a><br>Abigail See, Peter J. Liu, Christopher D. Manning</p>
 <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>本文提出了一个Sequence-to-Sequence attentional 模型，用于生成文本摘要，数据集使用的 <em>CNN/Daily Mail</em>。此模型思想可用于解决OOV(out of vocabulary)问题。</p>
 <h1 id="Our-Models"><a href="#Our-Models" class="headerlink" title="Our Models"></a>Our Models</h1><p>Baseline 模型与 Nallapati et al. (2016)相似，包含Encoder及Decoder，前者为单层双向LSTM，后者为单向LSTM。<br><img src="https://i.loli.net/2019/04/01/5ca1f0fd48350.jpg" alt="gtp_1.jpg"></p>
-<h2 id="2-1-Sequence-to-sequence-attentional-model"><a href="#2-1-Sequence-to-sequence-attentional-model" class="headerlink" title="2.1 Sequence-to-sequence attentional model"></a>2.1 Sequence-to-sequence attentional model</h2><p>首先使用Attention机制(Bahdanau et al. (2015))，<br>$$e_i^t = v^T \text{tanh}(W_h h_i + W_s s_t + b_{attn})$$<br>$$a^t = softmax(e^t)$$<br>其中, $V, W_h, W_s, b_{attn}$ 都是学习参数，然后可以计算 <em>上下文向量(context vector)</em>     $h^<em>$ ：<br>$$h_t^</em> = \sum_i a_i^t h_i$$<br>然后是模型新添加的模块：将上下文向量 $h^{<em>}$ 与decoder隐层状态 $s_t$ 拼接，并经过两层线性层，再使用softmax进行归一化，得到 vocabulary distribution $Pvocab$：<br>$$P_{vocab} = \text{softmax} (V^\prime (V [s_t, h_t^</em>]+b)+b^\prime)$$<br>这时候可以得到预测单词 $w$ 最终的分布： $P(w) = P_{vocab}(w)$ 。<br>在训练时候，每个time-step的 $t$ ，目标单词的 $w_t^<em>$ 的负对数似然估计为：<br>$$\text{loss}_t = -\log P(w_t^</em>)$$<br>整个sequence的损失为:<br>$$\text{loss} = \frac{1}{T}\sum_{t=0}^T \text{loss}_t$$</p>
-<h2 id="2-2-Pointer-generator-Network"><a href="#2-2-Pointer-generator-Network" class="headerlink" title="2.2 Pointer-generator Network"></a>2.2 Pointer-generator Network</h2><p>模型的Pointer-generator网络是baseline模型与pointer 模型的结合。其中time-step t 的<em>generation probability</em> $P_{gen} \in [0,1]$ 是由context vector ， decoder state, decoder input计算得到的：<br>$$P_{gen} = \sigma (w_{h^<em>}^T h_t^</em> + w_s^Ts_t + w_x^Tx_t + b)$$<br>可以看出， $P_{gen}$是一个软开关，表示通过从 $P_{vocab}$ 中采样来从词汇表中<strong>生成(generate)</strong>一个单词的概率，或者从输入序列中采样attention $a^t$ 来复制一个单词。我们将原始文档中的所有单词记为 <strong>拓展词汇表(extended vocabulary)</strong>，则其对应的分布(distribution)为：<br>$$P(w) = p_{gen}P_{vocab}(w) + (1-p_{gen}) \sum_{i:w_i=w} a_i^t$$<br>如果w是OOV，那么 $P_{vocab}(w)$ 为0，如果w没有出现在源文档中，则公式后者为0。这使得模型能够解决OOV问题。</p>
+<h2 id="2-1-Sequence-to-sequence-attentional-model"><a href="#2-1-Sequence-to-sequence-attentional-model" class="headerlink" title="2.1 Sequence-to-sequence attentional model"></a>2.1 Sequence-to-sequence attentional model</h2><p>首先使用Attention机制(Bahdanau et al. (2015))，</p>
+<script type="math/tex; mode=display">e_i^t = v^T \text{tanh}(W_h h_i + W_s s_t + b_{attn})</script><script type="math/tex; mode=display">a^t = softmax(e^t)</script><p>其中, $V, W<em>h, W_s, b</em>{attn}$ 都是学习参数，然后可以计算 <em>上下文向量(context vector)</em>     $h^*$ ：</p>
+<script type="math/tex; mode=display">h_t^* = \sum_i a_i^t h_i</script><p>然后是模型新添加的模块：将上下文向量 $h^{*}$ 与decoder隐层状态 $s_t$ 拼接，并经过两层线性层，再使用softmax进行归一化，得到 vocabulary distribution $Pvocab$：</p>
+<script type="math/tex; mode=display">P_{vocab} = \text{softmax} (V^\prime (V [s_t, h_t^*]+b)+b^\prime)</script><p>这时候可以得到预测单词 $w$ 最终的分布： $P(w) = P_{vocab}(w)$ 。<br>在训练时候，每个time-step的 $t$ ，目标单词的 $w_t^*$ 的负对数似然估计为：</p>
+<script type="math/tex; mode=display">\text{loss}_t = -\log P(w_t^*)</script><p>整个sequence的损失为:</p>
+<script type="math/tex; mode=display">\text{loss} = \frac{1}{T}\sum_{t=0}^T \text{loss}_t</script><h2 id="2-2-Pointer-generator-Network"><a href="#2-2-Pointer-generator-Network" class="headerlink" title="2.2 Pointer-generator Network"></a>2.2 Pointer-generator Network</h2><p>模型的Pointer-generator网络是baseline模型与pointer 模型的结合。其中time-step t 的<em>generation probability</em> $P_{gen} \in [0,1]$ 是由context vector ， decoder state, decoder input计算得到的：</p>
+<script type="math/tex; mode=display">P_{gen} = \sigma (w_{h^*}^T h_t^* + w_s^Ts_t + w_x^Tx_t + b)</script><p>可以看出， $P<em>{gen}$是一个软开关，表示通过从 $P</em>{vocab}$ 中采样来从词汇表中<strong>生成(generate)</strong>一个单词的概率，或者从输入序列中采样attention $a^t$ 来复制一个单词。我们将原始文档中的所有单词记为 <strong>拓展词汇表(extended vocabulary)</strong>，则其对应的分布(distribution)为：</p>
+<script type="math/tex; mode=display">P(w) = p_{gen}P_{vocab}(w) + (1-p_{gen}) \sum_{i:w_i=w} a_i^t</script><p>如果w是OOV，那么 $P_{vocab}(w)$ 为0，如果w没有出现在源文档中，则公式后者为0。这使得模型能够解决OOV问题。</p>
 <p><img src="https://i.loli.net/2019/04/01/5ca1f8f535f5f.jpg" alt="gtp_2.jpg"><br>生成一个概率值，将两个distribution进行叠加，从而既可以从源序列中提取单词，也可以从词汇表中选择单词。</p>
-<h2 id="2-3-Coverage-mechanism"><a href="#2-3-Coverage-mechanism" class="headerlink" title="2.3 Coverage mechanism"></a>2.3 Coverage mechanism</h2><p>重复是Seq2Seq的常见问题。使用 <strong>converage model</strong> 来解决这个问题。首先添加一个 <strong>converage vector</strong> $c^t$ ，它是decoder的之前的time-step的attention distribution和：<br>$$c^t = \sum_{t\prime = 0} ^{t-1} a^{t^\prime}$$<br>直觉上，$c^t$ 是源文档单词的分布，表示这些单词受到attention机制覆盖的长远。其中 $c^0$ 是一个零向量。</p>
-<p>converage vector是作为attention机制额外的输入：<br>$$e_i^t = v^T \text{tanh} (W_h h_i + W_s s_t + W_c c_i^t + b)$$</p>
-<p>这使Attention能简单的不在重复输出内容。</p>
-<p>注意，添加 <strong>coverage loss</strong> 来惩罚相同位置重复attention 是非常必要的：<br>$$\text{covloss}_t = \sum_i \text{min}(a_i^t, c_i^t)$$</p>
-<p>最后，整体loss为(添加了超参数 $\lambda$ )：<br>$$\text{loss}_t = -\log P(w_t^*) + \lambda \sum_i min(a_i^t, c_i^t)$$</p>
-
+<h2 id="2-3-Coverage-mechanism"><a href="#2-3-Coverage-mechanism" class="headerlink" title="2.3 Coverage mechanism"></a>2.3 Coverage mechanism</h2><p>重复是Seq2Seq的常见问题。使用 <strong>converage model</strong> 来解决这个问题。首先添加一个 <strong>converage vector</strong> $c^t$ ，它是decoder的之前的time-step的attention distribution和：</p>
+<script type="math/tex; mode=display">c^t = \sum_{t\prime = 0} ^{t-1} a^{t^\prime}</script><p>直觉上，$c^t$ 是源文档单词的分布，表示这些单词受到attention机制覆盖的长远。其中 $c^0$ 是一个零向量。</p>
+<p>converage vector是作为attention机制额外的输入：</p>
+<script type="math/tex; mode=display">e_i^t = v^T \text{tanh} (W_h h_i + W_s s_t + W_c c_i^t + b)</script><p>这使Attention能简单的不在重复输出内容。</p>
+<p>注意，添加 <strong>coverage loss</strong> 来惩罚相同位置重复attention 是非常必要的：</p>
+<script type="math/tex; mode=display">\text{covloss}_t = \sum_i \text{min}(a_i^t, c_i^t)</script><p>最后，整体loss为(添加了超参数 $\lambda$ )：</p>
+<script type="math/tex; mode=display">\text{loss}_t = -\log P(w_t^*) + \lambda \sum_i min(a_i^t, c_i^t)</script>
       
     </div>
 
@@ -604,7 +611,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -682,7 +689,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

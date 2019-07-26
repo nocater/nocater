@@ -484,7 +484,7 @@
 <p>第一组按钮用来调节宽度，方法包括 - bigger network - Adam算法<br>第二组按钮用来调节高度，方法包括 - 正则化 - 增加数据集<br>第三组 - 增加数据集<br>第二组 - 改变损失函数 - 改变开发数据集</p>
 </blockquote>
 <p> 一般不使用<em>early stopping</em>,它会同时影响前两步,违反<strong>正交化</strong>,使模型不好分析。</p>
-<h3 id="1-3-单一数字评估指标"><a href="#1-3-单一数字评估指标" class="headerlink" title="1.3 单一数字评估指标"></a>1.3 单一数字评估指标</h3><p>使用单一数字(实数)指标进行模型的评估。如<strong>F1值</strong>：$\frac{2}{\frac{1}{P}+\frac{1}{R}}$<br>重申：idea<->code<->experiment</-></-></p>
+<h3 id="1-3-单一数字评估指标"><a href="#1-3-单一数字评估指标" class="headerlink" title="1.3 单一数字评估指标"></a>1.3 单一数字评估指标</h3><p>使用单一数字(实数)指标进行模型的评估。如<strong>F1值</strong>：$\frac{2}{\frac{1}{P}+\frac{1}{R}}$<br>重申：idea&lt;-&gt;code&lt;-&gt;experiment</p>
 <h3 id="1-4-满足和优化指标"><a href="#1-4-满足和优化指标" class="headerlink" title="1.4 满足和优化指标"></a>1.4 满足和优化指标</h3><p>当有多个指标去衡量目标的话，可以选择一个作为<strong>优化指标(optimizing metric)</strong>，其它的设置为<strong>满足指标(satisficing metric)</strong></p>
 <ul>
 <li>如猫学习器准确率作为<strong>optimizing metric</strong>，识别速度小于100ms作为<strong>satisficing metric</strong></li>
@@ -494,8 +494,12 @@
 <h3 id="1-6-开发集和测试集的大小"><a href="#1-6-开发集和测试集的大小" class="headerlink" title="1.6 开发集和测试集的大小"></a>1.6 开发集和测试集的大小</h3><p>传统的8:2或6:2:2方式不再适合大数据下的当代<br>深度学习对训练数据量的要求非常大，因此，当数据大于百万时候，使用98:1:1是没有问题的。<br>一般强调设置 训练集、开发集、测试集<br>有时候忽略测试集不推荐</p>
 <h3 id="1-7-什么时间开始改变开发-测试集和指标"><a href="#1-7-什么时间开始改变开发-测试集和指标" class="headerlink" title="1.7 什么时间开始改变开发/测试集和指标"></a>1.7 什么时间开始改变开发/测试集和指标</h3><p>如果无法正确评估好算法的排名，则需要定义一个新的评估指标。</p>
 <blockquote>
-<p>算法a在识别猫图时可能会推送成人图片，则需要修改error指标：<br>$$Error: \frac{1}{m_{dev}} \sum_{i=1}^{m_{dev}}L({\hat y}^{(i)},y^{(i)}) \tag{1}$$<br>$$Error: \frac{1}{\sum \omega^{(i)}} \sum_{i=1}^{M_{dev}}\omega^{(i)}L({\hat y}^{(i)},y^{(i)}) \tag{2}$$<br>$$\omega^{(i)}=<br>\begin{cases}<br>1&amp; \text{if} \ x^{i}\  \text{is non-porn}\\<br>10&amp; \text{if} \ x^{i}\  \text{is porn}<br>\end{cases}$$</p>
-</blockquote>
+<p>算法a在识别猫图时可能会推送成人图片，则需要修改error指标：</p>
+<script type="math/tex; mode=display">Error: \frac{1}{m_{dev}} \sum_{i=1}^{m_{dev}}L({\hat y}^{(i)},y^{(i)}) \tag{1}</script><script type="math/tex; mode=display">Error: \frac{1}{\sum \omega^{(i)}} \sum_{i=1}^{M_{dev}}\omega^{(i)}L({\hat y}^{(i)},y^{(i)}) \tag{2}</script><script type="math/tex; mode=display">\omega^{(i)}=
+\begin{cases}
+1& \text{if} \ x^{i}\  \text{is non-porn}\\\\
+10& \text{if} \ x^{i}\  \text{is porn}
+\end{cases}</script></blockquote>
 <p>在当前开发集和测试集表现很好，但在实际应用中表现不好时，需要修改指标换切换数据集。</p>
 <h3 id="1-8-为什么是人的表现"><a href="#1-8-为什么是人的表现" class="headerlink" title="1.8 为什么是人的表现"></a>1.8 为什么是人的表现</h3><p><img src="http://img.nocater.com/18-7-6/16375421.jpg" alt="@贝叶斯误差"><br><strong>贝叶斯最优误差(Bayes optimal error)</strong>是理论上可能达到的最优误差，<br>如果你的模型比人类水平低，说明可以使用某些工具来提高性能。<br>模型效果低于人类水平，你可以</p>
 <ul>
@@ -516,7 +520,8 @@
 <li>专家团队的误差为0.5%</li>
 </ul>
 <p>可以得知 bayes error &lt;= 0.5%<br><img src="http://img.nocater.com/18-7-6/80653879.jpg" alt="@偏差、方差问题"><br>比较Avoidable bias 和 Variance大小可以分析应解决偏差还是方差问题。</p>
-<h3 id="1-11-超过人的表现"><a href="#1-11-超过人的表现" class="headerlink" title="1.11 超过人的表现"></a>1.11 超过人的表现</h3><table>
+<h3 id="1-11-超过人的表现"><a href="#1-11-超过人的表现" class="headerlink" title="1.11 超过人的表现"></a>1.11 超过人的表现</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>Scenario</th>
@@ -540,6 +545,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>在情况A下Avoidable Bias为0.1，Variance为0.2，故应该着重降低方差。<br>但在情况B下，模型超过人类，很难用现有的工具和方法去判断应降低偏差还是方差。<br>在结构化数据中，机器学习算法很容易超越人的表现。<br>但在自然感知领域，人类比较擅长，但机器学习能够一定程度上超过人类。</p>
 <h3 id="1-12-改善你模型的表现"><a href="#1-12-改善你模型的表现" class="headerlink" title="1.12 改善你模型的表现"></a>1.12 改善你模型的表现</h3><ol>
 <li>减小可避免偏差<ul>
@@ -574,6 +580,7 @@
 <li>修复狮子等大猫被错误分类</li>
 <li>更好地图片模糊处理</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -628,6 +635,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>然后通过人为分析，比如解决Great Cats问题，或同时解决图像模糊问题。<br>这个统计步骤大概需要几小时，但是值得。</p>
 <h3 id="2-2-清除标注错误的数据"><a href="#2-2-清除标注错误的数据" class="headerlink" title="2.2 清除标注错误的数据"></a>2.2 清除标注错误的数据</h3><p>深度学习对<strong>随机误差</strong>(少量的数据标记出错)<strong>鲁棒性(robust)</strong>，但对<strong>系统误差</strong>没有。<br>在误差分析的时候添加一列：数据标记类别出错，进行分析。<br>是否进行样本类别修正?</p>
 <ul>
@@ -667,6 +675,7 @@
 </blockquote>
 <h3 id="2-5-不匹配数据划分的偏差和方差"><a href="#2-5-不匹配数据划分的偏差和方差" class="headerlink" title="2.5 不匹配数据划分的偏差和方差"></a>2.5 不匹配数据划分的偏差和方差</h3><p>偏差和方差分析可以帮助你进行下一步的优化，训练集和开发测试集的数据分布不同时候，偏差和方差分析方法需要调整。需要设立<strong>训练-开发集(train-dev set)</strong>进行分析。<br><strong>训练-开发集(train-dev set)</strong>：和训练集同分布，但没有用于训练。<br><img src="http://img.nocater.com/18-7-8/46164709.jpg" alt="@训练-开发集"></p>
 <p>误差分析情况示例：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -715,10 +724,12 @@
 </tr>
 </tbody>
 </table>
+</div>
 <blockquote>
 <p><strong>avoidable error</strong>:Human-error - Train error<br><strong>variance</strong>:train error - train-dev error<br><strong>data mismatch</strong>: train-dev error - dev error<br><strong>degree of overfit</strong>:dev error - test error</p>
 </blockquote>
 <p>考虑下面的情况：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -761,7 +772,9 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>2,3是根据训练集分布评估的，4,5是根据开发集分布评估的，需要一个更通用的分析，以汽车后视镜语音为例：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -788,6 +801,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <blockquote>
 <p>首先分析红色四个数据，能给出优化方向<br>把表格中右上两个数字得到，左右对比分析很有用<br>最后一行说明实际任务对比训练任务更简单，但一行差值又表明不是那么简单<br><strong>data mismatch</strong>没有很系统的解决方法，但有一些尝试建议</p>
 </blockquote>
@@ -944,7 +958,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1022,7 +1036,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
