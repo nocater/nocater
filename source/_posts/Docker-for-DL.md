@@ -9,7 +9,6 @@ tags:
 categories: oteher
 description: 为Ubuntu18.04搭建Docker深度学习环境
 ---
-
 # Docker for DL in Ubuntu 18.04
 
 [TOC]
@@ -19,6 +18,8 @@ description: 为Ubuntu18.04搭建Docker深度学习环境
 [Install Docker](https://docs.docker.com/install/),查看左侧Ubuntu安装即可。
 
 ## Install nvidia-docker
+
+[nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
 
 1. 禁用系统默认显卡驱动
 
@@ -150,12 +151,69 @@ description: 为Ubuntu18.04搭建Docker深度学习环境
 
 ## Use Docker for DL
 
-# Reference
+## 创建数据卷
 
-[How to set up Docker for Deep Learning with Ubuntu 16.04 (with GPU)](<https://johannesfilter.com/how-to-set-ubuntu-16-04-for-deep-learning-with-gpu/>)
+[参考](https://docs.docker.com/engine/reference/commandline/volume_create/)
 
-[dl-setup](<https://github.com/floydhub/dl-setup#nvidia-drivers>)
+需要区分下type的区别 (不使用此方法，卷会默认于docker目录而不是想要的目录)
 
-[Ubuntu18.04上安装RTX 2080Ti显卡驱动](<https://my.oschina.net/u/2306127/blog/2877804>)
+``` bash
+docker volume create -d local \
+--opt type=tmpfs \
+--opt device=/home/chen/data/ \
+chen_data
+```
 
-[Ubuntu 18.04 安装 NVIDIA 显卡驱动](<https://zhuanlan.zhihu.com/p/59618999>)
+
+
+way2:
+
+首先使用账户`chen`创建所需要挂载的目录(即保证目录的owner为chen, docker自行创建的为root)
+
+然后直接使用 mount 参数进行挂载即可
+
+
+
+## 运行image
+
+使用[deepo](https://github.com/ufoym/deepo)
+
+``` bash
+docker run \
+ --name chenshuai \
+ --gpus all \
+ -it \
+ -d \
+ -p 8888:8888 \
+ --ipc=host \
+ --mount type=bind,source=/home/chen/docker_env,target=/env \
+ ufoym/deepo:all-jupyter-py36
+```
+
+> gpus 表示使用所有GPU
+>
+> it 表示ternimal
+>
+> d 表示守护式启动
+>
+> p 表示端口映射
+>
+> -- mount 添加挂载
+
+## 查看所有container
+
+``` bash
+docker container ls
+```
+
+## 进入container
+
+``` bash
+docker exec -it <PID> bash
+```
+
+## 删除未运行container
+
+``` bash
+docker container prune -f
+```
