@@ -217,3 +217,28 @@ docker exec -it <PID> bash
 ``` bash
 docker container prune -f
 ```
+
+
+
+## install docker-compose
+
+[参考](curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compos)
+
+使用pip安装
+
+```bash
+sudo pip install -U docker-compose
+```
+
+bash 补全命令
+
+```bash
+curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
+```
+
+
+
+## install docker-registry
+
+pass
+
