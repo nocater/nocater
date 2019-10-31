@@ -242,3 +242,50 @@ curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completi
 
 pass
 
+
+
+## pycharm remote connect docker(GPU)
+
+首先运行docker并暴露22端口
+
+```bash
+docker run \
+ --name zhannan \
+ --gpus all \
+ -it \
+ -d \
+ -p 9188:8888 \
+ -p 9122:22 \
+ --ipc=host \
+ --mount type=bind,source=/home/zhang/docker_env,target=/env \
+ ufoym/deepo:all-jupyter-py36
+```
+
+进入容器后，开启root的远程SSH连接
+
+```bash
+apt update && apt install -y openssh-server && apt install -y nano
+```
+
+修改`/etc/ssh/sshd_config`文件，添加
+
+```
+PermitRootLogin yes
+```
+
+重启SSH服务
+
+```bash
+service ssh restart
+```
+
+设置`root`密码后，验证连接
+
+```bash
+# 容器内使用22端口
+ssh root@127.0.0.1
+# 容器外使用映射端口
+ssh root@127.0.0.1 -p 9122
+```
+
+添加`pycharm`的远程连接
