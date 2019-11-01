@@ -289,3 +289,5 @@ ssh root@127.0.0.1 -p 9122
 ```
 
 添加`pycharm`的远程连接
+
+[参考](<https://medium.com/@furkanpur/remote-python-debug-to-docker-container-over-ssh-by-using-pycharm-44a9b6e82206>)
